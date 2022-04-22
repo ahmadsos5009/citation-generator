@@ -17,13 +17,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Install and build
-        run: yarn install && yarn run build
+      - name: Install
+        run: yarn install
 
       - name: Test
         run: yarn run test
 
       - name: Build
+        env:
+          APP_URL: https://citation-creator.com
         run: yarn run build
 
       - name: Deploy
