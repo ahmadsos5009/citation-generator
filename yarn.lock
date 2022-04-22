@@ -6728,6 +6728,11 @@ gatsby-page-utils@^1.14.0:
     lodash "^4.17.21"
     micromatch "^4.0.4"
 
+gatsby-plugin-cname@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-cname/-/gatsby-plugin-cname-1.0.0.tgz#5752d006c476a3c7897fca5c307901df5501747a"
+  integrity sha512-U0yRgn4cm1zBi+qC5a827acPFnUqKSowoCvAxT3MDmMJVLSWB4vmSyM7m6ThVz35obO4nKr4iP4vZhvA7gEVsA==
+
 gatsby-plugin-compile-es6-packages@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-compile-es6-packages/-/gatsby-plugin-compile-es6-packages-2.1.1.tgz#e01626799b8d84887606b2f0e8f3fd429e6025b8"
@@ -7066,14 +7071,6 @@ gatsby-theme-material-ui@^5.1.0:
     gatsby-plugin-webfonts "^2.2.1"
     gatsby-theme-material-ui-top-layout "^5.1.0"
     react-helmet "^6.1.0"
-
-gatsby-transformer-json@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-json/-/gatsby-transformer-json-4.7.0.tgz#0300e4216efc542ce5b99af734069b6faebcedf4"
-  integrity sha512-0+q/codjMb3SbXH/acU1pohRQEpCpF8/Q+D+cZ+zJ7MZZ5a0WBH17PtvYlsTeCLExBsbViApxRdnZYeNuMa+/A==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    bluebird "^3.7.2"
 
 gatsby-transformer-sharp@^3.10.0:
   version "3.14.0"

@@ -7,6 +7,7 @@ module.exports = {
     siteUrl: process.env.APP_URL,
   },
   plugins: [
+    "gatsby-plugin-cname",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-image",
     {
