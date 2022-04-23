@@ -20,9 +20,7 @@ import { navigate } from "gatsby"
 
 const IndexPage: React.FC = () => {
   const onCSLMetaDataClick = useCallback((e) => {
-    console.log("ON Click...")
     if (e.currentTarget.id) {
-      console.log("ON Click...", e.currentTarget)
       return navigate("/cslMetaData", {
         state: { format: e.currentTarget.id },
       })

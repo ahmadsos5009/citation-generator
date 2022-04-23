@@ -8,6 +8,12 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-cname",
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        excludes: ["/citationPreview", "/cslList", "/cslMetaData/"],
+      },
+    },
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-image",
     {

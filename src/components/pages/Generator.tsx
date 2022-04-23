@@ -27,7 +27,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
     <DBProvider format={pageContext.style} citationDocument={documentType}>
       <Layout>
         <Seo
-          title={`${pageContext.id} citation generator`}
+          title={`${pageContext.title}`}
           description={`${pageContext.id} citation & in text citation generator, and bibliography/reference list generator.`}
         />
         <Box
