@@ -1,6 +1,14 @@
 import * as React from "react"
-import { useCallback, useState } from "react"
-import { Box, CardContent, Container, Tab, Tabs, Typography } from "@mui/material"
+import { useCallback, useMemo, useState } from "react"
+import {
+  Box,
+  CardContent,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material"
 
 import Layout from "./Layout"
 import Seo from "../Seo"
@@ -23,12 +31,20 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
   )
   const onDocumentTypeClick = useCallback((event, type) => setDocumentType(type), [])
 
+  const pageTitle = useMemo(() => {
+    const style = pageContext.style
+    if (style.includes("_")) {
+      const [_style, edition] = style.split("_")
+      return `${_style.toUpperCase()} (${edition} ed.)`
+    } else return style.toUpperCase()
+  }, [pageContext.style])
+
   return (
     <DBProvider format={pageContext.style} citationDocument={documentType}>
       <Layout>
         <Seo
-          title={`${pageContext.title}`}
-          description={`${pageContext.id} citation & in text citation generator, and bibliography/reference list generator.`}
+          title={`${pageTitle} Citation Generator`}
+          description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
         />
         <Box
           sx={{
@@ -51,16 +67,21 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
             }}
           >
             <CardContent sx={{ flexGrow: 1 }}>
-              <Typography
-                component="h1"
-                variant="h5"
-                align="center"
-                color="text.primary"
-                gutterBottom
-                sx={{ p: 1 }}
-              >
-                {pageContext.title}
-              </Typography>
+              <Stack>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  align="center"
+                  color="text.primary"
+                  gutterBottom
+                  sx={{ p: 1 }}
+                >
+                  {`${pageTitle} Citation Generator`}
+                </Typography>
+                <Typography component="caption" color="text.secondary" gutterBottom>
+                  {pageContext.title}
+                </Typography>
+              </Stack>
 
               <ToggleCitationsListButton />
 

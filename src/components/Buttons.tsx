@@ -65,14 +65,20 @@ export const ClearFields: React.FC<{ document: CitationDocumentType }> = ({
 }
 
 export const ToggleCitationsListButton: React.FC = () => {
-  const { showCitationsList, setShowCitationsList } = useContext(DBContext)
+  const { showCitationsList, setShowCitationsList, state } = useContext(DBContext)
+
+  const citations = useMemo(() => {
+    return Object.values(state.value)
+      .map((list) => [...Object.values(list)])
+      .flat()
+  }, [state.value])
 
   const toggleCitationsList = useCallback(
     () => setShowCitationsList(!showCitationsList),
     [showCitationsList, setShowCitationsList],
   )
 
-  if (showCitationsList === undefined) {
+  if (showCitationsList === undefined || citations.length < 1) {
     return <></>
   }
 
