@@ -95,6 +95,10 @@ export const ReferencesList: React.FC<{
     [selectedCitations, setSelectedCitations],
   )
 
+  if (citations.length < 1 || !showCitationsList) {
+    return null
+  }
+
   return (
     <Collapse
       orientation="horizontal"
@@ -114,7 +118,14 @@ export const ReferencesList: React.FC<{
           <ListHeader />
           <Stack direction="row" spacing={4}>
             {/*<Collections />*/}
-            <List dense sx={{ overflowY: "scroll", height: "calc(100vh - 30vh)" }}>
+            <List
+              dense
+              sx={{
+                overflowY: "scroll",
+                width: "100%",
+                height: "calc(100vh - 30vh)",
+              }}
+            >
               {citations.map((citation, index) => {
                 const labelId = `checkbox-list-secondary-label-${index}`
 

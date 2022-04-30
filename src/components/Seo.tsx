@@ -41,7 +41,7 @@ const Seo: React.FC<SeoProps> = ({ description, lang, title }) => {
       }}
       title={title}
       // @ts-ignore
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={defaultTitle ? `%s` : defaultTitle}
       meta={[
         {
           name: "description",
