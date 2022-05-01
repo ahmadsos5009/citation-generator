@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /referencesManager
+
+User-agent: *
+Disallow: /citationPreview
+
+User-agent: *
+Disallow: /cslMetaData
+
+User-agent: *
+Disallow: /cslList
+
+User-agent: *
+Disallow: /help
+
+User-agent: *
+Disallow: /about
+Sitemap: https://citation-creator.com/sitemap/sitemap-0.xml
+Host: https://citation-creator.com
