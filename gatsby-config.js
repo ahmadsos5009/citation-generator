@@ -11,7 +11,29 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
-        excludes: ["/citationPreview", "/cslList", "/cslMetaData/"],
+        excludes: [
+          "/referencesManager",
+          "/citationPreview",
+          "/cslMetaData/",
+          "/cslList",
+          "/help",
+          "/about",
+        ],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://citation-creator.com",
+        sitemap: "https://citation-creator.com/sitemap/sitemap-0.xml",
+        policy: [
+          { userAgent: "*", disallow: ["/referencesManager"] },
+          { userAgent: "*", disallow: ["/citationPreview"] },
+          { userAgent: "*", disallow: ["/cslMetaData"] },
+          { userAgent: "*", disallow: ["/cslList"] },
+          { userAgent: "*", disallow: ["/help"] },
+          { userAgent: "*", disallow: ["/about"] },
+        ],
       },
     },
     "gatsby-plugin-react-helmet",
