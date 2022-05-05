@@ -2,6 +2,7 @@ import * as React from "react"
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
 import { useEffect, useRef, useState } from "react"
+import { Typography } from "@mui/material"
 
 export const Spinner: React.FC = () => {
   const [progress, setProgress] = useState(0)
@@ -39,3 +40,18 @@ export const Spinner: React.FC = () => {
     </Box>
   )
 }
+
+export const ImportProgress: React.FC = () => (
+  <Box sx={{ width: "100%", margin: "4px 16px" }}>
+    <Typography
+      fontWeight="fontWeightMedium"
+      padding={2}
+      align="center"
+      variant="overline"
+      display="block"
+    >
+      Looking for your citation
+    </Typography>
+    <LinearProgress />
+  </Box>
+)

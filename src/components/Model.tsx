@@ -13,7 +13,6 @@ import {
   Modal,
   Snackbar,
   styled as MUIStyled,
-  Tooltip,
   Typography,
 } from "@mui/material"
 import {
@@ -230,27 +229,26 @@ export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> =
 
   return (
     <div>
-      <Tooltip title="upload .bib/.tex file to Import citations">
-        <label htmlFor="contained-button-file">
-          <Input
-            // @ts-ignore
-            ref={uploadRef}
-            onChange={onFileUpload}
-            accept="*"
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <IconButton
-            color="secondary"
-            sx={{ p: "10px" }}
-            aria-label="upload"
-            component="span"
-          >
-            <UploadFileIcon />
-          </IconButton>
-        </label>
-      </Tooltip>
+      <label htmlFor="contained-button-file">
+        <Input
+          // @ts-ignore
+          ref={uploadRef}
+          onChange={onFileUpload}
+          accept="*"
+          id="contained-button-file"
+          multiple
+          type="file"
+        />
+        <IconButton
+          color="secondary"
+          sx={{ p: "10px", ":hover": { borderRadius: "8px" } }}
+          aria-label="upload"
+          component="span"
+        >
+          <Typography>Import form .bib/.tex</Typography>
+          <UploadFileIcon />
+        </IconButton>
+      </label>
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style, width: "50%", height: "50%" }}>

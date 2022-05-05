@@ -65,20 +65,14 @@ export const ClearFields: React.FC<{ document: CitationDocumentType }> = ({
 }
 
 export const ToggleCitationsListButton: React.FC = () => {
-  const { showCitationsList, setShowCitationsList, state } = useContext(DBContext)
-
-  const citations = useMemo(() => {
-    return Object.values(state.value)
-      .map((list) => [...Object.values(list)])
-      .flat()
-  }, [state.value])
+  const { showCitationsList, setShowCitationsList } = useContext(DBContext)
 
   const toggleCitationsList = useCallback(
     () => setShowCitationsList(!showCitationsList),
     [showCitationsList, setShowCitationsList],
   )
 
-  if (showCitationsList === undefined || citations.length < 1) {
+  if (showCitationsList === undefined) {
     return <></>
   }
 
@@ -284,3 +278,9 @@ export const LabelBadge: React.FC<{
     </StyledBadge>
   </IconButton>
 )
+
+export const FileImport = styled(IconButton)`
+  :hover {
+    border: #d32f2f 1px solid;
+  }
+`

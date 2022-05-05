@@ -174,7 +174,9 @@ const DocumentForm: React.FC<{ documentType: CitationDocumentType }> = ({
         height: "100%",
       }}
     >
-      <ImportCitationBox documentType={documentType} />
+      {documentType !== CitationDocumentType.REPORT && (
+        <ImportCitationBox documentType={documentType} />
+      )}
 
       <OnFlyCitationBox citation={citation} handleClick={handleClick} />
 
