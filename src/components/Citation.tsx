@@ -11,7 +11,6 @@ import {
   Divider,
   IconButton,
   InputBase,
-  List,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -26,13 +25,26 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import {
   Citation,
   CitationDocumentType,
-  CitationJSDocumentType,
   CitationOutput,
   DocumentType,
 } from "../types"
 import BookIcon from "@mui/icons-material/Book"
 import WebsiteIcon from "@mui/icons-material/Web"
 import ReportIcon from "@mui/icons-material/Summarize"
+import SearchIcon from "@mui/icons-material/Search"
+import EditIcon from "@mui/icons-material/Edit"
+import ArticleIcon from "@mui/icons-material/Article"
+import BackspaceIcon from "@mui/icons-material/Backspace"
+
+import { StoreContext } from "../provider/Store"
+
+import { ImportProgress } from "./editor/Spinner"
+import { UploadFileModel } from "./Model"
+import { CitationImportStrategy } from "./utilities/citation-importer"
+import { generateCitation } from "./utilities/citation_generator"
+import { DBContext } from "../provider/DBProvider"
+import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
+import { PrimaryList } from "./Lists"
 
 export const DocumentIcon: {
   [key in DocumentType]: ReactElement
@@ -51,8 +63,6 @@ export const DocumentLabel: {
   webpage: "Website",
   report: "Report",
 }
-
-import { Cite } from "@citation-js/core"
 
 interface OnFlyCitationBoxProps {
   // eslint-disable-next-line react/require-default-props
@@ -76,7 +86,11 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
   handleClick,
 }) => {
   if (!citation) {
-    return <></>
+    return (
+      <Typography padding={2} fontWeight="fontWeightMedium">
+        Fill entry to generate citation manually on the fly
+      </Typography>
+    )
   }
 
   return (
@@ -111,29 +125,21 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
   )
 }
 
-require("@citation-js/plugin-isbn")
-require("@citation-js/plugin-doi")
-require("@citation-js/plugin-bibjson")
-import SearchIcon from "@mui/icons-material/Search"
-import ArticleIcon from "@mui/icons-material/Article"
-import BackspaceIcon from "@mui/icons-material/Backspace"
-
-import { StoreContext } from "../provider/Store"
-import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
-
-import EditIcon from "@mui/icons-material/Edit"
-import { Spinner } from "./editor/Spinner"
-import { UploadFileModel } from "./Model"
-
 export type ImportCitation = Citation & { type: DocumentType }
 
 export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }> = ({
   documentType,
 }) => {
+  const { format } = useContext(DBContext)
   const [importLoading, setImportLoading] = useState(false)
   const [input, setInput] = useState("")
-  const [previewOutput, setPreviewOutput] = useState<string | undefined>(undefined)
-  const [outputJson, setOutputJson] = useState<ImportCitation | undefined>(undefined)
+  const [importedCitations, setImportedCitations] = useState<
+    {
+      citation: ImportCitation
+      htmlCitation: string
+      inText: string
+    }[]
+  >([])
 
   const [showAlert, setShowAlert] = useState(false)
   const closeSnackbar = useCallback(() => setShowAlert(false), [setShowAlert])
@@ -141,62 +147,85 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
   const onImportChange = useCallback((e) => setInput(e.target.value), [])
   const onClearClick = useCallback(() => {
     setInput("")
-    setPreviewOutput(undefined)
+    setImportedCitations([])
   }, [])
 
   const onImportSearch = useCallback(async () => {
-    try {
-      setImportLoading(true)
-      const cite = await Cite.async(input)
-      const outputJson = cite.get({ format: "real", type: "json", style: "csl" })
-      const outputHtml = Cite(cite.data, { format: "string" }).format(
-        "bibliography",
-        {
-          format: "html",
-          lang: "en-US",
-        },
-      )
-
-      if (outputJson.length > 0) {
-        setOutputJson(outputJson[0])
-        setPreviewOutput(outputHtml)
-      }
-    } catch (e) {
-      setShowAlert(true)
+    if (input.length < 1) {
+      setImportedCitations([])
+      return
     }
+
+    setImportLoading(true)
+
+    const importedCitations = await CitationImportStrategy(documentType, input)
+
+    if (importedCitations.length > 0) {
+      const previewCitations = importedCitations.map((citation) => {
+        const { convertedCitation, inText } = generateCitation(
+          citation,
+          documentType,
+          "html",
+          format,
+        )
+        return {
+          citation,
+          htmlCitation: convertedCitation,
+          inText,
+        }
+      })
+      setImportedCitations(previewCitations)
+    } else {
+      setShowAlert(true)
+      setImportedCitations([])
+    }
+
     setImportLoading(false)
-  }, [input, setPreviewOutput])
+  }, [input, documentType])
+
+  const onKeyPress = useCallback(
+    (e) => {
+      if (e.key === "Enter") {
+        return onImportSearch()
+      }
+    },
+    [input, documentType],
+  )
 
   const { dispatch } = useContext(StoreContext)
 
-  const onEditClick = useCallback(() => {
-    if (!outputJson) return
-    clearCitationFields(documentType)
-    fillCitationFields(documentType, outputJson)
+  const onEditClick = useCallback(
+    (e) => {
+      const index = e.currentTarget.value
+      if (index) {
+        clearCitationFields(documentType)
+        fillCitationFields(documentType, importedCitations[index].citation)
 
-    dispatch({
-      type: "fill",
-      documentType,
-      value: outputJson,
-    })
-    setInput("")
-    setPreviewOutput(undefined)
-  }, [outputJson, documentType])
+        dispatch({
+          type: "fill",
+          documentType,
+          value: importedCitations[index].citation,
+        })
+        setInput("")
+        setImportedCitations([])
+      }
+    },
+    [importedCitations, documentType],
+  )
 
   const message = useMemo(() => {
     switch (documentType) {
       case CitationDocumentType.JOURNAL:
-        return "Import Citation from URL, DOI"
+        return "Search by Article Title or DOI or URL"
       case CitationDocumentType.BOOK:
-        return "Import Citation from URL, ISBN"
-      case CitationDocumentType.REPORT:
+        return "Search by Book Title or URL or ISBN"
       case CitationDocumentType.WEBSITE:
-        return "Import Citation from URL"
+        return "Search by URL"
     }
   }, [documentType])
 
   if (importLoading) {
-    return <Spinner />
+    return <ImportProgress />
   }
 
   return (
@@ -205,8 +234,6 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      padding="4px"
-      margin="8px 12px"
       width="100%"
     >
       <Paper
@@ -218,6 +245,7 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
           inputProps={{ "aria-label": "Import Citation" }}
           value={input}
           onChange={onImportChange}
+          onKeyPress={onKeyPress}
         />
         <IconButton sx={{ p: "10px" }} aria-label="search" onClick={onImportSearch}>
           <SearchIcon />
@@ -232,13 +260,21 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
         <UploadFileModel documentType={documentType} />
       </Paper>
 
-      {previewOutput && (
-        <List sx={{ bgcolor: "background.paper", margin: "8px" }}>
+      <PrimaryList
+        sx={{
+          bgcolor: "background.paper",
+          margin: "8px",
+          maxHeight: "400px",
+          overflowY: "auto",
+        }}
+      >
+        {importedCitations.map(({ citation, htmlCitation, inText }, index) => (
           <ListItem
             key="citation-import"
             secondaryAction={
               <IconButton
                 edge="end"
+                value={index}
                 aria-label="edit-citation"
                 onClick={onEditClick}
               >
@@ -246,21 +282,23 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
               </IconButton>
             }
           >
-            {outputJson && (
-              <ListItemIcon>{DocumentIcon[outputJson.type]}</ListItemIcon>
+            {citation?.type && (
+              <ListItemIcon>{DocumentIcon[citation.type]}</ListItemIcon>
             )}
             <ListItemText>
-              <div dangerouslySetInnerHTML={{ __html: previewOutput }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: htmlCitation,
+                }}
+              />
+              <Typography variant="caption" display="block" gutterBottom margin={0}>
+                In-text Citation:
+                <div dangerouslySetInnerHTML={{ __html: inText }} />
+              </Typography>
             </ListItemText>
           </ListItem>
-          {outputJson && outputJson.type !== CitationJSDocumentType[documentType] && (
-            <Alert severity="warning">
-              Type of imported citations not similar to the one selected — Import
-              this citation from <b>{DocumentLabel[outputJson.type]}</b> section
-            </Alert>
-          )}
-        </List>
-      )}
+        ))}
+      </PrimaryList>
 
       <Snackbar
         open={showAlert}
