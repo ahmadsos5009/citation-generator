@@ -78,7 +78,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                 >
                   {`${pageTitle} Citation Generator`}
                 </Typography>
-                <Typography component="caption" color="text.secondary" gutterBottom>
+                <Typography textAlign="center" color="text.secondary" gutterBottom>
                   {pageContext.title}
                 </Typography>
               </Stack>

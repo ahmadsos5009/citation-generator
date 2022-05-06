@@ -27,14 +27,17 @@ export const CitationJSDocumentType: {
 
 export type CitationStyle =
   | "apa"
+  | "cse"
   | "ieee"
   | "mla_8th"
+  | "mhra"
   | "chicago"
   | "harvard"
   | "ama"
   | "asa"
   | "acm"
   | "nature"
+  | "turabian_9th"
   | "vancouver"
   | "oscola"
   | "nlm"
