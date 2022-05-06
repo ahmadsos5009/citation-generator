@@ -78,7 +78,7 @@ export const ExportFileNameModel: React.FC<{
       case "Word":
         export_word(citationHtml, fileName)
         break
-      case "BibTax":
+      case "BibTex":
         export_bibTex(citationsJson, fileName)
         break
     }

@@ -69,7 +69,7 @@ const IndexPage: React.FC = () => {
               <li>Text editor for Bibliographies list</li>
               <li>Read citation from URL, DOI, ISBN</li>
               <li>Import citations from BibTeX</li>
-              <li>Export your citations to a PDF, Word, BibTax Document</li>
+              <li>Export your citations to a PDF, Word, BibTex Document</li>
             </ul>
 
             <Typography

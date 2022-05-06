@@ -241,7 +241,7 @@ export const ReferenceExportButton: React.FC = () => {
           buttonIcon={<ArticleIcon sx={{ color: blue[500] }} />}
         />
         <ExportFileNameModel
-          buttonText="BibTax"
+          buttonText="BibTex"
           closeDropDown={handleClose}
           citationHtml={citationHtml}
           citationsJson={citationsJson}
