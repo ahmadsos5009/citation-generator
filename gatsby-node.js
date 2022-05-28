@@ -45,5 +45,16 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         process: "process",
       }),
     ],
+    resolve: {
+      fallback: {
+        util: false,
+        crypto: false,
+        path: false,
+        fs: false,
+      },
+    },
+    node: {
+      fs: "empty",
+    },
   })
 }

@@ -13,7 +13,7 @@ module.exports = {
       options: {
         excludes: [
           "/referencesManager",
-          "/citationPreview",
+          "/citationsList",
           "/cslMetaData/",
           "/cslList",
           "/help",
@@ -28,7 +28,7 @@ module.exports = {
         sitemap: "https://citation-creator.com/sitemap/sitemap-0.xml",
         policy: [
           { userAgent: "*", disallow: ["/referencesManager"] },
-          { userAgent: "*", disallow: ["/citationPreview"] },
+          { userAgent: "*", disallow: ["/citationsList"] },
           { userAgent: "*", disallow: ["/cslMetaData"] },
           { userAgent: "*", disallow: ["/cslList"] },
           { userAgent: "*", disallow: ["/help"] },

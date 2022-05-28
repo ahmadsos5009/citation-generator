@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from "react"
+import React, { useCallback, useContext } from "react"
 import {
   Badge,
   BadgeProps,
@@ -17,14 +17,7 @@ import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen"
 import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import { DBContext } from "../provider/DBProvider"
 import { clearCitationFields } from "./utilities/html_fields"
-import {
-  Citation,
-  CitationDocumentType,
-  CitationJSDocumentType,
-  CitationWithID,
-  CollectionLabel,
-  DocumentType,
-} from "../types"
+import { CitationDocumentType, CollectionLabel } from "../types"
 import { StoreContext } from "../provider/Store"
 import FilterListIcon from "@mui/icons-material/FilterList"
 import { useDropDownMenu } from "./hooks"
@@ -33,7 +26,7 @@ import CheckIcon from "@mui/icons-material/Check"
 import ArticleIcon from "@mui/icons-material/Article"
 import { blue, red } from "@mui/material/colors"
 import { ExportFileNameModel } from "./Model"
-import { generateCitations } from "./utilities/citation_generator"
+import useExportCitations from "./hooks/export"
 
 export const CiteResourceButton: React.FC<{
   onCiteResource: () => void
@@ -170,35 +163,13 @@ export const ReferenceFilterButton: React.FC = () => {
   )
 }
 
-export const ReferenceExportButton: React.FC = () => {
+export const ReferenceExportButton: React.FC<{ view: "Editor" | "Generator" }> = ({
+  view,
+}) => {
   const { anchorEl, handleClick, handleClose } = useDropDownMenu()
   const open = Boolean(anchorEl)
 
-  const { state, format } = useContext(DBContext)
-  const { selectedCitations, filters } = useContext(ReferencesListContext)
-
-  const { citationHtml, citationsJson } = useMemo(() => {
-    let citationHtml = ""
-
-    filters.map((doc) => {
-      const citation = Object.values(state.value[doc])
-        .filter((c) => selectedCitations.includes((c as CitationWithID).id) && c)
-        .map((c) => ({ ...c }))
-      citationHtml = citationHtml.concat(generateCitations(citation, format) + "\n")
-    })
-
-    const citationsJson: Citation & { type: DocumentType }[] = []
-    filters.map((doc) =>
-      Object.values(state.value[doc])
-        .filter((c) => selectedCitations.includes((c as CitationWithID).id) && c)
-        .map((c) => citationsJson.push({ ...c, type: CitationJSDocumentType[doc] })),
-    )
-
-    return {
-      citationHtml,
-      citationsJson,
-    }
-  }, [filters, state.value, selectedCitations])
+  const { citationHtml, citationsJson } = useExportCitations(view)
 
   return (
     <>

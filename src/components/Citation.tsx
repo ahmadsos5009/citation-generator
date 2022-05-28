@@ -45,6 +45,7 @@ import { generateCitation } from "./utilities/citation_generator"
 import { DBContext } from "../provider/DBProvider"
 import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
 import { PrimaryList } from "./Lists"
+import { EditorContext } from "../provider/EditorProvider"
 
 export const DocumentIcon: {
   [key in DocumentType]: ReactElement
@@ -127,9 +128,10 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
 
 export type ImportCitation = Citation & { type: DocumentType }
 
-export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }> = ({
-  documentType,
-}) => {
+export const ImportCitationBox: React.FC<{
+  documentType: CitationDocumentType
+  editor?: boolean
+}> = ({ documentType, editor }) => {
   const { format } = useContext(DBContext)
   const [importLoading, setImportLoading] = useState(false)
   const [input, setInput] = useState("")
@@ -193,24 +195,30 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
   )
 
   const { dispatch } = useContext(StoreContext)
+  const { setCitations, citations } = useContext(EditorContext)
 
   const onEditClick = useCallback(
     (e) => {
       const index = e.currentTarget.value
       if (index) {
-        clearCitationFields(documentType)
-        fillCitationFields(documentType, importedCitations[index].citation)
+        if (editor) {
+          citations.push(importedCitations[index].citation)
+          setCitations([...citations])
+        } else {
+          clearCitationFields(documentType)
+          fillCitationFields(documentType, importedCitations[index].citation)
 
-        dispatch({
-          type: "fill",
-          documentType,
-          value: importedCitations[index].citation,
-        })
+          dispatch({
+            type: "fill",
+            documentType,
+            value: importedCitations[index].citation,
+          })
+        }
         setInput("")
         setImportedCitations([])
       }
     },
-    [importedCitations, documentType],
+    [importedCitations, documentType, editor, citations],
   )
 
   const message = useMemo(() => {
@@ -257,7 +265,7 @@ export const ImportCitationBox: React.FC<{ documentType: CitationDocumentType }>
           </IconButton>
         </Tooltip>
         <Divider sx={{ height: 28, margin: "0 12px 0 0" }} orientation="vertical" />
-        <UploadFileModel documentType={documentType} />
+        <UploadFileModel documentType={documentType} editor={editor} />
       </Paper>
 
       <PrimaryList

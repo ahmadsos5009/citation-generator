@@ -20,9 +20,9 @@ import {
   export_pdf,
   export_word,
 } from "./utilities/citation_exporter"
-import { ReferencesListContext } from "../provider/ReferencesListProvider"
+
 import { DBContext } from "../provider/DBProvider"
-import { generateCitation, generateCitations } from "./utilities/citation_generator"
+import { generateCitation } from "./utilities/citation_generator"
 import { Citation, CitationDocumentType, DocumentType } from "../types"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 import { Cite } from "@citation-js/core"
@@ -50,10 +50,8 @@ export const ExportFileNameModel: React.FC<{
   const [fileName, setFileName] = useState("references")
   const [showAlert, setShowAlert] = useState(false)
 
-  const { selectedCitations } = useContext(ReferencesListContext)
-
   const handleOpen = useCallback(() => {
-    if (selectedCitations.length > 0) {
+    if (citationsJson.length > 0) {
       setOpen(true)
     } else {
       setShowAlert(true)
@@ -138,10 +136,12 @@ import { StoreContext } from "../provider/Store"
 import SaveIcon from "@mui/icons-material/Save"
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
 import { navigate } from "gatsby"
+import { EditorContext } from "../provider/EditorProvider"
 
-export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> = ({
-  documentType,
-}) => {
+export const UploadFileModel: React.FC<{
+  documentType: CitationDocumentType
+  editor?: boolean
+}> = ({ documentType, editor }) => {
   const [open, setOpen] = useState(false)
   const [uploadError, setUploadError] = useState<string | undefined>(undefined)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -185,19 +185,26 @@ export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> =
   }, [])
 
   const Store = useContext(StoreContext)
+  const Editor = useContext(EditorContext)
 
   const onEditClick = useCallback(
     (e) => {
       if (!e.currentTarget.value || !outputJson) return
 
-      clearCitationFields(documentType)
-      fillCitationFields(documentType, outputJson[e.currentTarget.value])
+      if (editor) {
+        Editor.citations.push(outputJson[e.currentTarget.value])
+        Editor.setCitations([...Editor.citations])
+      } else {
+        clearCitationFields(documentType)
+        fillCitationFields(documentType, outputJson[e.currentTarget.value])
 
-      Store.dispatch({
-        type: "fill",
-        documentType,
-        value: outputJson[e.currentTarget.value],
-      })
+        Store.dispatch({
+          type: "fill",
+          documentType,
+          value: outputJson[e.currentTarget.value],
+        })
+      }
+
       setOpen(false)
       if (uploadRef.current) uploadRef.current.value = ""
     },
@@ -207,14 +214,18 @@ export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> =
   const { format, dispatch } = useContext(DBContext)
 
   const onSaveAllClick = useCallback(() => {
-    outputJson?.map((citation) =>
-      dispatch({
-        type: "save",
-        citationDocument: documentType,
-        // @ts-ignore
-        citation,
-      }),
-    )
+    if (editor && outputJson) {
+      Editor.setCitations([...Editor.citations, ...outputJson])
+    } else {
+      outputJson?.map((citation) =>
+        dispatch({
+          type: "save",
+          citationDocument: documentType,
+          // @ts-ignore
+          citation,
+        }),
+      )
+    }
     setOpen(false)
     if (uploadRef.current) uploadRef.current.value = ""
   }, [outputJson, documentType])
@@ -222,8 +233,8 @@ export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> =
   const onBibliographyListClick = useCallback(() => {
     if (!outputJson) return
 
-    return navigate("/citationPreview", {
-      state: { htmlCitations: generateCitations(outputJson, format) },
+    return navigate("/citationsList", {
+      state: { citations: outputJson, format },
     })
   }, [outputJson, format])
 
@@ -258,14 +269,16 @@ export const UploadFileModel: React.FC<{ documentType: CitationDocumentType }> =
             <Box sx={{ width: "100%", height: "90%" }}>
               <Box display="flex" justifyContent="end">
                 <Button startIcon={<SaveIcon />} onClick={onSaveAllClick}>
-                  Save All
+                  {(editor && "Import") || "Save"} All
                 </Button>
-                <Button
-                  startIcon={<FormatQuoteIcon />}
-                  onClick={onBibliographyListClick}
-                >
-                  Bibliography List
-                </Button>
+                {!editor && (
+                  <Button
+                    startIcon={<FormatQuoteIcon />}
+                    onClick={onBibliographyListClick}
+                  >
+                    Bibliography List
+                  </Button>
+                )}
               </Box>
               <List sx={{ margin: "8px", height: "100%", overflowY: "scroll" }}>
                 {outputJson.map((citation, index) => (
