@@ -1,24 +1,51 @@
 import { Cite } from "@citation-js/core"
 import { Citation, DocumentType } from "../../types"
-
+import HTMLtoDOCX from "html-to-docx"
+import { saveAs } from "file-saver"
+import juice from "juice"
 require("@citation-js/plugin-csl")
 require("@citation-js/plugin-bibtex")
 
-export const export_word = (citationHtml: string, fileName: string): void => {
-  const fileType =
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  const link = document.createElement("a")
-  const header =
-    "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
-    "xmlns:w='urn:schemas-microsoft-com:office:word' " +
-    "xmlns='http://www.w3.org/TR/REC-html40'>" +
-    "<head><meta charset='utf-8'></head><body>"
-  const footer = "</body></html>"
-  const source = header + citationHtml + footer
+// TODO:: ADD CSL Style and Editor Style
+const CSL_CSS = `<style></style>`
 
-  link.href = `data:${fileType};charset=UTF-8,` + encodeURIComponent(source)
-  link.download = `${fileName}.docx`
-  link.click()
+export const export_word = async (citationHtml: string, fileName: string) => {
+  /**
+   * As there is no representation for the div in openXML will replace it with span
+   * and Add break between citations as there is no support for marginBottom
+   */
+  const getHtml = () => {
+    const parser = new DOMParser()
+    const document = parser.parseFromString(citationHtml, "text/html")
+    Array.from(
+      document.body.querySelectorAll("div .csl-right-inline,div .csl-left-margin"),
+    ).map((div) => {
+      const wrapper = document.createElement("span")
+      wrapper.innerHTML = div.innerHTML
+      wrapper.className = div.className
+      div.replaceWith(wrapper)
+    })
+
+    Array.from(document.body.querySelectorAll("div .csl-entry")).map((div) => {
+      div.appendChild(document.createElement("br"))
+
+      if (!div.querySelector("div .csl-right-inline,div .csl-left-margin")) {
+        const wrapper = document.createElement("span")
+        wrapper.innerHTML = div.innerHTML
+        wrapper.className = div.className
+        div.replaceWith(wrapper)
+      }
+    })
+    return document.body.outerHTML
+  }
+
+  const source = `<!DOCTYPE html><html lang="en">${getHtml()}</html>`
+
+  const fileBuffer = await HTMLtoDOCX(juice.inlineContent(source, CSL_CSS), null, {
+    orientation: "portrait",
+  })
+
+  saveAs(fileBuffer, `${fileName}.docx`)
 }
 
 export const export_pdf = async (citationHtml: string, fileName: string) => {
@@ -36,7 +63,27 @@ export const export_pdf = async (citationHtml: string, fileName: string) => {
   const pdfData = htmlToPdfmake.default(citationHtml)
   pdfMake
     // @ts-ignore
-    .createPdf({ content: pdfData }, null, null, pdfFonts.pdfMake.vfs)
+    .createPdf(
+      {
+        content: pdfData,
+        styles: {
+          "csl-bib-body": {
+            lineHeight: 1.8,
+            // font: '"SangBleu Republic", "Times New Roman", serif',
+            fontSize: 12,
+          },
+          "csl-left-margin": {
+            alignment: "left",
+          },
+          "csl-right-inline": {
+            margin: [0, 0, 0, 16],
+          },
+        },
+      },
+      undefined,
+      undefined,
+      pdfFonts.pdfMake.vfs,
+    )
     .download(fileName)
 }
 

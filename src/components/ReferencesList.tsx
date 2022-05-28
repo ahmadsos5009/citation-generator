@@ -21,7 +21,7 @@ import {
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye"
 
 import styled from "styled-components"
-import { generateCitation, generateCitations } from "./utilities/citation_generator"
+import { generateCitation } from "./utilities/citation_generator"
 import { DBContext } from "../provider/DBProvider"
 import { Citation, CitationDocumentType, CitationJSDocumentType } from "../types"
 import { ReferenceExportButton, ReferenceFilterButton } from "./Buttons"
@@ -275,9 +275,8 @@ const ListHeader: React.FC = () => {
     if (citations.length < 1) {
       setShowAlert(true)
     } else {
-      const bibliographyHTML = generateCitations(citations, format)
-      return navigate("/citationPreview", {
-        state: { htmlCitations: bibliographyHTML },
+      return navigate("/citationsList", {
+        state: { citations, format },
       })
     }
   }, [filters, state.value, selectedCitations, setShowAlert])
@@ -322,7 +321,7 @@ const ListHeader: React.FC = () => {
           </Snackbar>
         </Box>
         <Box marginRight="18px">
-          <ReferenceExportButton />
+          <ReferenceExportButton view="Generator" />
           <Tooltip title="Expand Full View">
             <IconButton>
               <OpenInFullIcon onClick={onExpandClick} />
