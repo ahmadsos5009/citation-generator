@@ -10,7 +10,7 @@ const CitationEditor = Loadable(() => import("../components/editor/CitationEdito
 const CitationsListPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="Citation List(Bibliography) editor" />
+      <Seo title="Reference List and Bibliography Generator" />
       <Box
         sx={{
           bgcolor: "background.paper",

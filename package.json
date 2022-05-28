@@ -77,6 +77,9 @@
     "typescript": "^4.3.5",
     "webpack": "^5.65.0"
   },
+  "resolutions": {
+    "xmlbuilder2": "2.1.4"
+  },
   "keywords": [
     "gatsby"
   ],
