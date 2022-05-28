@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /referencesManager
 
 User-agent: *
-Disallow: /citationPreview
+Disallow: /citationsList
 
 User-agent: *
 Disallow: /cslMetaData
