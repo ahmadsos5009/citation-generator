@@ -34,6 +34,21 @@ module.exports = {
           { userAgent: "*", disallow: ["/help"] },
           { userAgent: "*", disallow: ["/about"] },
         ],
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+
+            allSitePage {
+              nodes {
+                path
+              }
+            }
+          }`,
+        resolvePagePath: (page) => `${page.path}/`,
       },
     },
     "gatsby-plugin-react-helmet",
