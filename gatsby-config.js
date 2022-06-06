@@ -48,9 +48,11 @@ module.exports = {
               }
             }
           }`,
-        resolvePagePath: (page) => {
-          console.log(`${page.path}/`)
-          return `hhhhh/`
+        serialize: ({ path, modifiedGmt }) => {
+          return {
+            url: `${path}/`,
+            lastmod: modifiedGmt,
+          }
         },
       },
     },
