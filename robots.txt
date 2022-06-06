@@ -15,5 +15,5 @@ Disallow: /help
 
 User-agent: *
 Disallow: /about
-Sitemap: https://citation-creator.com/sitemap/sitemap-1.xml
+Sitemap: https://citation-creator.com/sitemap/sitemap-0.xml
 Host: https://citation-creator.com
