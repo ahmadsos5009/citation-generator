@@ -48,7 +48,10 @@ module.exports = {
               }
             }
           }`,
-        resolvePagePath: (page) => `${page.path}/`,
+        resolvePagePath: (page) => {
+          console.log(`${page.path}/`)
+          return `hhhhh/`
+        },
       },
     },
     "gatsby-plugin-react-helmet",
