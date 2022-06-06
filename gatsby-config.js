@@ -8,61 +8,61 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-cname",
-    // {
-    //   resolve: "gatsby-plugin-sitemap",
-    //   options: {
-    //     excludes: [
-    //       "/referencesManager",
-    //       "/citationsList",
-    //       "/cslMetaData/",
-    //       "/cslList",
-    //       "/help",
-    //       "/about",
-    //     ],
-    //   },
-    //   query: `{
-    //       site {
-    //         siteMetadata {
-    //           siteUrlNoSlash
-    //         }
-    //       }
-    //       allSitePage {
-    //         edges {
-    //           node {
-    //             path
-    //           }
-    //         }
-    //       }
-    //       allMarkdownRemark {
-    //         edges {
-    //           node {
-    //             fields {
-    //               slug
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }`,
-    //   serialize: ({ site, allSitePage, allMarkdownRemark }) => {
-    //     let pages = []
-    //     allSitePage.edges.map((edge) => {
-    //       pages.push({
-    //         url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
-    //         changefreq: `daily`,
-    //         priority: 0.5,
-    //       })
-    //     })
-    //     allMarkdownRemark.edges.map((edge) => {
-    //       pages.push({
-    //         url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
-    //         changefreq: `daily`,
-    //         priority: 0.8,
-    //       })
-    //     })
-    //
-    //     return pages
-    //   },
-    // },
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        excludes: [
+          "/referencesManager",
+          "/citationsList",
+          "/cslMetaData/",
+          "/cslList",
+          "/help",
+          "/about",
+        ],
+      },
+      query: `{
+          site {
+            siteMetadata {
+              siteUrlNoSlash
+            }
+          }
+          allSitePage {
+            edges {
+              node {
+                path
+              }
+            }
+          }
+          allMarkdownRemark {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+        }`,
+      serialize: ({ site, allSitePage, allMarkdownRemark }) => {
+        let pages = []
+        allSitePage.edges.map((edge) => {
+          pages.push({
+            url: site.siteMetadata.siteUrlNoSlash + `${edge.node.path}/`,
+            changefreq: `daily`,
+            priority: 0.5,
+          })
+        })
+        allMarkdownRemark.edges.map((edge) => {
+          pages.push({
+            url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
+            changefreq: `daily`,
+            priority: 0.8,
+          })
+        })
+
+        return pages
+      },
+    },
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
