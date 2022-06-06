@@ -27,7 +27,9 @@ module.exports = {
         },
         serialize: ({ path }) => {
           return {
-            url: `${path}/`,
+            url: `https://citation-creator.com/${path}/`,
+            changefreq: `daily`,
+            priority: 0.4,
           }
         },
       },
