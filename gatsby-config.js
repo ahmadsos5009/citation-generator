@@ -10,7 +10,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
-        exclude: [
+        excludes: [
           "/referencesManager",
           "/citationsList",
           "/cslMetaData",
