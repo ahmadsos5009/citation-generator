@@ -7,7 +7,6 @@ module.exports = {
     siteUrl: process.env.APP_URL,
   },
   plugins: [
-    "gatsby-plugin-cname",
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
@@ -53,7 +52,7 @@ module.exports = {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map((edge) => {
             return {
-              url: site.siteMetadata.siteUrl + `${edge.node.path}/`,
+              url: "ffffff",
               changefreq: `daily`,
               priority: 0.7,
             }
