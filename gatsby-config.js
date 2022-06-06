@@ -43,17 +43,21 @@ module.exports = {
             }
 
             allSitePage {
-              nodes {
-                path
+              edges {
+                node {
+                  path
+                }
               }
             }
-          }`,
-        serialize: ({ path, modifiedGmt }) => {
-          return {
-            url: `${path}/`,
-            lastmod: modifiedGmt,
-          }
-        },
+           }`,
+        serialize: ({ site, allSitePage }) =>
+          allSitePage.edges.map((edge) => {
+            return {
+              url: site.siteMetadata.siteUrl + `${edge.node.path}/`,
+              changefreq: `daily`,
+              priority: 0.7,
+            }
+          }),
       },
     },
     "gatsby-plugin-react-helmet",
