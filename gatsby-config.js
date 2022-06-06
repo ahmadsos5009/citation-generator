@@ -25,7 +25,7 @@ module.exports = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: "https://citation-creator.com",
-        sitemap: "https://citation-creator.com/sitemap/sitemap-0.xml",
+        sitemap: "https://citation-creator.com/sitemap/sitemap-1.xml",
         policy: [
           { userAgent: "*", disallow: ["/referencesManager"] },
           { userAgent: "*", disallow: ["/citationsList"] },
