@@ -21,11 +21,6 @@ module.exports = {
         ],
       },
       query: `{
-          site {
-            siteMetadata {
-              siteUrlNoSlash
-            }
-          }
           allSitePage {
             edges {
               node {
@@ -33,34 +28,11 @@ module.exports = {
               }
             }
           }
-          allMarkdownRemark {
-            edges {
-              node {
-                fields {
-                  slug
-                }
-              }
-            }
-          }
         }`,
-      serialize: ({ site, allSitePage, allMarkdownRemark }) => {
-        let pages = []
-        allSitePage.edges.map((edge) => {
-          pages.push({
-            url: site.siteMetadata.siteUrlNoSlash + `${edge.node.path}/`,
-            changefreq: `daily`,
-            priority: 0.5,
-          })
-        })
-        allMarkdownRemark.edges.map((edge) => {
-          pages.push({
-            url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
-            changefreq: `daily`,
-            priority: 0.8,
-          })
-        })
-
-        return pages
+      serialize: ({ path }) => {
+        return {
+          url: `${path}/`,
+        }
       },
     },
     {
