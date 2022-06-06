@@ -70,7 +70,7 @@ module.exports = {
             pages.push({
               url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
               changefreq: `daily`,
-              priority: 0.7,
+              priority: 0.8,
             })
           })
 
