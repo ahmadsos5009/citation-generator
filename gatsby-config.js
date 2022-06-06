@@ -49,7 +49,7 @@ module.exports = {
           pages.push({
             url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
             changefreq: `daily`,
-            priority: 0.7,
+            priority: 0.5,
           })
         })
         allMarkdownRemark.edges.map((edge) => {
