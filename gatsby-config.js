@@ -7,8 +7,32 @@ module.exports = {
     siteUrl: process.env.APP_URL,
   },
   plugins: [
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        query: `
+        {
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+        }
+      `,
+        resolveSiteUrl: () => process.env.APP_URL,
+        resolvePages: ({ allSitePage: { nodes: allPages } }) => {
+          return allPages.map((page) => {
+            return { ...page }
+          })
+        },
+        serialize: ({ path }) => {
+          return {
+            url: `${path}/`,
+          }
+        },
+      },
+    },
     "gatsby-plugin-cname",
-    "gatsby-plugin-advanced-sitemap",
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
