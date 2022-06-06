@@ -20,21 +20,7 @@ module.exports = {
           "/about",
         ],
       },
-    },
-    {
-      resolve: "gatsby-plugin-robots-txt",
-      options: {
-        host: "https://citation-creator.com",
-        sitemap: "https://citation-creator.com/sitemap/sitemap-1.xml",
-        policy: [
-          { userAgent: "*", disallow: ["/referencesManager"] },
-          { userAgent: "*", disallow: ["/citationsList"] },
-          { userAgent: "*", disallow: ["/cslMetaData"] },
-          { userAgent: "*", disallow: ["/cslList"] },
-          { userAgent: "*", disallow: ["/help"] },
-          { userAgent: "*", disallow: ["/about"] },
-        ],
-        query: `{
+      query: `{
           site {
             siteMetadata {
               siteUrlNoSlash
@@ -57,25 +43,39 @@ module.exports = {
             }
           }
         }`,
-        serialize: ({ site, allSitePage, allMarkdownRemark }) => {
-          let pages = []
-          allSitePage.edges.map((edge) => {
-            pages.push({
-              url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
-              changefreq: `daily`,
-              priority: 0.7,
-            })
+      serialize: ({ site, allSitePage, allMarkdownRemark }) => {
+        let pages = []
+        allSitePage.edges.map((edge) => {
+          pages.push({
+            url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
+            changefreq: `daily`,
+            priority: 0.7,
           })
-          allMarkdownRemark.edges.map((edge) => {
-            pages.push({
-              url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
-              changefreq: `daily`,
-              priority: 0.8,
-            })
+        })
+        allMarkdownRemark.edges.map((edge) => {
+          pages.push({
+            url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
+            changefreq: `daily`,
+            priority: 0.7,
           })
+        })
 
-          return pages
-        },
+        return pages
+      },
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://citation-creator.com",
+        sitemap: "https://citation-creator.com/sitemap/sitemap-0.xml",
+        policy: [
+          { userAgent: "*", disallow: ["/referencesManager"] },
+          { userAgent: "*", disallow: ["/citationsList"] },
+          { userAgent: "*", disallow: ["/cslMetaData"] },
+          { userAgent: "*", disallow: ["/cslList"] },
+          { userAgent: "*", disallow: ["/help"] },
+          { userAgent: "*", disallow: ["/about"] },
+        ],
       },
     },
     "gatsby-plugin-react-helmet",
