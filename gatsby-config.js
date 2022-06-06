@@ -19,7 +19,7 @@ module.exports = {
           }
         }
       `,
-        resolveSiteUrl: () => process.env.APP_URL,
+        resolveSiteUrl: () => "https://citation-creator.com",
         resolvePages: ({ allSitePage: { nodes: allPages } }) => {
           return allPages.map((page) => {
             return { ...page }
