@@ -8,35 +8,7 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-cname",
-    {
-      resolve: "gatsby-plugin-sitemap",
-      options: {
-        excludes: [
-          "/referencesManager",
-          "/citationsList",
-          "/cslMetaData/",
-          "/cslList",
-          "/help",
-          "/about",
-        ],
-      },
-      query: `{
-          allSitePage {
-            edges {
-              node {
-                path
-              }
-            }
-          }
-        }`,
-      serialize: ({ path }) => {
-        return {
-          loc: "dddd",
-          changefreq: "DDDD",
-          priority: 1,
-        }
-      },
-    },
+    "gatsby-plugin-advanced-sitemap",
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
