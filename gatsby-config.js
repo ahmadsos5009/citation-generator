@@ -52,6 +52,7 @@ module.exports = {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map((edge) => {
             return {
+              loc: "ffffff",
               url: "ffffff",
               changefreq: `daily`,
               priority: 0.7,
