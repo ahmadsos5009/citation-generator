@@ -31,7 +31,9 @@ module.exports = {
         }`,
       serialize: ({ path }) => {
         return {
-          url: `${path}/`,
+          loc: "dddd",
+          changefreq: "DDDD",
+          priority: 1,
         }
       },
     },
