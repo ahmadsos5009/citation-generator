@@ -7,6 +7,7 @@ module.exports = {
     siteUrl: process.env.APP_URL,
   },
   plugins: [
+    "gatsby-plugin-cname",
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
@@ -33,31 +34,48 @@ module.exports = {
           { userAgent: "*", disallow: ["/help"] },
           { userAgent: "*", disallow: ["/about"] },
         ],
-        query: `
-          {
-            site {
-              siteMetadata {
-                siteUrl
+        query: `{
+          site {
+            siteMetadata {
+              siteUrlNoSlash
+            }
+          }
+          allSitePage {
+            edges {
+              node {
+                path
               }
             }
-
-            allSitePage {
-              edges {
-                node {
-                  path
+          }
+          allMarkdownRemark {
+            edges {
+              node {
+                fields {
+                  slug
                 }
               }
             }
-           }`,
-        serialize: ({ site, allSitePage }) =>
+          }
+        }`,
+        serialize: ({ site, allSitePage, allMarkdownRemark }) => {
+          let pages = []
           allSitePage.edges.map((edge) => {
-            return {
-              loc: "ffffff",
-              url: "ffffff",
+            pages.push({
+              url: site.siteMetadata.siteUrlNoSlash + edge.node.path,
               changefreq: `daily`,
               priority: 0.7,
-            }
-          }),
+            })
+          })
+          allMarkdownRemark.edges.map((edge) => {
+            pages.push({
+              url: `${site.siteMetadata.siteUrlNoSlash}/${edge.node.fields.slug}/`,
+              changefreq: `daily`,
+              priority: 0.7,
+            })
+          })
+
+          return pages
+        },
       },
     },
     "gatsby-plugin-react-helmet",
