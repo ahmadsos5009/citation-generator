@@ -10,6 +10,14 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
+        exclude: [
+          "/referencesManager",
+          "/citationsList",
+          "/cslMetaData",
+          "/cslList",
+          "/help",
+          "/about",
+        ],
         query: `
         {
           allSitePage {
@@ -19,7 +27,7 @@ module.exports = {
           }
         }
       `,
-        resolveSiteUrl: () => "https://citation-creator.com",
+        resolveSiteUrl: () => process.env.APP_URL,
         resolvePages: ({ allSitePage: { nodes: allPages } }) => {
           return allPages.map((page) => {
             return { ...page }
@@ -27,9 +35,9 @@ module.exports = {
         },
         serialize: ({ path }) => {
           return {
-            url: `https://citation-creator.com/${path}/`,
+            url: path === "/" ? path : `${process.env.APP_URL}${path}/`,
             changefreq: `daily`,
-            priority: 0.4,
+            priority: 0.7,
           }
         },
       },
@@ -38,8 +46,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://citation-creator.com",
-        sitemap: "https://citation-creator.com/sitemap/sitemap-0.xml",
+        host: process.env.APP_URL,
+        sitemap: `${process.env.APP_URL}/sitemap/sitemap-0.xml`,
         policy: [
           { userAgent: "*", disallow: ["/referencesManager"] },
           { userAgent: "*", disallow: ["/citationsList"] },
