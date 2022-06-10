@@ -242,7 +242,7 @@ const ListHeader: React.FC = () => {
   const [selectAll, setSelectedAll] = useState(false)
   const { setSelectedCitations, selectedCitations, filters } =
     useContext(ReferencesListContext)
-  const { state, format } = useContext(DBContext)
+  const { state, format, citationDocument } = useContext(DBContext)
 
   const onSelectAllClick = useCallback(() => {
     if (!selectAll) {
@@ -276,7 +276,7 @@ const ListHeader: React.FC = () => {
       setShowAlert(true)
     } else {
       return navigate("/citationsList", {
-        state: { citations, format },
+        state: { citations, style: format, citationDocument },
       })
     }
   }, [filters, state.value, selectedCitations, setShowAlert])

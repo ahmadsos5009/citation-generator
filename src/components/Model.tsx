@@ -234,7 +234,11 @@ export const UploadFileModel: React.FC<{
     if (!outputJson) return
 
     return navigate("/citationsList", {
-      state: { citations: outputJson, format },
+      state: {
+        citations: outputJson,
+        style: format,
+        citationDocument: documentType,
+      },
     })
   }, [outputJson, format])
 
