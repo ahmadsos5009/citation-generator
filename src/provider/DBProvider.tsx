@@ -22,6 +22,7 @@ export const DBContext = React.createContext<{
   state: DBState
   dispatch: Dispatch<IDBAction>
   format: CitationStyle
+  citationDocument: CitationDocumentType
   showCitationsList: boolean | undefined
   setShowCitationsList: Dispatch<React.SetStateAction<boolean | undefined>>
 }>({
@@ -125,6 +126,7 @@ export const DBProvider: React.FC<{
   return (
     <DBContext.Provider
       value={{
+        citationDocument,
         showCitationsList,
         setShowCitationsList,
         state,

@@ -43,8 +43,8 @@ export default (
         )
         break
       case "Editor": {
-        const { citations, format, html } = editorContext
-        citationHtml = html || generateCitations(citations, format)
+        const { citations, style, html } = editorContext
+        citationHtml = html || generateCitations(citations, style)
         citationsJson = citations
         break
       }
@@ -58,7 +58,7 @@ export default (
     filters,
     state.value,
     editorContext.citations,
-    editorContext.format,
+    editorContext.style,
     editorContext.html,
     selectedCitations,
     view,

@@ -245,7 +245,7 @@ export const ImportCitationBox: React.FC<{
       width="100%"
     >
       <Paper
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: "50%" }}
+        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: "62%" }}
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}

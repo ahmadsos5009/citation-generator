@@ -7,11 +7,24 @@ import Editor from "ckeditor5-custom-build/build/ckeditor"
 import { Spinner } from "./Spinner"
 import { EditorContext } from "../../provider/EditorProvider"
 
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material"
-import { ImportCitationBox } from "../Citation"
-import { CitationDocumentType } from "../../types"
+import {
+  Box,
+  Card,
+  CardContent,
+  FormControl,
+  FormHelperText,
+  Grid,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material"
+import { DocumentIcon, ImportCitationBox } from "../Citation"
+
 import { ReferenceExportButton } from "../Buttons"
 import styled from "styled-components"
+import { CSL_METADATA } from "../../csl_metadata"
+import { CitationJSDocumentType } from "../../types"
 
 const defaultEditorMessage = `<html lang='en'><body>
 <h2 id="references_header" style="text-align:center;">References</h2>
@@ -23,7 +36,7 @@ const defaultEditorMessage = `<html lang='en'><body>
 `
 
 const CitationEditor: React.FC = () => {
-  const { setCitations, setFormat, html, setHtml, documentType } =
+  const { setCitations, setStyle, html, setHtml, setDocumentType } =
     useContext(EditorContext)
 
   const onTextChange = useCallback(
@@ -41,14 +54,17 @@ const CitationEditor: React.FC = () => {
 
   useEffect(() => {
     const response = window.history.state
-
-    if (response === null || !(response["citations"] && response["format"])) {
+    if (
+      response === null ||
+      !(response["citations"] && response["style"] && response["citationDocument"])
+    ) {
       setHtml(defaultEditorMessage)
       return
     }
-    const { citations, format } = response
+    const { citations, style, citationDocument } = response
     setCitations(citations)
-    setFormat(format)
+    setStyle(style)
+    setDocumentType(citationDocument)
   }, [setHtml])
 
   if (!html) {
@@ -57,7 +73,8 @@ const CitationEditor: React.FC = () => {
 
   return (
     <Box>
-      <Header document={documentType} />
+      <DocumentLabel />
+      <Header />
       <div className="document-editor">
         <div className="document-editor__toolbar" />
         <div className="document-editor__editable-container">
@@ -85,14 +102,50 @@ const CitationEditor: React.FC = () => {
   )
 }
 
-const Header: React.FC<{ document: CitationDocumentType }> = ({ document }) => {
+const Header: React.FC = () => {
+  const { documentType, style, setStyle } = useContext(EditorContext)
+
+  const onChangeStyle = useCallback((e) => setStyle(e.target.value), [])
+
   return (
     <HeaderContainer>
-      <ImportCitationBox documentType={document} editor />
+      <Box padding="0 8px">
+        <Stack direction="row" alignItems="center" width="max-content">
+          <FormHelperText>Citation Style:</FormHelperText>
+          <FormControl sx={{ m: 1, minWidth: 50 }} size="small">
+            <Select
+              MenuProps={{ style: { height: "220px" } }}
+              value={style}
+              onChange={onChangeStyle}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              {Object.values(CSL_METADATA).map(({ id }) => (
+                <MenuItem key={id.toLowerCase()} value={id.toLowerCase()}>
+                  {id.toLowerCase()}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Stack>
+      </Box>
+
+      <ImportCitationBox documentType={documentType} editor />
       <Box display="flex" alignItems="start" marginTop="4px">
         <ReferenceExportButton view="Editor" />
       </Box>
     </HeaderContainer>
+  )
+}
+
+const DocumentLabel: React.FC = () => {
+  const { documentType } = useContext(EditorContext)
+
+  return (
+    <Grid padding={1} container direction="row" alignItems="center">
+      {DocumentIcon[CitationJSDocumentType[documentType]]}
+      {documentType.toUpperCase()}
+    </Grid>
   )
 }
 

@@ -7,23 +7,23 @@ import { generateCitations } from "../components/utilities/citation_generator"
 export const EditorContext = React.createContext<{
   citations: ImportCitation[]
   documentType: CitationDocumentType
-  format: CitationStyle
+  style: CitationStyle
   html?: string
   setCitations: React.Dispatch<React.SetStateAction<ImportCitation[]>>
   setDocumentType: React.Dispatch<React.SetStateAction<CitationDocumentType>>
-  setFormat: React.Dispatch<React.SetStateAction<CitationStyle>>
+  setStyle: React.Dispatch<React.SetStateAction<CitationStyle>>
   setHtml: React.Dispatch<React.SetStateAction<string>>
 }>({
   citations: [],
   documentType: CitationDocumentType.JOURNAL,
-  format: "apa",
+  style: "apa",
   setCitations: () => {
     console.error("Unmounted")
   },
   setDocumentType: () => {
     console.error("Unmounted")
   },
-  setFormat: () => {
+  setStyle: () => {
     console.error("Unmounted")
   },
   setHtml: () => {
@@ -36,7 +36,7 @@ export const EditorProvider: React.FC = ({ children }) => {
   const [documentType, setDocumentType] = useState<CitationDocumentType>(
     CitationDocumentType.JOURNAL,
   )
-  const [format, setFormat] = useState<CitationStyle>("apa")
+  const [style, setStyle] = useState<CitationStyle>("apa")
   const [html, setHtml] = useState<string>("")
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const EditorProvider: React.FC = ({ children }) => {
     const currentCSLBibNode = citationsNode.getElementsByClassName("csl-bib-body")[0]
     const newNode = document
       .createRange()
-      .createContextualFragment(generateCitations(citations, format))
+      .createContextualFragment(generateCitations(citations, style))
 
     if (currentCSLBibNode) {
       currentCSLBibNode.replaceWith(newNode)
@@ -69,17 +69,17 @@ export const EditorProvider: React.FC = ({ children }) => {
     }
 
     setHtml(citationsNode.documentElement.outerHTML)
-  }, [citations])
+  }, [citations, style])
 
   return (
     <EditorContext.Provider
       value={{
         citations,
-        format,
+        style,
         documentType,
         html,
         setCitations,
-        setFormat,
+        setStyle,
         setDocumentType,
         setHtml,
       }}
