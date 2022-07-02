@@ -29,6 +29,7 @@ export type CitationStyle =
   | "apa"
   | "cse"
   | "ieee"
+  | "mla"
   | "mla_8th"
   | "mhra"
   | "chicago"
