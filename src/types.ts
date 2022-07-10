@@ -39,6 +39,7 @@ export type CitationStyle =
   | "acm"
   | "nature"
   | "turabian_9th"
+  | "turabian"
   | "vancouver"
   | "oscola"
   | "nlm"
