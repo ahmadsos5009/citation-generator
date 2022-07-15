@@ -3,6 +3,7 @@ import {
   Alert,
   Box,
   Button,
+  Fab,
   FilledInput,
   IconButton,
   List,
@@ -12,7 +13,9 @@ import {
   MenuItem,
   Modal,
   Snackbar,
+  Stack,
   styled as MUIStyled,
+  TextField,
   Typography,
 } from "@mui/material"
 import {
@@ -26,6 +29,7 @@ import { generateCitation } from "./utilities/citation_generator"
 import { Citation, CitationDocumentType, DocumentType } from "../types"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 import { Cite } from "@citation-js/core"
+import sendFeedback from "./utilities/feedback-api"
 
 const style = {
   position: "absolute" as const,
@@ -137,6 +141,9 @@ import SaveIcon from "@mui/icons-material/Save"
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
 import { navigate } from "gatsby"
 import { EditorContext } from "../provider/EditorProvider"
+import FeedbackIcon from "@mui/icons-material/Feedback"
+import { Feedback } from "./Buttons"
+import { validateFeedback } from "./utilities/text-validation"
 
 export const UploadFileModel: React.FC<{
   documentType: CitationDocumentType
@@ -346,3 +353,86 @@ const CitationListItem: React.FC<{
 const Input = MUIStyled("input")({
   display: "none",
 })
+
+export const FeedbackModel: React.FC = () => {
+  const [open, setOpen] = useState(false)
+
+  const toggleModel = useCallback(() => setOpen(!open), [open])
+
+  const [feedback, setFeedback] = useState("")
+  const [feedbackSent, setFeedbackSent] = useState(false)
+  const [feedbackApiError, setFeedbackApiError] = useState(false)
+
+  const [errorMessage, setErrorMessage] = useState<string | undefined>()
+
+  const onFeedbackChange = useCallback((e) => setFeedback(e.target.value), [])
+  console.log(process.env.FEEDBACK_API_KEY)
+  const onPublishPost = useCallback(async () => {
+    if (validateFeedback(feedback)) {
+      const response = await sendFeedback(feedback)
+      if (response) {
+        toggleModel()
+        setFeedbackSent(true)
+      } else {
+        setFeedbackApiError(true)
+      }
+    } else {
+      setErrorMessage("Your input should be less than 200 character")
+    }
+  }, [feedback])
+
+  return (
+    <>
+      <Feedback
+        variant="extended"
+        size="medium"
+        color="primary"
+        aria-label="add"
+        style={{ font: "10" }}
+        onClick={toggleModel}
+      >
+        <FeedbackIcon />
+        <Typography variant="overline" display="block" marginLeft="2px">
+          Feedback
+        </Typography>
+      </Feedback>
+      <Modal open={open} onClose={toggleModel}>
+        <Box sx={{ ...style, width: "50%", height: "50%" }}>
+          <Typography padding={2} fontWeight="fontWeightMedium">
+            Any feedback will be valuable to improve the website:
+          </Typography>
+          <Stack>
+            <TextField
+              id="standard-multiline-static"
+              label="Add your Feedback about any issue you face"
+              variant="standard"
+              multiline
+              rows={4}
+              onChange={onFeedbackChange}
+            />
+            <Fab
+              size="medium"
+              color="primary"
+              aria-label="post"
+              onClick={onPublishPost}
+              sx={{ m: 2, padding: 2 }}
+            >
+              Send
+            </Fab>
+          </Stack>
+          {feedbackApiError && (
+            <Alert severity="error">
+              Please try again, there is an issue with the network
+            </Alert>
+          )}
+          {errorMessage && <Alert severity="warning">{errorMessage}</Alert>}
+        </Box>
+      </Modal>
+      <Snackbar open={feedbackSent} autoHideDuration={2000}>
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Thanks for your Feedback 👍
+        </Alert>
+      </Snackbar>
+    </>
+  )
+}
