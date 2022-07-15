@@ -6,7 +6,7 @@ export default async (feedback: string): Promise<boolean> => {
     headers: {
       "Content-Type": "application/json",
       "X-Bin-Name": "citation-generator",
-      "X-Master-Key": process.env.FEEDBACK_API_KEY || "",
+      "X-Master-Key": "$2b$10$DJagMXkM455rbbxOtIOMLuijNmFvsKzs/taFCNuN8bYQE.kiEv3Be",
     },
     method: "POST",
     body: JSON.stringify({ feedback: feedback }),

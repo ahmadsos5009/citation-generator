@@ -366,7 +366,7 @@ export const FeedbackModel: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
 
   const onFeedbackChange = useCallback((e) => setFeedback(e.target.value), [])
-  console.log(process.env.FEEDBACK_API_KEY)
+
   const onPublishPost = useCallback(async () => {
     if (validateFeedback(feedback)) {
       const response = await sendFeedback(feedback)
