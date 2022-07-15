@@ -428,7 +428,11 @@ export const FeedbackModel: React.FC = () => {
           {errorMessage && <Alert severity="warning">{errorMessage}</Alert>}
         </Box>
       </Modal>
-      <Snackbar open={feedbackSent} autoHideDuration={2000}>
+      <Snackbar
+        open={feedbackSent}
+        autoHideDuration={2000}
+        onClose={() => setFeedbackSent(false)}
+      >
         <Alert severity="success" sx={{ width: "100%" }}>
           Thanks for your Feedback 👍
         </Alert>
