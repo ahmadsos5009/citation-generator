@@ -33,3 +33,6 @@
 * Get MetaDate from [CSL](https://csl.mendeley.com/)
 * Add new style to the [CitationStyle](https://github.com/asouqi/citation-generator/blob/master/src/types.ts#L26) type
 * Add [CSL MetaData](https://github.com/asouqi/citation-generator/blob/master/src/csl_metadata.ts), Object Attributes: `id, style_title, field, image` and `CSL_XML` remove [line break](https://lingojam.com/TexttoOneLine)
+
+#### User Feedback will be stored in:
+     https://jsonbin.io/app/bins
