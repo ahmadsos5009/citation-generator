@@ -255,3 +255,9 @@ export const FileImport = styled(IconButton)`
     border: #d32f2f 1px solid;
   }
 `
+
+export const Feedback = styled(Fab)`
+  position: fixed;
+  top: 90%;
+  right: 0;
+`

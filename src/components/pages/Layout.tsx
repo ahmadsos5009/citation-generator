@@ -7,6 +7,8 @@ import "../../styles/global.css"
 
 import "typeface-catamaran"
 
+import { FeedbackModel } from "../Model"
+
 const theme = createTheme({
   typography: {
     fontFamily: ["catamaran"].join(","),
@@ -21,6 +23,7 @@ const Layout: React.FC = ({ children }) => (
         {children}
       </main>
       <Footer />
+      <FeedbackModel />
     </ThemeProvider>
   </Wrapper>
 )
