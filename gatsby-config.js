@@ -94,12 +94,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-adsense`,
-      options: {
-        publisherId: `ca-pub-8835129466793937`,
-      },
-    },
-    {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "pages",
