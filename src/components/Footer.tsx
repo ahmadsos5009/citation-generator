@@ -27,10 +27,6 @@ const Footer: React.FC = () => (
         },
       }}
     >
-      <Link href="/help" underline="none">
-        Help
-      </Link>
-
       <Link href="/about" underline="none">
         About
       </Link>
