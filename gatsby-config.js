@@ -15,7 +15,6 @@ module.exports = {
           "/citationsList",
           "/cslMetaData",
           "/cslList",
-          "/help",
           "/about",
         ],
         query: `
@@ -53,9 +52,14 @@ module.exports = {
           { userAgent: "*", disallow: ["/citationsList"] },
           { userAgent: "*", disallow: ["/cslMetaData"] },
           { userAgent: "*", disallow: ["/cslList"] },
-          { userAgent: "*", disallow: ["/help"] },
           { userAgent: "*", disallow: ["/about"] },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-adsense`,
+      options: {
+        publisherId: `ca-pub-8835129466793937`,
       },
     },
     "gatsby-plugin-react-helmet",

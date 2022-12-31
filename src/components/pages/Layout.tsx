@@ -4,7 +4,6 @@ import Header from "../Header"
 import Footer from "../Footer"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import "../../styles/global.css"
-import { Helmet } from "react-helmet"
 
 import "typeface-catamaran"
 
@@ -18,13 +17,6 @@ const theme = createTheme({
 
 const Layout: React.FC = ({ children }) => (
   <Wrapper className="site">
-    <Helmet>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8835129466793937"
-        crossOrigin="anonymous"
-      />
-    </Helmet>
     <ThemeProvider theme={theme}>
       <Header />
       <main style={{ background: "#f7f7f7" }} className="site-content">
