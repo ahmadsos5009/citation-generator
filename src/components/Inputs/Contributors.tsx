@@ -17,6 +17,7 @@ import { StoreContext } from "../../provider/Store"
 import { documentUser, users } from "../../cslTypes/fieldsMapping"
 import { v4 as uuid } from "uuid"
 import {
+  Container,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -28,7 +29,7 @@ import {
 } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import DeleteIcon from "@mui/icons-material/Delete"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 export interface Users extends User {
   role: string
@@ -233,8 +234,8 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
   }, [nodeRef, dispatch, setContributors])
 
   return (
-    <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
-      <Stack spacing={4} direction="row" ref={nodeRef} id="author-container">
+    <Container disableGutters>
+      <Stack direction="row" ref={nodeRef} id="author-container">
         <AuthorsLabel id="authors">Contributor(s)</AuthorsLabel>
         <IconButton aria-label="add" onClick={handleOnAddClick}>
           <AddIcon />
@@ -245,10 +246,10 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
         <Stack
           id={contributor.id}
           key={index.toString()}
-          spacing={2}
-          direction="row"
+          spacing={{ xs: 0, md: 2 }}
+          direction={{ xs: "column", md: "row" }}
         >
-          <FormControl sx={{ m: 1, minWidth: 150 }}>
+          <FormControl>
             <Select
               name={`${contributor.id}_${contributor.role}`}
               value={contributor.role}
@@ -270,6 +271,7 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
             name={`${contributor.id}_${contributor.role}`}
             id="given"
             label="Given"
+            focused={false}
             value={contributor.given || ""}
             inputProps={{ className: "given" }}
             onChange={handleChange}
@@ -278,6 +280,7 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
             name={`${contributor.id}_${contributor.role}`}
             id="family"
             label="Family"
+            focused={false}
             value={contributor.family || ""}
             inputProps={{ className: "family" }}
             onChange={handleChange}
@@ -286,6 +289,7 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
             name={`${contributor.id}_${contributor.role}`}
             id="suffix"
             label="Suffix"
+            focused={false}
             value={contributor.suffix || ""}
             inputProps={{ className: "suffix" }}
             onChange={handleChange}
@@ -296,14 +300,13 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
               name={`${contributor.id}_${contributor.role}`}
               onClick={handleOnDeleteClick}
               aria-label="delete"
-              sx={{ marginBottom: "20px" }}
             >
               <DeleteIcon />
             </IconButton>
           </Stack>
         </Stack>
       ))}
-    </FormControl>
+    </Container>
   )
 }
 

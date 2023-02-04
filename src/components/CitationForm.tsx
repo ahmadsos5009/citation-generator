@@ -1,5 +1,4 @@
 import React, {
-  Fragment,
   useCallback,
   useContext,
   useEffect,
@@ -7,9 +6,9 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { Alert, Box, Snackbar, Stack } from "@mui/material"
+import { Alert, Container, Grid, Snackbar } from "@mui/material"
 import { StoreContext } from "../provider/Store"
-import { CiteResourceButton, ClearFields } from "./Buttons"
+
 import {
   Citation,
   CitationDocumentType,
@@ -20,11 +19,14 @@ import {
 import { generateCitation } from "./utilities/citation_generator"
 import { isEmptyObject } from "./utilities/object"
 import { useClipboard } from "./hooks"
-import { ImportCitationBox, OnFlyCitationBox } from "./Citation"
+
 import { DBContext } from "../provider/DBProvider"
 import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
 import { documentFields, labels } from "../cslTypes/fieldsMapping"
+
+import { CiteResourceButton, ClearFields } from "./Buttons"
 import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
+import { ImportCitationBox, OnFlyCitationBox } from "./Citation"
 
 export const eliminatedFields: { [key in CitationDocumentType]: string[] } = {
   [CitationDocumentType.JOURNAL]: [
@@ -89,7 +91,7 @@ const Form: React.FC<{ type: CitationDocumentType }> = ({ type }) => {
 const DocumentForm: React.FC<{ documentType: CitationDocumentType }> = ({
   documentType,
 }) => {
-  const refNode = useRef<HTMLDivElement>()
+  const refNode = useRef<HTMLDivElement>(null)
 
   const { state, dispatch } = useContext(StoreContext)
   const DB = useContext(DBContext)
@@ -166,30 +168,26 @@ const DocumentForm: React.FC<{ documentType: CitationDocumentType }> = ({
   )
 
   return (
-    <Box
+    <Grid
+      container
+      direction="column"
+      justifyContent="center"
       ref={refNode}
       id="form-container"
-      sx={{
-        "& .MuiTextField-root": { m: 1 },
-        height: "100%",
-      }}
     >
       {documentType !== CitationDocumentType.REPORT && (
         <ImportCitationBox documentType={documentType} />
       )}
 
-      <OnFlyCitationBox citation={citation} handleClick={handleClick} />
+      <Grid item container justifyContent="center" py={2}>
+        <OnFlyCitationBox citation={citation} handleClick={handleClick} />
+      </Grid>
 
-      <Box
-        display="flex"
-        sx={{
-          height: "min-content",
-          width: "100%",
-        }}
-      >
-        <Box width="100%">
+      {/* TODO:: move to form component */}
+      <Grid container justifyContent="center" item>
+        <Grid item xs={8} sm={10} lg={11} container>
           {fields.map((field, index) => (
-            <Fragment key={index.toString()}>
+            <Grid item xs={12} py={2} pl={{ md: 4 }} key={index.toString()}>
               {/* TODO:: move logic up */}
               {((field === "issued" || field === "accessed") && (
                 <>
@@ -215,31 +213,43 @@ const DocumentForm: React.FC<{ documentType: CitationDocumentType }> = ({
                     documentType={documentType}
                   />
                 ))}
-            </Fragment>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
 
-        <Stack
-          spacing={4}
-          sx={{
-            position: "sticky",
-            top: "10%",
-            display: "block",
-            height: "100%",
-            margin: "40px 0 0 20px",
-          }}
+        <Grid
+          item
+          container
+          direction="column"
+          alignItems="center"
+          xs={2}
+          sm={1}
+          lg={1}
         >
-          <CiteResourceButton onCiteResource={onCiteResource} />
-          <ClearFields document={documentType} />
-        </Stack>
-      </Box>
+          <Container
+            disableGutters
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              top: 0,
+              bottom: 0,
+              position: "sticky",
+              pl: "6px",
+            }}
+          >
+            <CiteResourceButton onCiteResource={onCiteResource} />
+            <ClearFields document={documentType} />
+          </Container>
+        </Grid>
+      </Grid>
+      {/* TODO:: move to form component */}
 
       <Snackbar open={showAlert} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Citation Copied to clipboard
         </Alert>
       </Snackbar>
-    </Box>
+    </Grid>
   )
 }
 

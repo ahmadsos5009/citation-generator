@@ -45,6 +45,7 @@ export const POPULAR_CSL_METADATA = {
   },
 }
 
+// TODO:: move to config
 export const CSL_METADATA: {
   [key in CitationStyle]: {
     id: string

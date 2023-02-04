@@ -22,7 +22,6 @@ import {
 import { DocumentIcon, ImportCitationBox } from "../Citation"
 
 import { ReferenceExportButton } from "../Buttons"
-import styled from "styled-components"
 import { CSL_METADATA } from "../../csl_metadata"
 import { CitationJSDocumentType } from "../../types"
 
@@ -108,8 +107,22 @@ const Header: React.FC = () => {
   const onChangeStyle = useCallback((e) => setStyle(e.target.value), [])
 
   return (
-    <HeaderContainer>
-      <Box padding="0 8px">
+    <Box
+      sx={{
+        flexDirection: { xs: "column", md: "row" },
+        display: "flex",
+        background: "#f4f4f4",
+        padding: "8px 0",
+        marginBottom: "8px",
+        border: "1px hsl(0, 0%, 82.7%) solid",
+      }}
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        padding="0 8px"
+      >
         <Stack direction="row" alignItems="center" width="max-content">
           <FormHelperText>Citation Style:</FormHelperText>
           <FormControl sx={{ m: 1, minWidth: 50 }} size="small">
@@ -128,13 +141,17 @@ const Header: React.FC = () => {
             </Select>
           </FormControl>
         </Stack>
+        <Box display={{ xs: "flex", md: "none" }} alignItems="start" marginTop="4px">
+          <ReferenceExportButton view="Editor" />
+        </Box>
       </Box>
 
       <ImportCitationBox documentType={documentType} editor />
-      <Box display="flex" alignItems="start" marginTop="4px">
+
+      <Box display={{ xs: "none", md: "flex" }} marginTop="4px">
         <ReferenceExportButton view="Editor" />
       </Box>
-    </HeaderContainer>
+    </Box>
   )
 }
 
@@ -154,8 +171,13 @@ const Footer: React.FC = () => (
     <Typography textAlign="center" gutterBottom variant="h5" component="div">
       Difference Between Reference and Bibliography
     </Typography>
-    <Stack margin={4} flexDirection="row" justifyContent="space-around">
-      <Card sx={{ maxWidth: 345 }}>
+    <Stack
+      margin={4}
+      flexDirection="row"
+      flexWrap="wrap"
+      justifyContent="space-around"
+    >
+      <Card sx={{ my: 2, maxWidth: 345 }}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Reference List
@@ -165,7 +187,7 @@ const Footer: React.FC = () => (
           </Typography>
         </CardContent>
       </Card>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ my: 2, maxWidth: 345 }}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Bibliography
@@ -180,14 +202,5 @@ const Footer: React.FC = () => (
     </Stack>
   </Box>
 )
-
-const HeaderContainer = styled(Box)`
-  display: flex;
-  background: #f4f4f4;
-  padding: 8px 0;
-  margin-bottom: 8px;
-  border: 1px hsl(0, 0%, 82.7%) solid;
-  border-radius: var(--ck-border-radius);
-`
 
 export default CitationEditor

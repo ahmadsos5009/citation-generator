@@ -1,35 +1,27 @@
 import * as React from "react"
-import styled from "styled-components"
+
 import Header from "../Header"
-import Footer from "../Footer"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+
+import { createTheme, ThemeProvider } from "@mui/material"
 import "../../styles/global.css"
 
 import "typeface-catamaran"
+import themes from "../../themes"
+import Footer from "../Footer"
+import styled from "@emotion/styled"
 
-import { FeedbackModel } from "../Model"
-
-const theme = createTheme({
-  typography: {
-    fontFamily: ["catamaran"].join(","),
-  },
-})
+const theme = createTheme(themes)
 
 const Layout: React.FC = ({ children }) => (
-  <Wrapper className="site">
-    <ThemeProvider theme={theme}>
-      <Header />
-      <main style={{ background: "#f7f7f7" }} className="site-content">
-        {children}
-      </main>
-      <Footer />
-      <FeedbackModel />
-    </ThemeProvider>
-  </Wrapper>
+  <ThemeProvider theme={theme}>
+    <Header />
+    <Main>{children}</Main>
+    <Footer />
+  </ThemeProvider>
 )
 
-const Wrapper = styled.div`
-  height: 100%;
+const Main = styled.main`
+  flex: 1;
 `
 
 export default Layout

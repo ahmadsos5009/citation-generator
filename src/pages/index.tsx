@@ -1,133 +1,157 @@
 import * as React from "react"
+
+import Layout from "../components/pages/Layout"
+import Seo from "../components/Seo"
 import {
-  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
-  Container,
   Grid,
+  List,
+  ListItem,
+  ListItemText,
   Typography,
 } from "@mui/material"
-
-import Seo from "../components/Seo"
-import Layout from "../components/pages/Layout"
-import { StaticImage } from "gatsby-plugin-image"
-import { POPULAR_CSL_METADATA } from "../csl_metadata"
-import { useCallback } from "react"
-import { navigate } from "gatsby"
+import { PrimaryStart, PrimaryText, Secondary } from "../components/Typography"
+import { ReferencesList, ReferenceManagement } from "../placeholders"
+import styled from "@emotion/styled"
 
 const IndexPage: React.FC = () => {
-  const onCSLMetaDataClick = useCallback((e) => {
-    if (e.currentTarget.id) {
-      return navigate("/cslMetaData", {
-        state: { format: e.currentTarget.id },
-      })
-    }
-  }, [])
-
   return (
     <Layout>
       <Seo
         title="Citation Creator / Generator"
         description="Create citation online rapidly free for a wide range of CSL styles"
       />
-      <Container
-        sx={{
-          py: 8,
-          border: "1px solid #d4d7dc",
-          borderRadius: 1,
-          background: "white",
-        }}
-        maxWidth="lg"
-      >
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-            display: "flex",
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h4"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
+
+      <Grid container height="100%">
+        <Grid bgcolor="primary.main" container p={2} item>
+          <Grid p={6} md={4} xs={12} item>
+            <PrimaryStart>
               Create citation online rapidly free for a wide range of CSL styles
-            </Typography>
+            </PrimaryStart>
+            {/* TODO:: replace this with a new message  */}
+            <PrimaryText>
+              <List disablePadding>
+                <Item>
+                  <ListItemText
+                    primary="Create Citation Manually"
+                    secondary="Create your citation manually rapidly for journals, books, websites, report"
+                  />
+                </Item>
+                <Item>
+                  <ListItemText
+                    primary="Import Citations"
+                    secondary="Import citations from Title, URL, DOI, ISBN, BibTeX"
+                  />
+                </Item>
+                <Item>
+                  <ListItemText
+                    primary="Export Citations"
+                    secondary="Export your citations or references list to a PDF, Word, BibTex Document"
+                  />
+                </Item>
+                <Item>
+                  <ListItemText
+                    primary="Store Citations"
+                    secondary="Store citation in your browser to create your own references list"
+                  />
+                </Item>
+              </List>
+            </PrimaryText>
+          </Grid>
 
-            <ul>
-              <li>Generate citation for journal, book, website, report</li>
-              <li>Create your own collections for citations with labels</li>
-              <li>Store citation in your browser</li>
-              <li>Create Bibliographies list</li>
-              <li>Text editor for Bibliographies list</li>
-              <li>Read citation from URL, DOI, ISBN</li>
-              <li>Import citations from BibTeX</li>
-              <li>Export your citations to a PDF, Word, BibTex Document</li>
-            </ul>
-
-            <Typography
-              variant="subtitle1"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              Check out the list of supported
-              <Button
-                href="/cslList"
-                variant="contained"
-                sx={{ maxWidth: "max-content", margin: "0 4px" }}
+          <Grid
+            container
+            md={8}
+            xs={12}
+            item
+            justifyContent="center"
+            p={4}
+            height={{ md: "80%" }}
+          >
+            <Grid item display={{ md: "flex" }} md={6} p={2}>
+              <Card
+                sx={{
+                  maxWidth: { md: 350, xs: 150 },
+                  bgcolor: "primary.50",
+                  borderRadius: "50px 50px 0 0",
+                }}
               >
-                Citation Styles
-              </Button>
-              apa, ieee...
-            </Typography>
-          </Container>
-          <Container maxWidth="sm">
-            <StaticImage src="../images/screenshot.png" alt="Citation" />
-          </Container>
-        </Box>
-
-        <Typography component="div" variant="h5" margin="12px">
-          Popular Styles
-        </Typography>
-        <Grid container spacing={4}>
-          {Object.values(POPULAR_CSL_METADATA).map((csl, index) => (
-            <Grid item key={index.toString()} xs={12} sm={6} md={4}>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia component="img" alt={csl.style_title} image={csl.image} />
+                <CardMedia>
+                  <ReferencesList />
+                </CardMedia>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {csl.id}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {csl.style_title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    field: {csl.field}
+                  <Secondary>Bibliographies / References List</Secondary>
+                  <Typography pt={2} pb={8} variant="body2" color="text.secondary">
+                    Create Bibliographies list from your citations or imported
+                    citations, also there an editor to help with editing list before
+                    exporting them
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" href={`/${csl.id.toLocaleLowerCase()}`}>
-                    Create {csl.id} citation
-                  </Button>
-                  <Button size="small" id={csl.id} onClick={onCSLMetaDataClick}>
-                    Examples
+                  <Button variant="outlined" size="small" href="/citationsList/">
+                    List Generator
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
-          ))}
+
+            <Grid item display={{ md: "flex" }} md={6} p={2}>
+              <Card
+                sx={{
+                  maxWidth: { md: 350, xs: 150 },
+                  bgcolor: "primary.50",
+                  borderRadius: "50px 50px 0 0",
+                }}
+              >
+                <CardMedia>
+                  <ReferenceManagement />
+                </CardMedia>
+                <CardContent>
+                  <Secondary>Reference Management</Secondary>
+                  <Typography pt={2} variant="body2" color="text.secondary">
+                    Manage your references by organizing them in collections and
+                    tags. The goal of reference management is to make it easier for
+                    researchers to manage the information they use in their work and
+                    to generate accurate and consistent citations and bibliographies.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button variant="outlined" size="small" href="/referencesManager/">
+                    Manage References
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
-      </Container>
+
+        {/* TODO:: show this when implement annotated bibliography */}
+        {/*<Grid bgcolor="primary.light" container xs={12} item>*/}
+        {/*  <Grid md={7} p={6} item>*/}
+        {/*    <PrimaryText pb={1} sx={{ color: "#8A8783 !important" }}>*/}
+        {/*      Text editor for Bibliographies list, Text editor for Bibliographies*/}
+        {/*      list*/}
+        {/*    </PrimaryText>*/}
+        {/*    <Button variant="outlined">Action</Button>*/}
+        {/*  </Grid>*/}
+        {/*  <Grid md={5} item container alignItems="center" justifyContent="center">*/}
+        {/*    <CardMedia sx={{ maxWidth: { md: 400, xs: 200 } }}>*/}
+        {/*      <AnnotatedBibliography />*/}
+        {/*    </CardMedia>*/}
+        {/*  </Grid>*/}
+        {/*</Grid>*/}
+      </Grid>
     </Layout>
   )
 }
+
+const Item = styled(ListItem)`
+  padding-right: 0;
+  padding-left: 0;
+`
 
 export default IndexPage

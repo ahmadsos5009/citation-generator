@@ -1,6 +1,6 @@
-import styled from "styled-components"
 import { Tooltip, tooltipClasses, TooltipProps } from "@mui/material"
 import React from "react"
+import styled from "@emotion/styled"
 
 export const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   // eslint-disable-next-line react/jsx-props-no-spreading

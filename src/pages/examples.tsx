@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Grid, Typography } from "@mui/material"
 import Seo from "../components/Seo"
 import Layout from "../components/pages/Layout"
-import { useEffect, useState } from "react"
+
 import { CSL_METADATA } from "../csl_metadata"
 import { generateCitations } from "../components/utilities/citation_generator"
 
@@ -179,76 +179,61 @@ const examples = [
   },
 ]
 
-const CSLMetaDataPage: React.FC = () => {
-  const [format, setFormat] = useState()
-
-  useEffect(() => {
-    const format = window.history.state?.format
-    if (format) {
-      setFormat(format.toLowerCase())
-    }
-  }, [setFormat])
-
-  if (!format) {
-    return <></>
-  }
-
-  const { style_title } = CSL_METADATA[format]
-
+const CitationsExamplesPage: React.FC = () => {
   return (
     <Layout>
-      <Seo
-        title={`${style_title} with Bibliography and in-text citation examples`}
-      />
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          pt: 8,
-          pb: 6,
-        }}
-      >
-        <Container>
-          <Typography
-            component="h1"
-            variant="h5"
-            align="center"
-            color="text.primary"
-            gutterBottom
-            sx={{ p: 1 }}
-          >
-            {style_title}
-          </Typography>
-          Example of citations:
-          <Box padding={2}>
-            <Typography color="text.secondary" padding={0}>
-              Bibliography:
-            </Typography>
-            <div
-              className="output-viewer"
-              style={{ padding: "4px" }}
-              dangerouslySetInnerHTML={{
-                // @ts-ignore
-                __html: generateCitations(examples, format),
-              }}
-            />
-          </Box>
-          <Box padding={2}>
-            <Typography color="text.secondary" padding={0}>
-              In text citation:
-            </Typography>
-            <div
-              className="output-viewer"
-              style={{ padding: "4px" }}
-              dangerouslySetInnerHTML={{
-                // @ts-ignore
-                __html: generateCitations(examples, format, true),
-              }}
-            />
-          </Box>
-        </Container>
-      </Box>
+      <Seo title="Citation Examples" />
+      <Grid container bgcolor="primary.main" justifyContent="center" height="100%">
+        <Grid item xs={10} md={6}>
+          {Object.values(CSL_METADATA).map(({ style_title, id }) => (
+            <Grid item xs={12} key={id}>
+              <Typography
+                component="h1"
+                variant="h5"
+                align="center"
+                color="text.primary"
+                gutterBottom
+                sx={{ p: 1 }}
+              >
+                {style_title}
+              </Typography>
+              Example of citations:
+              <Box padding={2} bgcolor="white">
+                <Typography color="text.secondary" padding={0}>
+                  Bibliography:
+                </Typography>
+                <div
+                  className="output-viewer"
+                  style={{ padding: "4px" }}
+                  dangerouslySetInnerHTML={{
+                    // @ts-ignore
+                    __html: generateCitations(examples, id.toLocaleLowerCase()),
+                  }}
+                />
+              </Box>
+              <Box padding={2} bgcolor="white">
+                <Typography color="text.secondary" padding={0}>
+                  In text citation:
+                </Typography>
+                <div
+                  className="output-viewer"
+                  style={{ padding: "4px" }}
+                  dangerouslySetInnerHTML={{
+                    __html: generateCitations(
+                      // @ts-ignore
+                      examples,
+                      id.toLocaleLowerCase(),
+                      true,
+                    ),
+                  }}
+                />
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
     </Layout>
   )
 }
 
-export default CSLMetaDataPage
+export default CitationsExamplesPage

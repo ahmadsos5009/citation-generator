@@ -79,7 +79,9 @@ const LinkInput: React.FC<{ documentType: CitationDocumentType }> = ({
         <ToggleButton value="URL">URL</ToggleButton>
       </ToggleButtonGroup>
       <FormControl variant="standard" sx={{ margin: "0 12px" }}>
-        <InputLabel shrink>DOI / URL</InputLabel>
+        <InputLabel focused={false} shrink>
+          DOI / URL
+        </InputLabel>
         <Input id="link" onChange={handleChange} />
       </FormControl>
     </Stack>

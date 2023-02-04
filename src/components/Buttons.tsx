@@ -31,8 +31,14 @@ import useExportCitations from "./hooks/export"
 export const CiteResourceButton: React.FC<{
   onCiteResource: () => void
 }> = ({ onCiteResource }) => (
-  <Tooltip title="save citation to the References list">
-    <Fab color="primary" aria-label="cite" size="large" onClick={onCiteResource}>
+  <Tooltip title="save citation to the Reference Manager">
+    <Fab
+      sx={{ marginBottom: "6px" }}
+      color="primary"
+      aria-label="cite"
+      size="medium"
+      onClick={onCiteResource}
+    >
       Save
     </Fab>
   </Tooltip>
@@ -50,7 +56,7 @@ export const ClearFields: React.FC<{ document: CitationDocumentType }> = ({
 
   return (
     <Tooltip title="clear all fields">
-      <Fab color="primary" aria-label="clear" size="large" onClick={onClearClick}>
+      <Fab color="primary" aria-label="clear" size="medium" onClick={onClearClick}>
         Clear
       </Fab>
     </Tooltip>
