@@ -267,8 +267,8 @@ export const UploadFileModel: React.FC<{
           aria-label="upload"
           component="span"
         >
-          <Typography>Import form .bib/.tex</Typography>
           <UploadFileIcon />
+          <Typography color="secondary.main">Import form .bib/.tex</Typography>
         </IconButton>
       </label>
 

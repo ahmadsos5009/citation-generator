@@ -1,39 +1,146 @@
 import * as React from "react"
-import { Box, Link, Typography } from "@mui/material"
+import { Button, Container, Grid, Typography } from "@mui/material"
 
-const logoImageData =
-  "data:image/png;base64,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"
+import styled from "styled-components"
 
-const Footer: React.FC = () => (
-  <Box
-    sx={{
-      background: "#f4f4f4",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "8px 0",
-    }}
-    component="footer"
-  >
-    <Link href="/" sx={{ margin: "2px" }}>
-      <img src={logoImageData} alt="Citation Generator" />
-    </Link>
-    <Box
-      margin="0 8px"
-      sx={{
-        typography: "body1",
-        "& > :not(style) + :not(style)": {
-          ml: 1,
-        },
-      }}
-    >
-      <Link href="/about" underline="none">
-        About
-      </Link>
-    </Box>
+import FacebookIcon from "@mui/icons-material/Facebook"
+import TwitterIcon from "@mui/icons-material/Twitter"
+import RedditIcon from "@mui/icons-material/Reddit"
 
-    <Typography align="center">© Citation Generator 2022</Typography>
-  </Box>
-)
+import { POPULAR_CSL_METADATA } from "../csl_metadata"
+import { useCallback } from "react"
+import config from "../config"
+
+const open = (socialLink: string) => {
+  window.open(socialLink, "_blank")
+}
+
+const Footer: React.FC = () => {
+  const shareCallback = useCallback((event) => {
+    const a_href = window.location.href
+    const encodedA_href = encodeURIComponent(a_href)
+    const { twitter, reddit } = config.SOCIAL
+
+    switch (event.currentTarget.id) {
+      case "twitter":
+        open(
+          `${twitter.url}?url=${encodedA_href}&text=${twitter.text}&hashtags=${twitter.hashtags}`,
+        )
+        break
+      case "reddit":
+        open(
+          `${reddit.url}?title=${reddit.title}&text=${reddit.text} ${encodedA_href}`,
+        )
+        break
+      case "facebook":
+        open(
+          `https://www.facebook.com/sharer/sharer.php?u=https://citation-creator.com/`,
+        )
+        break
+    }
+  }, [])
+
+  return (
+    <Container disableGutters maxWidth={false} component="footer">
+      <Grid container bgcolor="secondary.light">
+        <Grid md={4} xs={12} container justifyContent="center" item>
+          <Container>
+            <Container>
+              <Logo>Citation Generator</Logo>
+              <Text maxWidth="60%">
+                Create Citation online rapidly, with support for a large number of
+                citation styles, for Book, Journal articles.
+              </Text>
+            </Container>
+          </Container>
+        </Grid>
+
+        <Grid md={8} xs={12} container direction="column" justifyContent="end" item>
+          <Grid>
+            <Grid container p={{ xs: 2, md: 0 }}>
+              {Object.values(POPULAR_CSL_METADATA).map(({ id }) => (
+                <Link key={id} href={`/${id.toLocaleLowerCase()}/`}>
+                  {id} Citation Generator
+                </Link>
+              ))}
+            </Grid>
+
+            <Grid container p={{ xs: 2, md: 0 }}>
+              <Link href="/about/">About</Link>
+              <Link href="/terms/">Terms</Link>
+              <Link href="/contact/">Contact Us</Link>
+              <Link href="/privacy/">Privacy Policy</Link>
+            </Grid>
+
+            <Grid container justifyContent="end" pb={1}>
+              <ShareButton id="twitter" onClick={shareCallback}>
+                <TwitterIcon fontSize="small" />
+              </ShareButton>
+              <ShareButton id="reddit" onClick={shareCallback}>
+                <RedditIcon fontSize="small" />
+              </ShareButton>
+              <ShareButton id="facebook" onClick={shareCallback}>
+                <FacebookIcon fontSize="small" />
+              </ShareButton>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid bgcolor="#817589">
+        <CopyRight>© Citation Generator 2023</CopyRight>
+      </Grid>
+    </Container>
+  )
+}
+
+const Logo = styled(Typography)`
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 50px;
+  color: #e6daea;
+`
+
+const Text = styled(Typography)`
+  font-family: "sans-serif";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 25px;
+  color: #e6daea;
+`
+
+const Link = styled(Button).attrs(() => ({
+  size: "small",
+}))`
+  display: block;
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  color: #e6daea;
+  text-align: center;
+  :hover {
+    text-decoration: underline;
+  }
+`
+
+const ShareButton = styled(Link)`
+  display: flex;
+  align-items: start;
+`
+
+const CopyRight = styled(Typography).attrs(() => ({
+  noWrap: true,
+}))`
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: #e6daea;
+  text-align: end;
+  padding-right: 12px;
+`
 
 export default Footer

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react"
 import { StoreContext } from "../../provider/Store"
-import { Box, FormControl, FormLabel, Input, InputLabel } from "@mui/material"
+import { Container, FormControl, FormLabel, Input, InputLabel } from "@mui/material"
 import { FieldProps, NumberFieldProps } from "./types"
 import { HtmlTooltip } from "../Tooltips"
 import { descriptions } from "../../cslTypes/fieldsMapping"
@@ -35,33 +35,42 @@ const DateField: React.FC<
   }, [])
 
   return (
-    <Box margin="8px">
+    <Container
+      disableGutters
+      sx={{ pt: "4px", display: "flex", flexDirection: "column" }}
+    >
       <FormLabel error={error}>
         {label}
         <HtmlTooltip title={descriptions["issued"]}>
           {/* @ts-ignore */}
-          <HelpOutlineIcon fontSize="16" sx={{ margin: "0 4px" }} />
+          <HelpOutlineIcon fontSize="16" />
         </HtmlTooltip>
       </FormLabel>
       {documentType === "website" && (
         <>
-          <FormControl variant="standard" sx={{ margin: "0 12px" }}>
-            <InputLabel shrink>Day</InputLabel>
+          <FormControl variant="standard">
+            <InputLabel focused={false} shrink>
+              Day
+            </InputLabel>
             <Input onChange={handleChange} type="number" id={`${id}-day`} />
           </FormControl>
 
-          <FormControl variant="standard" sx={{ margin: "0 12px" }}>
-            <InputLabel shrink>Month</InputLabel>
+          <FormControl variant="standard">
+            <InputLabel focused={false} shrink>
+              Month
+            </InputLabel>
             <Input onChange={handleChange} type="number" id={`${id}-month`} />
           </FormControl>
         </>
       )}
 
-      <FormControl variant="standard" sx={{ margin: "0 12px" }}>
-        <InputLabel shrink>Year</InputLabel>
+      <FormControl variant="standard">
+        <InputLabel focused={false} shrink>
+          Year
+        </InputLabel>
         <Input onChange={handleChange} type="number" id={`${id}-year`} />
       </FormControl>
-    </Box>
+    </Container>
   )
 }
 

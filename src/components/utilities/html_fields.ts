@@ -39,7 +39,7 @@ export const clearCitationFields = (documentType: CitationDocumentType): void =>
 
 const clearNode = (node: HTMLElement | null) => {
   if (node && (node as HTMLInputElement)) {
-    (node as HTMLInputElement).value = ""
+    ;(node as HTMLInputElement).value = ""
   }
 }
 
@@ -126,6 +126,6 @@ export const fillCitationFields = (
 
 const updateNodeValue = (node: HTMLElement | null, value?: string): void => {
   if (node && (node as HTMLInputElement) && value) {
-    (node as HTMLInputElement).value = value
+    ;(node as HTMLInputElement).value = value
   }
 }

@@ -9,7 +9,7 @@ import {
   Alert,
   Box,
   Checkbox,
-  Collapse,
+  Grid,
   IconButton,
   ListItem,
   Snackbar,
@@ -32,7 +32,7 @@ import { navigate } from "gatsby"
 export const ReferencesList: React.FC<{
   setDocumentType: React.Dispatch<React.SetStateAction<CitationDocumentType>>
 }> = ({ setDocumentType }) => {
-  const { state, showCitationsList, dispatch, format } = useContext(DBContext)
+  const { state, dispatch, format } = useContext(DBContext)
 
   const { filters, selectedCitations, setSelectedCitations } =
     useContext(ReferencesListContext)
@@ -95,22 +95,22 @@ export const ReferencesList: React.FC<{
   )
 
   return (
-    <Collapse
-      orientation="horizontal"
-      in={showCitationsList}
-      sx={{
-        display: "flex",
-        maxWidth: "32%",
-        p: 4,
-        m: 0,
-        textAlign: "center",
-        border: "1px solid rgba(0, 0, 0, 0.12);",
-        borderRadius: "10px",
-      }}
-    >
-      <Box>
-        <CollectionProvider>
+    <CollectionProvider>
+      <Grid xs={10} md={8} py={2}>
+        <Grid xs={12}>
           <ListHeader />
+        </Grid>
+
+        <Grid
+          xs={12}
+          bgcolor="white"
+          p={2}
+          borderRadius="10px"
+          boxShadow={`0 0 0 0.5px #878da2, 0 0 2px 0.5px rgb(135 141 162 / 50%),
+                            0 1px 8px 0.5px rgb(135 141 162 / 10%),
+                            0 2px 12px 0.5px rgb(135 141 162 / 10%),
+                            0 4px 20px 0.5px rgb(135 141 162 / 25%)`}
+        >
           <Stack direction="row" spacing={4} justifyContent="center">
             {/*<Collections />*/}
             {(citations.length > 0 && (
@@ -223,20 +223,21 @@ export const ReferencesList: React.FC<{
               </Box>
             )}
           </Stack>
-        </CollectionProvider>
-      </Box>
-    </Collapse>
+        </Grid>
+      </Grid>
+    </CollectionProvider>
   )
 }
 
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
-import OpenInFullIcon from "@mui/icons-material/OpenInFull"
+
 import { DocumentIcon, DocumentLabel } from "./Citation"
 import { CollectionProvider } from "../provider/CollectionProvider"
 import { CollectionModel } from "./modal/CollectionModel"
 import { PrimaryList } from "./Lists"
 import ListAltIcon from "@mui/icons-material/ListAlt"
+import { Primary } from "./Typography"
 
 const ListHeader: React.FC = () => {
   const [selectAll, setSelectedAll] = useState(false)
@@ -281,15 +282,9 @@ const ListHeader: React.FC = () => {
     }
   }, [filters, state.value, selectedCitations, setShowAlert])
 
-  const onExpandClick = useCallback(() => {
-    return navigate("/referencesManager", {
-      state: { format },
-    })
-  }, [format])
-
   return (
     <Box>
-      <Typography>References</Typography>
+      <Primary>Reference Manager</Primary>
       <Stack
         justifyContent="space-between"
         direction="row"
@@ -322,11 +317,6 @@ const ListHeader: React.FC = () => {
         </Box>
         <Box marginRight="18px">
           <ReferenceExportButton view="Generator" />
-          <Tooltip title="Expand Full View">
-            <IconButton>
-              <OpenInFullIcon onClick={onExpandClick} />
-            </IconButton>
-          </Tooltip>
           <Checkbox edge="end" value={selectAll} onChange={onSelectAllClick} />
         </Box>
       </Stack>

@@ -36,7 +36,12 @@ export const Spinner: React.FC = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress variant="buffer" value={progress} valueBuffer={buffer} />
+      <LinearProgress
+        color="secondary"
+        variant="buffer"
+        value={progress}
+        valueBuffer={buffer}
+      />
     </Box>
   )
 }
