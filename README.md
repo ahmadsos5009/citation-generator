@@ -50,6 +50,7 @@
 - [x] update list generator page
 - [x] reuse reference list to be a reference manger page in future
   > Google Ads try
+- [ ] Fix Scrollbar
 - [ ] use IndexDB, and update schema, for Reference Management System
 - [ ] build Reference Management System
 - [ ] build annotated bibliography page
