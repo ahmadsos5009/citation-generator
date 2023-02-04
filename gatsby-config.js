@@ -121,11 +121,9 @@ module.exports = {
         },
       },
     },
-    "gatsby-theme-material-ui",
     "gatsby-plugin-mdx",
     "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-typescript",
     "eslint-config-airbnb",
-    "gatsby-plugin-styled-components",
   ],
 }

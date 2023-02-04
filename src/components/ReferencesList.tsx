@@ -20,7 +20,6 @@ import {
 
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye"
 
-import styled from "styled-components"
 import { generateCitation } from "./utilities/citation_generator"
 import { DBContext } from "../provider/DBProvider"
 import { Citation, CitationDocumentType, CitationJSDocumentType } from "../types"
@@ -238,6 +237,7 @@ import { CollectionModel } from "./modal/CollectionModel"
 import { PrimaryList } from "./Lists"
 import ListAltIcon from "@mui/icons-material/ListAlt"
 import { Primary } from "./Typography"
+import styled from "@emotion/styled"
 
 const ListHeader: React.FC = () => {
   const [selectAll, setSelectedAll] = useState(false)

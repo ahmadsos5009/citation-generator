@@ -1,8 +1,6 @@
 import * as React from "react"
 import { Button, Container, Grid, Typography } from "@mui/material"
 
-import styled from "styled-components"
-
 import FacebookIcon from "@mui/icons-material/Facebook"
 import TwitterIcon from "@mui/icons-material/Twitter"
 import RedditIcon from "@mui/icons-material/Reddit"
@@ -10,6 +8,7 @@ import RedditIcon from "@mui/icons-material/Reddit"
 import { POPULAR_CSL_METADATA } from "../csl_metadata"
 import { useCallback } from "react"
 import config from "../config"
+import styled from "@emotion/styled"
 
 const open = (socialLink: string) => {
   window.open(socialLink, "_blank")
@@ -59,17 +58,25 @@ const Footer: React.FC = () => {
           <Grid>
             <Grid container p={{ xs: 2, md: 0 }}>
               {Object.values(POPULAR_CSL_METADATA).map(({ id }) => (
-                <Link key={id} href={`/${id.toLocaleLowerCase()}/`}>
+                <Link size="small" key={id} href={`/${id.toLocaleLowerCase()}/`}>
                   {id} Citation Generator
                 </Link>
               ))}
             </Grid>
 
             <Grid container p={{ xs: 2, md: 0 }}>
-              <Link href="/about/">About</Link>
-              <Link href="/terms/">Terms</Link>
-              <Link href="/contact/">Contact Us</Link>
-              <Link href="/privacy/">Privacy Policy</Link>
+              <Link size="small" href="/about/">
+                About
+              </Link>
+              <Link size="small" href="/terms/">
+                Terms
+              </Link>
+              <Link size="small" href="/contact/">
+                Contact Us
+              </Link>
+              <Link size="small" href="/privacy/">
+                Privacy Policy
+              </Link>
             </Grid>
 
             <Grid container justifyContent="end" pb={1}>
@@ -87,7 +94,7 @@ const Footer: React.FC = () => {
         </Grid>
       </Grid>
       <Grid bgcolor="#817589">
-        <CopyRight>© Citation Generator 2023</CopyRight>
+        <CopyRight noWrap>© Citation Generator 2023</CopyRight>
       </Grid>
     </Container>
   )
@@ -111,9 +118,7 @@ const Text = styled(Typography)`
   color: #e6daea;
 `
 
-const Link = styled(Button).attrs(() => ({
-  size: "small",
-}))`
+const Link = styled(Button)`
   display: block;
   font-family: sans-serif;
   font-style: normal;
@@ -131,9 +136,7 @@ const ShareButton = styled(Link)`
   align-items: start;
 `
 
-const CopyRight = styled(Typography).attrs(() => ({
-  noWrap: true,
-}))`
+const CopyRight = styled(Typography)`
   font-family: "Open Sans", sans-serif;
   font-style: normal;
   font-weight: 300;

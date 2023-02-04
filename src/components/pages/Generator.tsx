@@ -48,12 +48,8 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
         >
           <Grid xs={2} md={4} item>
             <Stack p={2}>
-              <Primary align="center" gutterBottom>
-                {`${pageTitle} Citation Generator`}
-              </Primary>
-              <PrimaryText textAlign="center" gutterBottom>
-                {pageContext.title}
-              </PrimaryText>
+              <Primary>{`${pageTitle} Citation Generator`}</Primary>
+              <PrimaryText>{pageContext.title}</PrimaryText>
             </Stack>
           </Grid>
 

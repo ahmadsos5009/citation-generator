@@ -3,7 +3,7 @@ import * as React from "react"
 import Layout from "../components/pages/Layout"
 import Seo from "../components/Seo"
 import { Grid, List, ListItem, ListItemText } from "@mui/material"
-import { Primary, PrimaryText } from "../components/Typography"
+import { Primary, PrimaryTextStart } from "../components/Typography"
 
 const TermsPage: React.FC = () => {
   return (
@@ -17,13 +17,13 @@ const TermsPage: React.FC = () => {
         height="100%"
       >
         <Grid md={4} item>
-          <Primary pb={2}>Terms and Conditions</Primary>
-          <PrimaryText>
+          <Primary>Terms and Conditions</Primary>
+          <PrimaryTextStart>
             These terms and conditions govern the use of our citation generator
             website, which provides users with the ability to generate citations and
             store them in their browser for free. By using our website, you agree to
             be bound by these terms and conditions.
-          </PrimaryText>
+          </PrimaryTextStart>
           <List>
             <ListItem>
               <ListItemText

@@ -28,12 +28,20 @@ const Header: React.FC = () => {
     setAnchorElNav(null)
   }
 
+  // component: "a",
+  //   href: "/",
+  //   noWrap: true,
+
   return (
     <AppBar position="static">
       <Container disableGutters maxWidth={false} sx={{ background: "#ECE4D5" }}>
         <Toolbar>
           <Logo
             variant="h6"
+            // @ts-ignore
+            as="a"
+            href="/"
+            noWrap
             sx={{ display: { xs: "none", md: "flex" }, fontSize: "28px" }}
           >
             Citation Generator
@@ -62,6 +70,10 @@ const Header: React.FC = () => {
           {/** Mobile View  **/}
           <Logo
             variant="h5"
+            // @ts-ignore
+            as="a"
+            href="/"
+            noWrap
             sx={{ display: { xs: "flex", md: "none" }, fontSize: "22px" }}
           >
             Citation Generator

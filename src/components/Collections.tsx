@@ -19,7 +19,7 @@ import { CollectionContext } from "../provider/CollectionProvider"
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd"
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList"
 import LabelIcon from "@mui/icons-material/Label"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 export const Collections: React.FC = () => {
   const {

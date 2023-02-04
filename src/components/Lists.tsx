@@ -1,5 +1,5 @@
-import styled from "styled-components"
 import { List } from "@mui/material"
+import styled from "@emotion/styled"
 
 export const PrimaryList = styled(List)`
   ::-webkit-scrollbar {

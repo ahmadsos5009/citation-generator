@@ -22,7 +22,6 @@ import {
 import { DocumentIcon, ImportCitationBox } from "../Citation"
 
 import { ReferenceExportButton } from "../Buttons"
-import styled from "styled-components"
 import { CSL_METADATA } from "../../csl_metadata"
 import { CitationJSDocumentType } from "../../types"
 
@@ -108,7 +107,16 @@ const Header: React.FC = () => {
   const onChangeStyle = useCallback((e) => setStyle(e.target.value), [])
 
   return (
-    <HeaderContainer>
+    <Box
+      sx={{
+        flexDirection: { xs: "column", md: "row" },
+        display: "flex",
+        background: "#f4f4f4",
+        padding: "8px 0",
+        marginBottom: "8px",
+        border: "1px hsl(0, 0%, 82.7%) solid",
+      }}
+    >
       <Box
         display="flex"
         alignItems="center"
@@ -143,7 +151,7 @@ const Header: React.FC = () => {
       <Box display={{ xs: "none", md: "flex" }} marginTop="4px">
         <ReferenceExportButton view="Editor" />
       </Box>
-    </HeaderContainer>
+    </Box>
   )
 }
 
@@ -194,16 +202,5 @@ const Footer: React.FC = () => (
     </Stack>
   </Box>
 )
-
-const HeaderContainer = styled(Box).attrs(() => ({
-  flexDirection: { xs: "column", md: "row" },
-}))`
-  display: flex;
-  background: #f4f4f4;
-  padding: 8px 0;
-  margin-bottom: 8px;
-  border: 1px hsl(0, 0%, 82.7%) solid;
-  border-radius: var(--ck-border-radius);
-`
 
 export default CitationEditor

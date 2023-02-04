@@ -1,6 +1,5 @@
 import AddIcon from "@mui/icons-material/Add"
 
-import styled from "styled-components"
 import React, {
   Dispatch,
   SetStateAction,
@@ -44,6 +43,7 @@ import { LabelBadge } from "../Buttons"
 import LabelIcon from "@mui/icons-material/Label"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
+import styled from "@emotion/styled"
 
 const colors: LabelHex[] = [
   "secondary",

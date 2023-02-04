@@ -7,8 +7,8 @@ import "../../styles/global.css"
 
 import "typeface-catamaran"
 import themes from "../../themes"
-import styled from "styled-components"
 import Footer from "../Footer"
+import styled from "@emotion/styled"
 
 const theme = createTheme(themes)
 

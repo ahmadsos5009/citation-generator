@@ -3,7 +3,7 @@ import * as React from "react"
 import Layout from "../components/pages/Layout"
 import Seo from "../components/Seo"
 import { Alert, Fab, Grid, Snackbar, Stack, TextField } from "@mui/material"
-import { Primary, PrimaryText } from "../components/Typography"
+import { Primary, PrimaryTextStart } from "../components/Typography"
 import { useCallback, useState } from "react"
 import { validateFeedback } from "../components/utilities/text-validation"
 import sendFeedback from "../components/utilities/feedback-api"
@@ -43,17 +43,17 @@ const ContactPage: React.FC = () => {
         height="100%"
       >
         <Grid md={4} item>
-          <Primary pb={2}>Contact Us</Primary>
-          <PrimaryText p={2}>
+          <Primary>Contact Us</Primary>
+          <PrimaryTextStart>
             At Citation Generator Website, we're dedicated to providing you with the
             best possible experience when it comes to generating citations and
             bibliographies. If you have any questions, concerns, or feedback, we're
             here to help.
-          </PrimaryText>
-          <PrimaryText p={2}>
+          </PrimaryTextStart>
+          <PrimaryTextStart>
             If you need assistance with our citation generator, have a suggestion for
             how we can improve, Fill out the form on this page to send us a message:
-          </PrimaryText>
+          </PrimaryTextStart>
           <Stack p={2}>
             <TextField
               id="standard-multiline-static"

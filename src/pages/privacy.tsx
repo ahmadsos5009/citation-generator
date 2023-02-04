@@ -4,6 +4,7 @@ import Layout from "../components/pages/Layout"
 import Seo from "../components/Seo"
 import { Grid, List, ListItem, ListItemText } from "@mui/material"
 import { Primary, PrimaryText } from "../components/Typography"
+import styled from "@emotion/styled"
 
 const PrivacyPage: React.FC = () => {
   return (
@@ -17,13 +18,13 @@ const PrivacyPage: React.FC = () => {
         height="100%"
       >
         <Grid md={4} item>
-          <Primary pb={2}>Privacy Policy</Primary>
-          <PrimaryText>
+          <Primary>Privacy Policy</Primary>
+          <Header>
             This Privacy Policy outlines the collection, use, and sharing of
             information by our citation generator website. Our goal is to provide a
             safe and secure platform for our users to manage their citations and
             research materials.
-          </PrimaryText>
+          </Header>
           <List>
             <ListItem>
               <ListItemText
@@ -80,5 +81,9 @@ const PrivacyPage: React.FC = () => {
     </Layout>
   )
 }
+
+const Header = styled(PrimaryText)`
+  text-align: start;
+`
 
 export default PrivacyPage

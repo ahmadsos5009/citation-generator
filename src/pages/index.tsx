@@ -14,9 +14,9 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material"
-import { Primary, PrimaryText, Secondary } from "../components/Typography"
+import { PrimaryStart, PrimaryText, Secondary } from "../components/Typography"
 import { ReferencesList, ReferenceManagement } from "../placeholders"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 const IndexPage: React.FC = () => {
   return (
@@ -29,11 +29,11 @@ const IndexPage: React.FC = () => {
       <Grid container height="100%">
         <Grid bgcolor="primary.main" container p={2} item>
           <Grid p={6} md={4} xs={12} item>
-            <Primary pb={2}>
+            <PrimaryStart>
               Create citation online rapidly free for a wide range of CSL styles
-            </Primary>
+            </PrimaryStart>
             {/* TODO:: replace this with a new message  */}
-            <PrimaryText pb={1}>
+            <PrimaryText>
               <List disablePadding>
                 <Item>
                   <ListItemText
@@ -84,9 +84,7 @@ const IndexPage: React.FC = () => {
                   <ReferencesList />
                 </CardMedia>
                 <CardContent>
-                  <Secondary gutterBottom>
-                    Bibliographies / References List
-                  </Secondary>
+                  <Secondary>Bibliographies / References List</Secondary>
                   <Typography pt={2} pb={8} variant="body2" color="text.secondary">
                     Create Bibliographies list from your citations or imported
                     citations, also there an editor to help with editing list before
@@ -113,7 +111,7 @@ const IndexPage: React.FC = () => {
                   <ReferenceManagement />
                 </CardMedia>
                 <CardContent>
-                  <Secondary gutterBottom>Reference Management</Secondary>
+                  <Secondary>Reference Management</Secondary>
                   <Typography pt={2} variant="body2" color="text.secondary">
                     Manage your references by organizing them in collections and
                     tags. The goal of reference management is to make it easier for
