@@ -3,7 +3,7 @@ name: Github Pages Deploy
 on:
   push:
     branches:
-      - "UI_V2"
+      - "master"
 
 jobs:
   build:
