@@ -65,7 +65,7 @@ const Seo: React.FC<SeoProps> = ({ description, lang, title }) => {
         },
         {
           name: "twitter:creator",
-          content: site.siteMetadata?.author || "",
+          content: metaDescription,
         },
         {
           name: "twitter:title",

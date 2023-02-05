@@ -50,9 +50,12 @@
 - [x] update list generator page
 - [x] reuse reference list to be a reference manger page in future
   > Google Ads try
-- [ ] Fix Scrollbar
+- [X] Fix Scrollbar
+- [ ] Performance fix for CSL xml
+- [ ] move all CSL to config
 - [ ] use IndexDB, and update schema, for Reference Management System
 - [ ] build Reference Management System
 - [ ] build annotated bibliography page
 - [ ] add 4040 page
 - [ ] add more CSL style
+
