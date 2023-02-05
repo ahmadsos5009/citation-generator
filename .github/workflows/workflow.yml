@@ -9,13 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.0.0]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: NodeJs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
       - name: Install
         run: yarn install
