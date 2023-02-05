@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/acm",
-    "result": {"pageContext":{"id":"90ff0f6d-44b0-50c1-a8f2-14350583b160","title":"Association for Computing Machinery","style":"acm"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/acm/","result":{"pageContext":{"id":"90ff0f6d-44b0-50c1-a8f2-14350583b160","title":"Association for Computing Machinery","style":"acm"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

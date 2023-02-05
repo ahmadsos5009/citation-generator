@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/vancouver",
-    "result": {"pageContext":{"id":"d05843a4-0b76-55cb-b59b-11ed00b206f8","title":"Vancouver","style":"vancouver"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/vancouver/","result":{"pageContext":{"id":"d05843a4-0b76-55cb-b59b-11ed00b206f8","title":"Vancouver","style":"vancouver"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

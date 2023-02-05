@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/apa",
-    "result": {"pageContext":{"id":"2bda4786-0e44-5388-9e37-2aa417c8adeb","title":"American Psychological Association","style":"apa"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/apa/","result":{"pageContext":{"id":"2bda4786-0e44-5388-9e37-2aa417c8adeb","title":"American Psychological Association","style":"apa"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/mhra",
-    "result": {"pageContext":{"id":"aa14d23f-bc68-51ff-a252-afd96213773a","title":"Modern Humanities Research Association","style":"mhra"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/mhra/","result":{"pageContext":{"id":"aa14d23f-bc68-51ff-a252-afd96213773a","title":"Modern Humanities Research Association","style":"mhra"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

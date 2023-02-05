@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/oscola",
-    "result": {"pageContext":{"id":"11888008-be16-5776-baf9-524e5e07a5d9","title":"Oxford University Standard for Citation of Legal Authorities","style":"oscola"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/oscola/","result":{"pageContext":{"id":"11888008-be16-5776-baf9-524e5e07a5d9","title":"Oxford University Standard for Citation of Legal Authorities","style":"oscola"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

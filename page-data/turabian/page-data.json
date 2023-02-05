@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/turabian",
-    "result": {"pageContext":{"id":"03a61749-e617-5384-9970-d4e79a1dcf50","title":"Turabian","style":"turabian"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/turabian/","result":{"pageContext":{"id":"03a61749-e617-5384-9970-d4e79a1dcf50","title":"Turabian","style":"turabian"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

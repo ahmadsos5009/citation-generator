@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/rsc",
-    "result": {"pageContext":{"id":"fc464c6d-78e6-5444-baa8-a75d4ce0b28d","title":"Royal Society of Chemistry","style":"rsc"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/rsc/","result":{"pageContext":{"id":"fc464c6d-78e6-5444-baa8-a75d4ce0b28d","title":"Royal Society of Chemistry","style":"rsc"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

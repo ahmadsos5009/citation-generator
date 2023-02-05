@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/cse",
-    "result": {"pageContext":{"id":"5d831dcd-c6bf-52ba-811d-f5911b91f20c","title":"Council of Science Editors","style":"cse"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/cse/","result":{"pageContext":{"id":"5d831dcd-c6bf-52ba-811d-f5911b91f20c","title":"Council of Science Editors","style":"cse"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/nlm",
-    "result": {"pageContext":{"id":"226428f2-91b5-56df-a965-da11c966e1ac","title":"National Library of Medicine","style":"nlm"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/nlm/","result":{"pageContext":{"id":"226428f2-91b5-56df-a965-da11c966e1ac","title":"National Library of Medicine","style":"nlm"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/nature",
-    "result": {"pageContext":{"id":"dd82256d-0e53-57be-86e0-924d7e48770d","title":"Nature","style":"nature"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/nature/","result":{"pageContext":{"id":"dd82256d-0e53-57be-86e0-924d7e48770d","title":"Nature","style":"nature"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/acs",
-    "result": {"pageContext":{"id":"08d768a1-b141-569d-ba59-a38928ad1404","title":"American Chemical Society","style":"acs"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/acs/","result":{"pageContext":{"id":"08d768a1-b141-569d-ba59-a38928ad1404","title":"American Chemical Society","style":"acs"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/chicago",
-    "result": {"pageContext":{"id":"d43d944b-a516-529e-a1a0-a19511f50f44","title":"Chicago","style":"chicago"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/chicago/","result":{"pageContext":{"id":"d43d944b-a516-529e-a1a0-a19511f50f44","title":"Chicago","style":"chicago"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

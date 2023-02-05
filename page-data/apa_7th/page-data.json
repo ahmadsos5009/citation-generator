@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/apa_7th",
-    "result": {"pageContext":{"id":"0b104909-dddd-5c97-89f4-1107e8ca6b5a","title":"American Psychological Association 7th edition","style":"apa_7th"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/apa_7th/","result":{"pageContext":{"id":"0b104909-dddd-5c97-89f4-1107e8ca6b5a","title":"American Psychological Association 7th edition","style":"apa_7th"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

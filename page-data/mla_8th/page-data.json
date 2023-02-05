@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/mla_8th",
-    "result": {"pageContext":{"id":"e9eaa32b-df91-594e-bdf2-8eec514c8326","title":"Modern Language Association 8th edition","style":"mla_8th"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/mla_8th/","result":{"pageContext":{"id":"e9eaa32b-df91-594e-bdf2-8eec514c8326","title":"Modern Language Association 8th edition","style":"mla_8th"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

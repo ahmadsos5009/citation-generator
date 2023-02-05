@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/ama",
-    "result": {"pageContext":{"id":"fd38ed87-c198-5381-b28d-758aa5c62a68","title":"American Medical Association","style":"ama"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/ama/","result":{"pageContext":{"id":"fd38ed87-c198-5381-b28d-758aa5c62a68","title":"American Medical Association","style":"ama"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

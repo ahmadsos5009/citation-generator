@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/asa",
-    "result": {"pageContext":{"id":"2d8144eb-25f7-52b1-b882-42a2d4911a1a","title":"American Sociological Association","style":"asa"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/asa/","result":{"pageContext":{"id":"2d8144eb-25f7-52b1-b882-42a2d4911a1a","title":"American Sociological Association","style":"asa"}},"staticQueryHashes":["63159454"],"slicesMap":{}}

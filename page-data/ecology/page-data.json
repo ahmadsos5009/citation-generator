@@ -1,5 +1,1 @@
-{
-    "componentChunkName": "component---src-components-pages-generator-tsx",
-    "path": "/ecology",
-    "result": {"pageContext":{"id":"940c1846-f7f9-5359-a50a-b8e8d7dea265","title":"Ecology","style":"ecology"}},
-    "staticQueryHashes": ["63159454"]}
+{"componentChunkName":"component---src-components-pages-generator-tsx","path":"/ecology/","result":{"pageContext":{"id":"940c1846-f7f9-5359-a50a-b8e8d7dea265","title":"Ecology","style":"ecology"}},"staticQueryHashes":["63159454"],"slicesMap":{}}
