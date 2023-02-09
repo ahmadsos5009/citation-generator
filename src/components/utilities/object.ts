@@ -1,28 +1,44 @@
-import { Citation } from "../../types"
+import { Citation, DocumentType } from "../../types"
+
+import { documentUser } from "../../cslTypes/fieldsMapping"
 import { User } from "../../cslTypes/type"
 
-export const isEmptyObject = (citation: Citation): boolean =>
-  Object.values(citation).every((value) => {
-    switch (typeof value) {
-      case "string":
-        return value === undefined || value === ""
-      case "number":
-        return value === undefined
-      case "object": {
-        if (value instanceof Array && value.length > 0) {
-          return !(
-            isObjectWithValue(value[0], "family") ||
-            isObjectWithValue(value[0], "given") ||
-            isObjectWithValue(value[0], "suffix")
-          )
-        } else return false
-      }
-      default:
+export const isEmptyCitation = (
+  citation: Citation,
+  document: DocumentType,
+): boolean => {
+  return Object.entries(citation).every(([filed, value]) => {
+    if (Array.isArray(value)) {
+      if (documentUser[document].includes(filed) && !emptyContributors(value)) {
         return false
+      }
+    } else {
+      if (value !== undefined && value.length > 0) return false
+    }
+
+    return true
+  })
+}
+
+const emptyContributors = (contributors: User[]) => {
+  return contributors.every((contributor) =>
+    Object.entries(contributor).every((ent) => !ent[1]),
+  )
+}
+
+export const getEmptyCitation = (citation: Citation, document: DocumentType) => {
+  const emptyCitation = {} as Citation
+  Object.entries(citation).map(([filed]) => {
+    if (documentUser[document].includes(filed)) {
+      // @ts-ignore
+      emptyCitation[filed] = []
+    } else if (filed === "issued" || filed === "accessed") {
+      // @ts-ignore
+      emptyCitation[filed] = {}
+    } else {
+      // @ts-ignore
+      emptyCitation[filed] = ""
     }
   })
-
-const isObjectWithValue = (obj: User, key: "family" | "given" | "suffix") => {
-  const length = obj[key]?.length
-  return length && length > 0
+  return emptyCitation
 }

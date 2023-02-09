@@ -1,21 +1,12 @@
-import React, {
-  Dispatch,
-  Reducer,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react"
+import React, { Dispatch, Reducer, useReducer, useState } from "react"
 import { CitationCollection, CitationStyle, CollectionLabel } from "../types"
 import {
   deleteDBCollection,
   deleteDBLabel,
   getDBCollections,
-  getDBLabels,
   storeDBCollection,
   storeDBLabel,
 } from "../components/utilities/DB"
-import { DBContext } from "./DBProvider"
 
 type DBState = {
   collections: CitationCollection[]
@@ -101,27 +92,16 @@ const reducer = (state: DBState, action: IDBAction): DBState => {
       throw new Error()
   }
 }
-
+// TODO:: remove this
 export const CollectionProvider: React.FC = ({ children }) => {
   const [selectedCollection, setSelectedCollection] = useState("all")
   const [selectedLabels, setSelectedLabels] = useState<string[]>([])
 
-  const { format } = useContext(DBContext)
-
   const [state, dispatch] = useReducer<Reducer<DBState, IDBAction>>(reducer, {
     collections: [],
     labels: [],
-    format,
+    format: "apa",
   })
-
-  useEffect(() => {
-    dispatch({
-      type: "initialize",
-      dataType: "both",
-      collections: getDBCollections(format),
-      labels: getDBLabels(),
-    })
-  }, [])
 
   return (
     <CollectionContext.Provider

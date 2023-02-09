@@ -11,6 +11,7 @@ exports.createPages = async function ({ actions, graphql }) {
       allMdx {
         edges {
           node {
+            body
             frontmatter {
               path
               title
@@ -25,12 +26,12 @@ exports.createPages = async function ({ actions, graphql }) {
   // eslint-disable-next-line array-callback-return
   return data.allMdx.edges.map((edge) => {
     const { path, title } = edge.node.frontmatter
-    const { id } = edge.node
+    const { id, body } = edge.node
 
     actions.createPage({
       path,
       component: require.resolve("./src/components/pages/Generator.tsx"),
-      context: { id, title, style: path },
+      context: { id, title, style: path, xml: body },
     })
   })
 }

@@ -4,4 +4,8 @@
  * See: https://www.gatsbyjs.com/docs/browser-apis/
  */
 
-// You can delete this file if you're not using it
+import React from "react"
+import { DBProvider } from "./src/provider/DBProvider"
+
+// eslint-disable-next-line react/react-in-jsx-scope
+export const wrapRootElement = ({ element }) => <DBProvider>{element}</DBProvider>

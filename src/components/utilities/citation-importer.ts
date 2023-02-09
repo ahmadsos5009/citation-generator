@@ -175,7 +175,7 @@ export const CitationJsImport = async (input: string): Promise<ImportCitation[]>
   require("@citation-js/plugin-bibjson")
   try {
     const cite = await Cite.async(input)
-    return cite.get({ format: "real", type: "json", style: "csl" })
+    return cite.get({ format: "real", type: "json" })
   } catch (e) {
     return []
   }

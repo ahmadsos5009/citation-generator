@@ -19,11 +19,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
-import { DocumentIcon, ImportCitationBox } from "../Citation"
+import { DocumentIcon, ImportCitation, ImportCitationBox } from "../Citation"
 
 import { ReferenceExportButton } from "../Buttons"
 import { CSL_METADATA } from "../../csl_metadata"
-import { CitationJSDocumentType } from "../../types"
+import { Citation, CitationJSDocumentType } from "../../types"
+import { DBContext } from "../../provider/DBProvider"
 
 const defaultEditorMessage = `<html lang='en'><body>
 <h2 id="references_header" style="text-align:center;">References</h2>
@@ -102,9 +103,24 @@ const CitationEditor: React.FC = () => {
 }
 
 const Header: React.FC = () => {
-  const { documentType, style, setStyle } = useContext(EditorContext)
+  const { documentType, style, xml, setXml, setStyle, citations, setCitations } =
+    useContext(EditorContext)
 
-  const onChangeStyle = useCallback((e) => setStyle(e.target.value), [])
+  const updateCitation = useCallback(
+    (citation: Citation) => {
+      setCitations([...citations, citation as ImportCitation])
+    },
+    [citations],
+  )
+
+  const { cslDao } = useContext(DBContext)
+
+  const onChangeStyle = useCallback(async (e) => {
+    const newStyle = e.target.value
+    const { xml } = await cslDao.get(newStyle)
+    setXml(xml)
+    setStyle(newStyle)
+  }, [])
 
   return (
     <Box
@@ -142,14 +158,19 @@ const Header: React.FC = () => {
           </FormControl>
         </Stack>
         <Box display={{ xs: "flex", md: "none" }} alignItems="start" marginTop="4px">
-          <ReferenceExportButton view="Editor" />
+          <ReferenceExportButton />
         </Box>
       </Box>
 
-      <ImportCitationBox documentType={documentType} editor />
+      <ImportCitationBox
+        documentType={documentType}
+        style={style}
+        xml={xml}
+        updateCitation={updateCitation}
+      />
 
       <Box display={{ xs: "none", md: "flex" }} marginTop="4px">
-        <ReferenceExportButton view="Editor" />
+        <ReferenceExportButton />
       </Box>
     </Box>
   )

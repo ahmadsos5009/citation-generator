@@ -1,46 +1,44 @@
 import React, { useCallback, useContext } from "react"
-import { StoreContext } from "../../provider/Store"
+
 import { Container, FormControl, FormLabel, Input, InputLabel } from "@mui/material"
-import { FieldProps, NumberFieldProps } from "./types"
+
 import { HtmlTooltip } from "../Tooltips"
-import { descriptions } from "../../cslTypes/fieldsMapping"
+import { descriptions, labels } from "../../cslTypes/fieldsMapping"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
+import { GeneratorContext } from "../../provider/GeneratorProvider"
 
-const DateField: React.FC<
-  FieldProps & NumberFieldProps & { id: "issued" | "accessed" }
-> = ({ label, id, error, documentType }) => {
-  const { dispatch, state } = useContext(StoreContext)
+const DateField: React.FC<{ id: string }> = ({ id }) => {
+  const { documentType, setValue, citation } = useContext(GeneratorContext)
 
-  const handleChange = useCallback((e) => {
-    // @ts-ignore
-    const value = state[documentType][id] || { "date-parts": ["0", "0", "0"] }
+  const value = (citation &&
+    citation[id as "issued" | "accessed"]?.["date-parts"]) || ["0", "0", "0"]
 
-    switch (e.target.id) {
-      case `${id}-day`:
-        value["date-parts"][2] = e.target.value
-        break
-      case `${id}-month`:
-        value["date-parts"][1] = e.target.value
-        break
-      case `${id}-year`:
-        value["date-parts"][0] = e.target.value
-    }
+  const [year, month, day] = value
 
-    dispatch({
-      type: "set",
-      id,
-      documentType,
-      value,
-    })
-  }, [])
+  const handleChange = useCallback(
+    async (e) => {
+      switch (e.target.id) {
+        case `${id}-day`:
+          value[2] = e.target.value
+          break
+        case `${id}-month`:
+          value[1] = e.target.value
+          break
+        case `${id}-year`:
+          value[0] = e.target.value
+      }
+      setValue(id, { "date-parts": value })
+    },
+    [id, setValue, value],
+  )
 
   return (
     <Container
       disableGutters
       sx={{ pt: "4px", display: "flex", flexDirection: "column" }}
     >
-      <FormLabel error={error}>
-        {label}
+      <FormLabel>
+        {labels[id]}
         <HtmlTooltip title={descriptions["issued"]}>
           {/* @ts-ignore */}
           <HelpOutlineIcon fontSize="16" />
@@ -52,14 +50,24 @@ const DateField: React.FC<
             <InputLabel focused={false} shrink>
               Day
             </InputLabel>
-            <Input onChange={handleChange} type="number" id={`${id}-day`} />
+            <Input
+              value={day === "0" ? "" : day}
+              onChange={handleChange}
+              type="number"
+              id={`${id}-day`}
+            />
           </FormControl>
 
           <FormControl variant="standard">
             <InputLabel focused={false} shrink>
               Month
             </InputLabel>
-            <Input onChange={handleChange} type="number" id={`${id}-month`} />
+            <Input
+              value={month === "0" ? "" : month}
+              onChange={handleChange}
+              type="number"
+              id={`${id}-month`}
+            />
           </FormControl>
         </>
       )}
@@ -68,7 +76,12 @@ const DateField: React.FC<
         <InputLabel focused={false} shrink>
           Year
         </InputLabel>
-        <Input onChange={handleChange} type="number" id={`${id}-year`} />
+        <Input
+          value={year === "0" ? "" : year}
+          onChange={handleChange}
+          type="number"
+          id={`${id}-year`}
+        />
       </FormControl>
     </Container>
   )

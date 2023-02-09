@@ -28,7 +28,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import {
   Citation,
   CitationDocumentType,
-  CitationOutput,
+  CitationJSDocumentType,
+  CitationStyle,
   DocumentType,
 } from "../types"
 import BookIcon from "@mui/icons-material/Book"
@@ -39,18 +40,17 @@ import EditIcon from "@mui/icons-material/Edit"
 import ArticleIcon from "@mui/icons-material/Article"
 import BackspaceIcon from "@mui/icons-material/Backspace"
 
-import { StoreContext } from "../provider/Store"
-
 import { ImportProgress } from "./editor/Spinner"
 
 import { CitationImportStrategy } from "./utilities/citation-importer"
 import { generateCitation } from "./utilities/citation_generator"
-import { DBContext } from "../provider/DBProvider"
-import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
+
 import { PrimaryList } from "./Lists"
-import { EditorContext } from "../provider/EditorProvider"
+
 import { UploadFileModel } from "./Model"
 import { Secondary } from "./Typography"
+import { GeneratorContext } from "../provider/GeneratorProvider"
+import { isEmptyCitation } from "./utilities/object"
 
 export const DocumentIcon: {
   [key in DocumentType]: ReactElement
@@ -71,8 +71,6 @@ export const DocumentLabel: {
 }
 
 interface OnFlyCitationBoxProps {
-  // eslint-disable-next-line react/require-default-props
-  citation?: CitationOutput
   handleClick: (event: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -90,10 +88,11 @@ const boxStyle: SxProps<Theme> = {
 }
 
 export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
-  citation,
   handleClick,
 }) => {
-  if (!citation) {
+  const { citation, style, xml, documentType } = useContext(GeneratorContext)
+
+  if (!citation || isEmptyCitation(citation, CitationJSDocumentType[documentType])) {
     return (
       <Typography padding={2} fontWeight="fontWeightMedium">
         Fill entry to generate citation manually on the fly
@@ -101,9 +100,14 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
     )
   }
 
+  const { convertedCitation, inText } = useMemo(
+    () => generateCitation(citation, documentType, "html", style, xml),
+    [citation, documentType, style],
+  )
+
   return (
     <Grid item xs={11} lg={10} sx={{ ...boxStyle }}>
-      <Secondary py={2}>Citation Preview</Secondary>
+      <Secondary>Citation Preview</Secondary>
 
       <Box sx={{ display: "flex", padding: "8px", alignItems: "center" }}>
         <IconButton onClick={handleClick} value="citation">
@@ -111,7 +115,7 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
         </IconButton>
         <div
           className="output-viewer"
-          dangerouslySetInnerHTML={{ __html: citation?.html || "" }}
+          dangerouslySetInnerHTML={{ __html: convertedCitation }}
         />
       </Box>
 
@@ -126,7 +130,7 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
           <div
             className="output-viewer"
             dangerouslySetInnerHTML={{
-              __html: citation?.inText || "",
+              __html: inText,
             }}
           />
         </Box>
@@ -135,13 +139,15 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
   )
 }
 
+// TODO:: remove this and add to type to the manually citation
 export type ImportCitation = Citation & { type: DocumentType }
 
 export const ImportCitationBox: React.FC<{
   documentType: CitationDocumentType
-  editor?: boolean
-}> = ({ documentType, editor }) => {
-  const { format } = useContext(DBContext)
+  style: CitationStyle
+  xml: string
+  updateCitation: (citation: Citation) => void
+}> = ({ documentType, style, xml, updateCitation }) => {
   const [importLoading, setImportLoading] = useState(false)
   const [input, setInput] = useState("")
   const [importedCitations, setImportedCitations] = useState<
@@ -177,7 +183,8 @@ export const ImportCitationBox: React.FC<{
           citation,
           documentType,
           "html",
-          format,
+          style,
+          xml,
         )
         return {
           citation,
@@ -192,7 +199,7 @@ export const ImportCitationBox: React.FC<{
     }
 
     setImportLoading(false)
-  }, [input, documentType])
+  }, [input, documentType, style])
 
   const onKeyPress = useCallback(
     (e) => {
@@ -203,31 +210,15 @@ export const ImportCitationBox: React.FC<{
     [input, documentType],
   )
 
-  const { dispatch } = useContext(StoreContext)
-  const { setCitations, citations } = useContext(EditorContext)
-
   const onEditClick = useCallback(
     (e) => {
       const index = e.currentTarget.value
-      if (index) {
-        if (editor) {
-          citations.push(importedCitations[index].citation)
-          setCitations([...citations])
-        } else {
-          clearCitationFields(documentType)
-          fillCitationFields(documentType, importedCitations[index].citation)
-
-          dispatch({
-            type: "fill",
-            documentType,
-            value: importedCitations[index].citation,
-          })
-        }
-        setInput("")
-        setImportedCitations([])
-      }
+      const { citation } = importedCitations[index]
+      updateCitation(citation)
+      setInput("")
+      setImportedCitations([])
     },
-    [importedCitations, documentType, editor, citations],
+    [importedCitations],
   )
 
   const message = useMemo(() => {
@@ -286,7 +277,12 @@ export const ImportCitationBox: React.FC<{
           orientation="vertical"
         />
         <Container disableGutters maxWidth={false}>
-          <UploadFileModel documentType={documentType} editor={editor} />
+          <UploadFileModel
+            documentType={documentType}
+            updateCitation={updateCitation}
+            style={style}
+            xml={xml}
+          />
         </Container>
       </Paper>
 

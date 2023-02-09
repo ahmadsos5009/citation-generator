@@ -1,6 +1,5 @@
 import { Cite, plugins } from "@citation-js/core"
 import { Citation, CitationStyle } from "../../types"
-import { CSL_XML } from "../../csl_metadata"
 
 require("@citation-js/plugin-csl")
 
@@ -9,9 +8,10 @@ export function generateCitation(
   documentType: string,
   format: "html" | "text",
   template: CitationStyle,
+  xml: string,
 ): { convertedCitation: string; inText: string } {
   const cslPlugin = plugins.config.get("@csl")
-  cslPlugin.templates.add(template, CSL_XML[template])
+  cslPlugin.templates.add(template, xml)
 
   const cite = Cite({ ...citation, type: documentType }, { format: "string" })
   const htmlCitation = cite.format("bibliography", {
@@ -34,12 +34,13 @@ export function generateCitation(
 export const generateCitations = (
   citations: Citation[],
   template: CitationStyle,
+  xml: string,
   inText?: boolean,
 ): string => {
   const cite = Cite(citations, { format: "string" })
 
   const cslPlugin = plugins.config.get("@csl")
-  cslPlugin.templates.add(template, CSL_XML[template])
+  cslPlugin.templates.add(template, xml)
 
   return cite.format((inText && "citation") || "bibliography", {
     format: "html",

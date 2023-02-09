@@ -47,7 +47,7 @@ export const Spinner: React.FC = () => {
 }
 
 export const ImportProgress: React.FC = () => (
-  <Box sx={{ width: "100%", margin: "4px 16px" }}>
+  <Box sx={{ margin: "4px 16px" }}>
     <Typography
       fontWeight="fontWeightMedium"
       padding={2}

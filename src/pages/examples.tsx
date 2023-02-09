@@ -3,179 +3,64 @@ import { Box, Grid, Typography } from "@mui/material"
 import Seo from "../components/Seo"
 import Layout from "../components/pages/Layout"
 
-import { CSL_METADATA } from "../csl_metadata"
-import { generateCitations } from "../components/utilities/citation_generator"
-
-const examples = [
+const preprocessedCitations = [
   {
-    "container-title": "J. Geophys. Res.",
-    author: [
-      {
-        given: "J. G.",
-        family: "Smith",
-      },
-      {
-        given: "H. K.",
-        family: "Weston",
-      },
-    ],
-    type: "article-journal",
-    id: "Citation:83465785-93c0-422d-aaf6-7c87307f946b",
-    "citation-label": "smit54",
-    issued: {
-      "date-parts": [[1954]],
-    },
-    page: "14-15",
-    title: "Nothing Particular in this Year's History",
-    volume: "2",
-    _graph: [
-      {
-        type: "@biblatex/text",
-        data: "@ARTICLE{smit54,\n\tAUTHOR = {J. G. Smith and H. K. Weston},\n\tTITLE = {Nothing Particular in this Year's History},\n\tYEAR = {1954},\n\tJOURNAL = {J. Geophys. Res.},\n\tVOLUME = {2},\n\tPAGES = {14-15}\n}\n@BOOK{colu92,\n\tAUTHOR = {Christopher Columbus},\n\tTITLE = {How {I} Discovered {America}},\n\tYEAR = {1492},\n\tPUBLISHER = {Hispanic Press},\n\tADDRESS = {Barcelona}\n}\n@ARTICLE{gree00,\n\tAUTHOR = {R. J. Green and U. P. Fred and W. P. Norbert},\n\tTITLE = {Things that Go Bump in the Night},\n\tYEAR = {1900},\n\tJOURNAL = {Psych. Today},\n\tVOLUME = {46},\n\tPAGES = {345-678}\n}\n@ARTICLE{phil99,\n\tAUTHOR = {T. P. Phillips},\n\tTITLE = {Possible Influence of the Magnetosphere on {American} History},\n\tYEAR = {1999},\n\tJOURNAL = {J. Oddball Res.},\n\tVOLUME = {98},\n\tPAGES = {1000-1003}\n}\n@ARTICLE{jame76,\n\tAUTHOR = {Kelly James and Harris, Jr., George and Wilby Wollops},\n\tTITLE = {{American} Independence and Magnetism},\n\tYEAR = {1776},\n\tJOURNAL = {Revol. Tracts},\n\tVOLUME = {32},\n\tPAGES = {34-55}\n}\n\n",
-      },
-      {
-        type: "@biblatex/entries+list",
-      },
-      {
-        type: "@csl/list+object",
-      },
-    ],
+    style_title: "American Psychological Association",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">Columbus, C. (1492).<i>How I Discovered America</i>. Barcelona: Hispanic Press.</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">Green, R. J., Fred, U. P., &amp; Norbert, W. P. (1900). Things that Go Bump in the Night.<i>Psych. Today</i>,<i>46</i>, 345–678.</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">James, K., Harris, G., Jr., &amp; Wollops, W. (1776). American Independence and Magnetism.<i>Revol. Tracts</i>,<i>32</i>, 34–55.</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">Phillips, T. P. (1999). Possible Influence of the Magnetosphere on American History.<i>J. Oddball Res.</i>,<i>98</i>, 1000–1003.</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">Smith, J. G., &amp; Weston, H. K. (1954). Nothing Particular in this Year’s History.<i>J. Geophys. Res.</i>,<i>2</i>, 14–15.</div></div>',
+    inText:
+      "(Columbus, 1492; Green, Fred, & Norbert, 1900; James, Harris, & Wollops, 1776; Phillips, 1999; Smith & Weston, 1954)",
   },
   {
-    "publisher-place": "Barcelona",
-    author: [
-      {
-        given: "Christopher",
-        family: "Columbus",
-      },
-    ],
-    type: "book",
-    id: "Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc",
-    "citation-label": "colu92",
-    issued: {
-      "date-parts": [[1492]],
-    },
-    publisher: "Hispanic Press",
-    title: "How I Discovered America",
-    _graph: [
-      {
-        type: "@biblatex/text",
-        data: "@ARTICLE{smit54,\n\tAUTHOR = {J. G. Smith and H. K. Weston},\n\tTITLE = {Nothing Particular in this Year's History},\n\tYEAR = {1954},\n\tJOURNAL = {J. Geophys. Res.},\n\tVOLUME = {2},\n\tPAGES = {14-15}\n}\n@BOOK{colu92,\n\tAUTHOR = {Christopher Columbus},\n\tTITLE = {How {I} Discovered {America}},\n\tYEAR = {1492},\n\tPUBLISHER = {Hispanic Press},\n\tADDRESS = {Barcelona}\n}\n@ARTICLE{gree00,\n\tAUTHOR = {R. J. Green and U. P. Fred and W. P. Norbert},\n\tTITLE = {Things that Go Bump in the Night},\n\tYEAR = {1900},\n\tJOURNAL = {Psych. Today},\n\tVOLUME = {46},\n\tPAGES = {345-678}\n}\n@ARTICLE{phil99,\n\tAUTHOR = {T. P. Phillips},\n\tTITLE = {Possible Influence of the Magnetosphere on {American} History},\n\tYEAR = {1999},\n\tJOURNAL = {J. Oddball Res.},\n\tVOLUME = {98},\n\tPAGES = {1000-1003}\n}\n@ARTICLE{jame76,\n\tAUTHOR = {Kelly James and Harris, Jr., George and Wilby Wollops},\n\tTITLE = {{American} Independence and Magnetism},\n\tYEAR = {1776},\n\tJOURNAL = {Revol. Tracts},\n\tVOLUME = {32},\n\tPAGES = {34-55}\n}\n\n",
-      },
-      {
-        type: "@biblatex/entries+list",
-      },
-      {
-        type: "@csl/list+object",
-      },
-    ],
+    style: "Institute of Electrical and Electronics Engineers",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry"><div class="csl-left-margin">[1]</div><div class="csl-right-inline">J. G. Smith and H. K. Weston, “Nothing Particular in this Year’s History,”<i>J. Geophys. Res.</i>, vol. 2, pp. 14–15, 1954.</div></div><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry"><div class="csl-left-margin">[2]</div><div class="csl-right-inline">C. Columbus,<i>How I Discovered America</i>. Barcelona: Hispanic Press, 1492.</div></div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry"><div class="csl-left-margin">[3]</div><div class="csl-right-inline">R. J. Green, U. P. Fred, and W. P. Norbert, “Things that Go Bump in the Night,”<i>Psych. Today</i>, vol. 46, pp. 345–678, 1900.</div></div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry"><div class="csl-left-margin">[4]</div><div class="csl-right-inline">T. P. Phillips, “Possible Influence of the Magnetosphere on American History,”<i>J. Oddball Res.</i>, vol. 98, pp. 1000–1003, 1999.</div></div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry"><div class="csl-left-margin">[5]</div><div class="csl-right-inline">K. James, G. Harris Jr., and W. Wollops, “American Independence and Magnetism,”<i>Revol. Tracts</i>, vol. 32, pp. 34–55, 1776.</div></div></div>',
+    inText: "[1]–[5]",
   },
   {
-    "container-title": "Psych. Today",
-    author: [
-      {
-        given: "R. J.",
-        family: "Green",
-      },
-      {
-        given: "U. P.",
-        family: "Fred",
-      },
-      {
-        given: "W. P.",
-        family: "Norbert",
-      },
-    ],
-    type: "article-journal",
-    id: "Citation:39778dc4-366c-4e93-9e89-87e2e85bea49",
-    "citation-label": "gree00",
-    issued: {
-      "date-parts": [[1900]],
-    },
-    page: "345-678",
-    title: "Things that Go Bump in the Night",
-    volume: "46",
-    _graph: [
-      {
-        type: "@biblatex/text",
-        data: "@ARTICLE{smit54,\n\tAUTHOR = {J. G. Smith and H. K. Weston},\n\tTITLE = {Nothing Particular in this Year's History},\n\tYEAR = {1954},\n\tJOURNAL = {J. Geophys. Res.},\n\tVOLUME = {2},\n\tPAGES = {14-15}\n}\n@BOOK{colu92,\n\tAUTHOR = {Christopher Columbus},\n\tTITLE = {How {I} Discovered {America}},\n\tYEAR = {1492},\n\tPUBLISHER = {Hispanic Press},\n\tADDRESS = {Barcelona}\n}\n@ARTICLE{gree00,\n\tAUTHOR = {R. J. Green and U. P. Fred and W. P. Norbert},\n\tTITLE = {Things that Go Bump in the Night},\n\tYEAR = {1900},\n\tJOURNAL = {Psych. Today},\n\tVOLUME = {46},\n\tPAGES = {345-678}\n}\n@ARTICLE{phil99,\n\tAUTHOR = {T. P. Phillips},\n\tTITLE = {Possible Influence of the Magnetosphere on {American} History},\n\tYEAR = {1999},\n\tJOURNAL = {J. Oddball Res.},\n\tVOLUME = {98},\n\tPAGES = {1000-1003}\n}\n@ARTICLE{jame76,\n\tAUTHOR = {Kelly James and Harris, Jr., George and Wilby Wollops},\n\tTITLE = {{American} Independence and Magnetism},\n\tYEAR = {1776},\n\tJOURNAL = {Revol. Tracts},\n\tVOLUME = {32},\n\tPAGES = {34-55}\n}\n\n",
-      },
-      {
-        type: "@biblatex/entries+list",
-      },
-      {
-        type: "@csl/list+object",
-      },
-    ],
+    style: "National Library of Medicine",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry"><div class="csl-left-margin">1.</div><div class="csl-right-inline">Smith JG, Weston HK. Nothing Particular in this Year’s History. J Geophys Res. 1954;2:14–15.</div></div><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry"><div class="csl-left-margin">2.</div><div class="csl-right-inline">Columbus C. How I Discovered America. Barcelona: Hispanic Press; 1492.</div></div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry"><div class="csl-left-margin">3.</div><div class="csl-right-inline">Green RJ, Fred UP, Norbert WP. Things that Go Bump in the Night. Psych Today. 1900;46:345–678.</div></div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry"><div class="csl-left-margin">4.</div><div class="csl-right-inline">Phillips TP. Possible Influence of the Magnetosphere on American History. J Oddball Res. 1999;98:1000–1003.</div></div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry"><div class="csl-left-margin">5.</div><div class="csl-right-inline">James K, Harris G Jr, Wollops W. American Independence and Magnetism. Revol Tracts. 1776;32:34–55.</div></div></div>',
+    inText: "<sup>1–5</sup>",
   },
   {
-    "container-title": "J. Oddball Res.",
-    author: [
-      {
-        given: "T. P.",
-        family: "Phillips",
-      },
-    ],
-    type: "article-journal",
-    id: "Citation:d76401d7-486c-486f-b4fe-b45dbca95214",
-    "citation-label": "phil99",
-    issued: {
-      "date-parts": [[1999]],
-    },
-    page: "1000-1003",
-    title: "Possible Influence of the Magnetosphere on American History",
-    volume: "98",
-    _graph: [
-      {
-        type: "@biblatex/text",
-        data: "@ARTICLE{smit54,\n\tAUTHOR = {J. G. Smith and H. K. Weston},\n\tTITLE = {Nothing Particular in this Year's History},\n\tYEAR = {1954},\n\tJOURNAL = {J. Geophys. Res.},\n\tVOLUME = {2},\n\tPAGES = {14-15}\n}\n@BOOK{colu92,\n\tAUTHOR = {Christopher Columbus},\n\tTITLE = {How {I} Discovered {America}},\n\tYEAR = {1492},\n\tPUBLISHER = {Hispanic Press},\n\tADDRESS = {Barcelona}\n}\n@ARTICLE{gree00,\n\tAUTHOR = {R. J. Green and U. P. Fred and W. P. Norbert},\n\tTITLE = {Things that Go Bump in the Night},\n\tYEAR = {1900},\n\tJOURNAL = {Psych. Today},\n\tVOLUME = {46},\n\tPAGES = {345-678}\n}\n@ARTICLE{phil99,\n\tAUTHOR = {T. P. Phillips},\n\tTITLE = {Possible Influence of the Magnetosphere on {American} History},\n\tYEAR = {1999},\n\tJOURNAL = {J. Oddball Res.},\n\tVOLUME = {98},\n\tPAGES = {1000-1003}\n}\n@ARTICLE{jame76,\n\tAUTHOR = {Kelly James and Harris, Jr., George and Wilby Wollops},\n\tTITLE = {{American} Independence and Magnetism},\n\tYEAR = {1776},\n\tJOURNAL = {Revol. Tracts},\n\tVOLUME = {32},\n\tPAGES = {34-55}\n}\n\n",
-      },
-      {
-        type: "@biblatex/entries+list",
-      },
-      {
-        type: "@csl/list+object",
-      },
-    ],
+    style: "Royal Society of Chemistry",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry"><div class="csl-left-margin">1</div><div class="csl-right-inline">J. G. Smith and H. K. Weston,<i>J. Geophys. Res.</i>, 1954,<b>2</b>, 14–15.</div></div><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry"><div class="csl-left-margin">2</div><div class="csl-right-inline">C. Columbus,<i>How I Discovered America</i>, Hispanic Press, Barcelona, 1492.</div></div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry"><div class="csl-left-margin">3</div><div class="csl-right-inline">R. J. Green, U. P. Fred and W. P. Norbert,<i>Psych. Today</i>, 1900,<b>46</b>, 345–678.</div></div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry"><div class="csl-left-margin">4</div><div class="csl-right-inline">T. P. Phillips,<i>J. Oddball Res.</i>, 1999,<b>98</b>, 1000–1003.</div></div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry"><div class="csl-left-margin">5</div><div class="csl-right-inline">K. James, G. Harris Jr. and W. Wollops,<i>Revol. Tracts</i>, 1776,<b>32</b>, 34–55.</div></div></div>',
+    inText: "<sup>1–5</sup>",
   },
   {
-    "container-title": "Revol. Tracts",
-    author: [
-      {
-        given: "Kelly",
-        family: "James",
-      },
-      {
-        given: "George",
-        family: "Harris",
-        suffix: "Jr.",
-      },
-      {
-        given: "Wilby",
-        family: "Wollops",
-      },
-    ],
-    type: "article-journal",
-    id: "Citation:26a9a333-21b6-4f0b-b2cc-323711806529",
-    "citation-label": "jame76",
-    issued: {
-      "date-parts": [[1776]],
-    },
-    page: "34-55",
-    title: "American Independence and Magnetism",
-    volume: "32",
-    _graph: [
-      {
-        type: "@biblatex/text",
-        data: "@ARTICLE{smit54,\n\tAUTHOR = {J. G. Smith and H. K. Weston},\n\tTITLE = {Nothing Particular in this Year's History},\n\tYEAR = {1954},\n\tJOURNAL = {J. Geophys. Res.},\n\tVOLUME = {2},\n\tPAGES = {14-15}\n}\n@BOOK{colu92,\n\tAUTHOR = {Christopher Columbus},\n\tTITLE = {How {I} Discovered {America}},\n\tYEAR = {1492},\n\tPUBLISHER = {Hispanic Press},\n\tADDRESS = {Barcelona}\n}\n@ARTICLE{gree00,\n\tAUTHOR = {R. J. Green and U. P. Fred and W. P. Norbert},\n\tTITLE = {Things that Go Bump in the Night},\n\tYEAR = {1900},\n\tJOURNAL = {Psych. Today},\n\tVOLUME = {46},\n\tPAGES = {345-678}\n}\n@ARTICLE{phil99,\n\tAUTHOR = {T. P. Phillips},\n\tTITLE = {Possible Influence of the Magnetosphere on {American} History},\n\tYEAR = {1999},\n\tJOURNAL = {J. Oddball Res.},\n\tVOLUME = {98},\n\tPAGES = {1000-1003}\n}\n@ARTICLE{jame76,\n\tAUTHOR = {Kelly James and Harris, Jr., George and Wilby Wollops},\n\tTITLE = {{American} Independence and Magnetism},\n\tYEAR = {1776},\n\tJOURNAL = {Revol. Tracts},\n\tVOLUME = {32},\n\tPAGES = {34-55}\n}\n\n",
-      },
-      {
-        type: "@biblatex/entries+list",
-      },
-      {
-        type: "@csl/list+object",
-      },
-    ],
+    style: "American Chemical Society",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry"><div class="csl-left-margin">(1)</div><div class="csl-right-inline">Smith, J. G.; Weston, H. K. Nothing Particular in This Year’s History.<i>J. Geophys. Res.</i><b>1954</b>,<i>2</i>, 14–15.</div></div><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry"><div class="csl-left-margin">(2)</div><div class="csl-right-inline">Columbus, C.<i>How I Discovered America</i>; Hispanic Press: Barcelona, 1492.</div></div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry"><div class="csl-left-margin">(3)</div><div class="csl-right-inline">Green, R. J.; Fred, U. P.; Norbert, W. P. Things That Go Bump in the Night.<i>Psych. Today</i><b>1900</b>,<i>46</i>, 345–678.</div></div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry"><div class="csl-left-margin">(4)</div><div class="csl-right-inline">Phillips, T. P. Possible Influence of the Magnetosphere on American History.<i>J. Oddball Res.</i><b>1999</b>,<i>98</i>, 1000–1003.</div></div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry"><div class="csl-left-margin">(5)</div><div class="csl-right-inline">James, K.; Harris, G., Jr.; Wollops, W. American Independence and Magnetism.<i>Revol. Tracts</i><b>1776</b>,<i>32</i>, 34–55.</div></div></div>',
+    inText: "<sup>1–5</sup>",
+  },
+  {
+    style: "Association for Computing Machinery",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry"><div class="csl-left-margin">[1]</div><div class="csl-right-inline">Christopher Columbus. 1492.<i>How I Discovered America</i>. Hispanic Press, Barcelona.</div></div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry"><div class="csl-left-margin">[2]</div><div class="csl-right-inline">R. J. Green, U. P. Fred, and W. P. Norbert. 1900. Things that Go Bump in the Night.<i>Psych. Today</i>46, (1900), 345–678.</div></div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry"><div class="csl-left-margin">[3]</div><div class="csl-right-inline">Kelly James, George Harris Jr., and Wilby Wollops. 1776. American Independence and Magnetism.<i>Revol. Tracts</i>32, (1776), 34–55.</div></div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry"><div class="csl-left-margin">[4]</div><div class="csl-right-inline">T. P. Phillips. 1999. Possible Influence of the Magnetosphere on American History.<i>J. Oddball Res.</i>98, (1999), 1000–1003.</div></div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry"><div class="csl-left-margin">[5]</div><div class="csl-right-inline">J. G. Smith and H. K. Weston. 1954. Nothing Particular in this Year’s History.<i>J. Geophys. Res.</i>2, (1954), 14–15.</div></div></div>',
+    inText: "[1–5]",
+  },
+  {
+    style: "Council of Science Editors",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">1. Columbus C. How I Discovered America. Barcelona: Hispanic Press; 1492.</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">2. Green RJ, Fred UP, Norbert WP. Things that Go Bump in the Night. 1900;46:345–678.</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">3. James K, Harris G Jr, Wollops W. American Independence and Magnetism. 1776;32:34–55.</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">4. Phillips TP. Possible Influence of the Magnetosphere on American History. 1999;98:1000–1003.</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">5. Smith JG, Weston HK. Nothing Particular in this Year’s History. 1954;2:14–15.</div></div>',
+    inText: "<sup>1–5</sup>",
+  },
+  {
+    style: "Modern Language Association 8th edition",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">Columbus, Christopher.<i>How I Discovered America</i>. Hispanic Press, 1492.</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">Green, R. J., et al. “Things That Go Bump in the Night.”<i>Psych. Today</i>, vol. 46, 1900, pp. 345–678.</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">James, Kelly, et al. “American Independence and Magnetism.”<i>Revol. Tracts</i>, vol. 32, 1776, pp. 34–55.</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">Phillips, T. P. “Possible Influence of the Magnetosphere on American History.”<i>J. Oddball Res.</i>, vol. 98, 1999, pp. 1000–03.</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">Smith, J. G., and H. K. Weston. “Nothing Particular in This Year’s History.”<i>J. Geophys. Res.</i>, vol. 2, 1954, pp. 14–15.</div></div>',
+    inText: "(Smith and Weston; Columbus; Green et al.; Phillips; James et al.)",
+  },
+  {
+    style: "Modern Language Association",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">Columbus, Christopher.<i>How I Discovered America</i>. Hispanic Press, 1492.</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">Green, R. J., et al. “Things That Go Bump in the Night.”<i>Psych. Today</i>, vol. 46, 1900, pp. 345–678.</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">James, Kelly, et al. “American Independence and Magnetism.”<i>Revol. Tracts</i>, vol. 32, 1776, pp. 34–55.</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">Phillips, T. P. “Possible Influence of the Magnetosphere on American History.”<i>J. Oddball Res.</i>, vol. 98, 1999, pp. 1000–03.</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">Smith, J. G., and H. K. Weston. “Nothing Particular in This Year’s History.”<i>J. Geophys. Res.</i>, vol. 2, 1954, pp. 14–15.</div></div>',
+    inText: "(Smith and Weston; Columbus; Green et al.; Phillips; James et al.)",
+  },
+  {
+    style: "Modern Humanities Research Association",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">Columbus, Christopher,<i>How I Discovered America</i>(Barcelona: Hispanic Press, 1492)</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">Green, RJ, UP Fred and WP Norbert, “Things That Go Bump in the Night,”<i>Psych. Today</i>, 46 (1900), 345–678</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">James, Kelly, George Harris Jr and Wilby Wollops, “American Independence and Magnetism,”<i>Revol. Tracts</i>, 32 (1776), 34–55</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">Phillips, TP, “Possible Influence of the Magnetosphere on American History,”<i>J. Oddball Res.</i>, 98 (1999), 1000–1003</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">Smith, JG and HK Weston, “Nothing Particular in This Year’s History,”<i>J. Geophys. Res.</i>, 2 (1954), 14–15</div></div>',
+    inText:
+      "J. G. Smith and H. K. Weston, “Nothing Particular in This Year’s History,”<i>J. Geophys. Res.</i>, 2 (1954), 14–15; Christopher Columbus,<i>How I Discovered America</i>(Barcelona: Hispanic Press, 1492); R. J. Green, U. P. Fred and W. P. Norbert, “Things That Go Bump in the Night,”<i>Psych. Today</i>, 46 (1900), 345–678; T. P. Phillips, “Possible Influence of the Magnetosphere on American History,”<i>J. Oddball Res.</i>, 98 (1999), 1000–1003; Kelly James, George Harris Jr. and Wilby Wollops, “American Independence and Magnetism,”<i>Revol. Tracts</i>, 32 (1776), 34–55.",
+  },
+  {
+    style: "Turabian",
+    bib: '<div class="csl-bib-body"><div data-csl-entry-id="Citation:d55a94dc-0127-4d8f-befd-01f1a6dd96dc" class="csl-entry">Columbus, Christopher.<i>How I Discovered America</i>. Barcelona: Hispanic Press, 1492.</div><div data-csl-entry-id="Citation:39778dc4-366c-4e93-9e89-87e2e85bea49" class="csl-entry">Green, R. J., U. P. Fred, and W. P. Norbert. “Things That Go Bump in the Night.”<i>Psych. Today</i>46 (1900): 345–678.</div><div data-csl-entry-id="Citation:26a9a333-21b6-4f0b-b2cc-323711806529" class="csl-entry">James, Kelly, George Harris Jr., and Wilby Wollops. “American Independence and Magnetism.”<i>Revol. Tracts</i>32 (1776): 34–55.</div><div data-csl-entry-id="Citation:d76401d7-486c-486f-b4fe-b45dbca95214" class="csl-entry">Phillips, T. P. “Possible Influence of the Magnetosphere on American History.”<i>J. Oddball Res.</i>98 (1999): 1000–1003.</div><div data-csl-entry-id="Citation:83465785-93c0-422d-aaf6-7c87307f946b" class="csl-entry">Smith, J. G., and H. K. Weston. “Nothing Particular in This Year’s History.”<i>J. Geophys. Res.</i>2 (1954): 14–15.</div></div>',
+    inText:
+      "J. G. Smith and H. K. Weston, “Nothing Particular in This Year’s History,”<i>J. Geophys. Res.</i>2 (1954): 14–15; Christopher Columbus,<i>How I Discovered America</i>(Barcelona: Hispanic Press, 1492); R. J. Green, U. P. Fred, and W. P. Norbert, “Things That Go Bump in the Night,”<i>Psych. Today</i>46 (1900): 345–678; T. P. Phillips, “Possible Influence of the Magnetosphere on American History,”<i>J. Oddball Res.</i>98 (1999): 1000–1003; Kelly James, George Harris Jr., and Wilby Wollops, “American Independence and Magnetism,”<i>Revol. Tracts</i>32 (1776): 34–55.",
   },
 ]
 
@@ -185,8 +70,8 @@ const CitationsExamplesPage: React.FC = () => {
       <Seo title="Citation Examples" />
       <Grid container bgcolor="primary.main" justifyContent="center" height="100%">
         <Grid item xs={10} md={6}>
-          {Object.values(CSL_METADATA).map(({ style_title, id }) => (
-            <Grid item xs={12} key={id}>
+          {preprocessedCitations.map(({ style_title, bib, inText }, index) => (
+            <Grid item xs={12} key={index.toString()}>
               <Typography
                 component="h1"
                 variant="h5"
@@ -207,7 +92,7 @@ const CitationsExamplesPage: React.FC = () => {
                   style={{ padding: "4px" }}
                   dangerouslySetInnerHTML={{
                     // @ts-ignore
-                    __html: generateCitations(examples, id.toLocaleLowerCase()),
+                    __html: bib,
                   }}
                 />
               </Box>
@@ -219,12 +104,7 @@ const CitationsExamplesPage: React.FC = () => {
                   className="output-viewer"
                   style={{ padding: "4px" }}
                   dangerouslySetInnerHTML={{
-                    __html: generateCitations(
-                      // @ts-ignore
-                      examples,
-                      id.toLocaleLowerCase(),
-                      true,
-                    ),
+                    __html: inText,
                   }}
                 />
               </Box>

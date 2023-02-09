@@ -22,5 +22,9 @@ module.exports = {
     "react/require-default-props": 0,
     "react/jsx-wrap-multilines": 0,
     "@typescript-eslint/ban-ts-comment": 0,
+    "class-methods-use-this": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "react/jsx-props-no-spreading": 0,
   },
 }
