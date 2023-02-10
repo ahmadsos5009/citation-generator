@@ -51,11 +51,25 @@
 - [x] reuse reference list to be a reference manger page in future
   > Google Ads try
 - [X] Fix Scrollbar
-- [ ] Performance fix for CSL xml
-- [ ] move all CSL to config
-- [ ] use IndexDB, and update schema, for Reference Management System
+- [X] Performance fix for CSL xml
+- [X] move all CSL to config
+- [X] use IndexDB, and update schema, for Reference Management System
+- [ ] Fix Imported Data, and filter just document type
+- [ ] Fix Import and upload list item
+- [ ] Duplicate references citation.js
+- [ ] PubMed
 - [ ] build Reference Management System
 - [ ] build annotated bibliography page
 - [ ] add 4040 page
 - [ ] add more CSL style
 
+Dexie - Schema:
+* csl: `id, name, xml`
+* citation: `id, type, json, updatedTimestamp`
+* collection: ``
+* tag: ``
+* manger_filter: TODO
+
+> * Seed CSL on request
+> * Add csl xml to the body
+> * Static example generation, like mdx page

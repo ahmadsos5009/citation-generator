@@ -1,19 +1,7 @@
 import { User } from "../../cslTypes/type"
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import {
-  AuthorsEventPayload,
-  CitationDocumentType,
-  CitationJSDocumentType,
-  Events,
-} from "../../types"
-import { StoreContext } from "../../provider/Store"
+import React, { useCallback, useContext, useMemo } from "react"
+import { CitationJSDocumentType } from "../../types"
+
 import { documentUser, users } from "../../cslTypes/fieldsMapping"
 import { v4 as uuid } from "uuid"
 import {
@@ -30,212 +18,107 @@ import {
 import AddIcon from "@mui/icons-material/Add"
 import DeleteIcon from "@mui/icons-material/Delete"
 import styled from "@emotion/styled"
+import { GeneratorContext } from "../../provider/GeneratorProvider"
 
 export interface Users extends User {
   role: string
 }
 
-/**
- *  Will maintain Contributors list in both StoreContext to show it the OnFlyCitationBox component,
- *  and State will be in sync with StoreContext
- * @param documentType
- * @constructor
- */
-const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
-  documentType,
-}) => {
-  const { state, dispatch } = useContext(StoreContext)
+const ContributorsInput: React.FC = () => {
+  const { documentType, citation, setValue } = useContext(GeneratorContext)
 
-  const initial = useMemo(() => {
-    const contributors: Users[] = []
-
-    documentUser[CitationJSDocumentType[documentType]].map((user) => {
+  /**
+   * Collect all users roles in the citation and add to them id
+   * so we could us it when updating it or delete them
+   */
+  const contributors = useMemo(() => {
+    const initRole = documentUser[CitationJSDocumentType[documentType]][0]
+    const users: (User & { role: string })[] = []
+    documentUser[CitationJSDocumentType[documentType]].map((role) => {
       // @ts-ignore
-      if (state[documentType][user] && state[documentType][user].length > 0) {
+      if (citation && citation[role]) {
         // @ts-ignore
-        state[documentType][user].map((u) => contributors.push({ ...u, role: user }))
+        users.push(...citation[role].map((u) => ({ ...u, role, id: uuid() })))
       }
     })
 
-    if (contributors.length > 0) {
-      return contributors
+    if (users.length) {
+      return users
     } else {
-      const initialUser = { id: uuid() }
-      setTimeout(() => {
-        dispatch({
-          type: "set",
-          id: "author",
-          documentType,
-          value: [initialUser],
-        })
-      }, 100)
-      return [{ ...initialUser, role: "author" }]
+      setValue(initRole, [{}])
+      return [{ role: initRole, id: uuid() }]
     }
-  }, [state[documentType], dispatch])
-
-  const [contributors, setContributors] = useState<Users[]>(initial)
+  }, [documentType, citation])
 
   const handleOnAddClick = useCallback(() => {
     const role = documentUser[CitationJSDocumentType[documentType]][0]
-    const newUser = { id: uuid() }
-
     // @ts-ignore
-    const updatedContributors = state[documentType][role]
-      ? // @ts-ignore
-        [...state[documentType][role], newUser]
-      : [newUser]
-
-    dispatch({
-      type: "set",
-      id: role,
-      documentType,
-      value: updatedContributors,
-    })
-
-    setContributors([...contributors, { ...newUser, role }])
-  }, [state[documentType], contributors, setContributors, dispatch])
-
-  const handleOnDeleteClick = useCallback(
-    (e) => {
-      const [id, role] = e.currentTarget.name.split("_")
-      // @ts-ignore
-      const contributor = state[documentType][role] || [{ id }]
-      // @ts-ignore
-      const index = contributor.findIndex((user) => user.id === id)
-
-      const newValue = [
-        // @ts-ignore
-        ...(state[documentType][role] || []),
-        contributor[index],
-      ].filter((user) => user.id !== id)
-
-      dispatch({
-        type: "set",
-        id: role,
-        documentType,
-        value: newValue,
-      })
-
-      const newState = contributors.filter((user) => user.id !== id)
-      setContributors(newState)
-    },
-    [state[documentType], contributors, setContributors],
-  )
+    const users = (citation && [...citation[role], {}]) || [{}]
+    setValue(role, [...users])
+  }, [documentType, citation])
 
   const handleChange = useCallback(
     (e) => {
       const [id, role] = e.target.name.split("_")
-      // @ts-ignore
-      const contributor = state[documentType][role] || [{ id }]
-      // @ts-ignore
-      const index = contributor.findIndex((user) => user.id === id)
+      const filed = e.target.id
+      const value = e.target.value
+      const users = contributors
+        .filter((user) => user.role === role)
+        .map((user) => {
+          if (user.id === id) {
+            return { ...getCitationUser(user), [filed]: value }
+          }
+          return getCitationUser(user)
+        })
 
-      switch (e.target.id) {
-        case "given":
-          contributor[index]["given"] = e.target.value
-          break
-        case "family":
-          contributor[index]["family"] = e.target.value
-          break
-        case "suffix":
-          contributor[index]["suffix"] = e.target.value
-          break
-      }
-
-      dispatch({
-        type: "set",
-        id: role,
-        documentType,
-        value: contributor,
-      })
-
-      const newState = contributors.map((user) => {
-        if (user.id === id) {
-          user = { ...contributor[index], role: user.role }
-        }
-        return user
-      })
-      setContributors(newState)
+      setValue(role, users)
     },
-    [state[documentType], contributors, setContributors],
+    [citation, contributors],
   )
 
+  const handleOnDeleteClick = useCallback(
+    (e) => {
+      const [id, role] = e.currentTarget.name.split("_")
+      const users = contributors.filter((user) => {
+        if (user.role === role && user.id !== id) {
+          return getCitationUser(user)
+        }
+      })
+
+      setValue(role, users)
+    },
+    [contributors],
+  )
+
+  /**
+   * switch user for one array to another array
+   */
   const handleRoleChange = useCallback(
     (e) => {
       const [id, role] = e.target.name.split("_")
-      // @ts-ignore
-      const contributor = state[documentType][role] || [{ id }]
-      // @ts-ignore
-      const index = contributor.findIndex((user) => user.id === id)
-
-      const newValue = [
-        // @ts-ignore
-        ...(state[documentType][e.target.value] || []),
-        contributor[index],
-      ]
-
-      // @ts-ignore
-      const oldValue = (state[documentType][role] || []).filter(
-        // @ts-ignore
-        (user) => user.id !== id,
+      const newRole = e.target.value
+      let updatedUser
+      const from = contributors.filter((user) => {
+        if (user.id === id) {
+          updatedUser = user
+        }
+        if (user.role === role && user.id !== id) {
+          return getCitationUser(user)
+        }
+      })
+      const to = contributors.filter(
+        (user) => user.role === newRole && getCitationUser(user),
       )
 
-      dispatch({
-        type: "set",
-        id: role,
-        documentType,
-        value: oldValue,
-      })
-
-      dispatch({
-        type: "set",
-        id: e.target.value,
-        documentType,
-        value: newValue,
-      })
-
-      const newState = contributors.map((user) => {
-        if (user.id === id) {
-          user.role = e.target.value
-        }
-        return user
-      })
-      setContributors(newState)
+      setValue(role, from)
+      setValue(newRole, [...to, updatedUser])
     },
-    [state[documentType], contributors, setContributors],
+    [contributors],
   )
-
-  const nodeRef = useRef<HTMLDivElement>()
-
-  const EventCallBack = useCallback(
-    (e: CustomEvent<{ payload: AuthorsEventPayload }>) => {
-      const { state, store } = e.detail.payload
-      if (store) {
-        Object.entries(store).map((obj) => {
-          const [role, value] = obj
-          dispatch({
-            type: "set",
-            id: role,
-            documentType,
-            value,
-          })
-        })
-        setContributors(state)
-      }
-    },
-    [dispatch, setContributors],
-  )
-
-  useEffect(() => {
-    if (!nodeRef.current) return
-    nodeRef.current.addEventListener(Events.AUTHORS, EventCallBack as EventListener)
-    return () =>
-      document.removeEventListener(Events.AUTHORS, EventCallBack as EventListener)
-  }, [nodeRef, dispatch, setContributors])
 
   return (
     <Container disableGutters>
-      <Stack direction="row" ref={nodeRef} id="author-container">
+      <Stack direction="row" id="author-container">
         <AuthorsLabel id="authors">Contributor(s)</AuthorsLabel>
         <IconButton aria-label="add" onClick={handleOnAddClick}>
           <AddIcon />
@@ -309,6 +192,12 @@ const ContributorsInput: React.FC<{ documentType: CitationDocumentType }> = ({
     </Container>
   )
 }
+
+const getCitationUser = (user: User) => ({
+  family: user.family,
+  given: user.given,
+  suffix: user.suffix,
+})
 
 const AuthorsLabel = styled(FormLabel)`
   display: flex;

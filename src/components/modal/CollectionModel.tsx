@@ -44,6 +44,7 @@ import LabelIcon from "@mui/icons-material/Label"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
 import styled from "@emotion/styled"
+import config from "../../config"
 
 const colors: LabelHex[] = [
   "secondary",
@@ -91,11 +92,13 @@ export const CollectionModel: React.FC = () => {
 
   return (
     <>
-      <Tooltip title="Create your collection with citations">
-        <IconButton onClick={onCollectionClick}>
-          <LibraryAddIcon />
-        </IconButton>
-      </Tooltip>
+      {config.ENABLE_COLLECTION && (
+        <Tooltip title="Create your collection with citations">
+          <IconButton onClick={onCollectionClick}>
+            <LibraryAddIcon />
+          </IconButton>
+        </Tooltip>
+      )}
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style, width: "50%", height: "50%" }}>
           <Typography

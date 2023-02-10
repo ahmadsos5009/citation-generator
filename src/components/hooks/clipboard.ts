@@ -1,7 +1,8 @@
 import React, { useCallback, useContext } from "react"
-import { Citation } from "../../types"
+
 import { generateCitation } from "../utilities/citation_generator"
-import { DBContext } from "../../provider/DBProvider"
+
+import { GeneratorContext } from "../../provider/GeneratorProvider"
 
 type ClipboardProps = {
   handleClick: (event: React.MouseEvent<HTMLElement>) => void
@@ -12,9 +13,9 @@ type ClipboardProps = {
   showAlert: boolean
 }
 
-export default (citation: Citation, documentType: string): ClipboardProps => {
+export default (): ClipboardProps => {
   const [showAlert, setShowAlert] = React.useState(false)
-  const { format } = useContext(DBContext)
+  const { documentType, citation, style, xml } = useContext(GeneratorContext)
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
@@ -29,7 +30,8 @@ export default (citation: Citation, documentType: string): ClipboardProps => {
         citation,
         documentType,
         "text",
-        format,
+        style,
+        xml,
       )
 
       if (target === "citation") {
@@ -45,7 +47,7 @@ export default (citation: Citation, documentType: string): ClipboardProps => {
 
       setShowAlert(true)
     },
-    [citation],
+    [citation, style, documentType],
   )
 
   const handleClose = useCallback(

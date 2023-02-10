@@ -1,4 +1,9 @@
+import { CitationDocumentType } from "./types"
+
 interface Config {
+  DB_VERSION: number
+  DB_NAME: string
+  DOMAIN: string
   SERVICES_PAGES: { name: string; href: string; disabled?: boolean }[]
   SOCIAL: {
     twitter: {
@@ -12,9 +17,17 @@ interface Config {
       text: string
     }
   }
+  ENABLE_COLLECTION: boolean
+  DOCUMENT_TYPES: CitationDocumentType[]
 }
 
+const IS_DEVELOPMENT =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+
 export default <Config>{
+  DB_VERSION: 1,
+  DB_NAME: "CitationGenerator",
+  DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citation-creator.com",
   SERVICES_PAGES: [
     { name: "List Generator", href: "/citationsList/" },
     { name: "Manage References", href: "/referencesManager/" },
@@ -41,4 +54,6 @@ export default <Config>{
       text: "free citation generator and you could create a bibliography and export it as PDF Word or BibTex.",
     },
   },
+  ENABLE_COLLECTION: false,
+  DOCUMENT_TYPES: ["journal", "book", "report", "website"],
 }

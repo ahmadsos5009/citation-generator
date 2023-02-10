@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react"
+import React, { useContext } from "react"
 import {
   FormControl,
   FormLabel,
@@ -8,81 +8,42 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material"
-import { StoreContext } from "../../provider/Store"
-import { CitationDocumentType } from "../../types"
 
-const LinkInput: React.FC<{ documentType: CitationDocumentType }> = ({
-  documentType,
-}) => {
-  const [link, setLink] = useState("DOI")
+import { GeneratorContext } from "../../provider/GeneratorProvider"
+import { Controller } from "react-hook-form"
 
-  const { dispatch, state } = useContext(StoreContext)
-
-  const onLinkChange = useCallback(
-    (e) => {
-      const value = e.target.value
-      if (value === link) {
-        return
-      }
-
-      const oppositeLink = (value === "DOI" && "URL") || "DOI"
-
-      dispatch({
-        type: "set",
-        id: value,
-        documentType,
-        // @ts-ignore
-        value: state[documentType][oppositeLink],
-      })
-
-      dispatch({
-        type: "set",
-        id: oppositeLink,
-        documentType,
-        value: undefined,
-      })
-
-      setLink(e.target.value)
-    },
-    [setLink, dispatch, link, state[documentType]],
-  )
-
-  const handleChange = useCallback(
-    (e) => {
-      dispatch({
-        type: "set",
-        id: link,
-        documentType,
-        value: e.target.value,
-      })
-
-      dispatch({
-        type: "set",
-        id: (link === "DOI" && "URL") || "DOI",
-        documentType,
-        value: undefined,
-      })
-    },
-    [dispatch],
-  )
+const LinkInput: React.FC = () => {
+  const { control } = useContext(GeneratorContext)
 
   return (
     <Stack margin="8px">
       <FormLabel>Link</FormLabel>
-      <ToggleButtonGroup
-        color="primary"
-        value={link}
-        exclusive
-        onChange={onLinkChange}
-      >
-        <ToggleButton value="DOI">DOI</ToggleButton>
-        <ToggleButton value="URL">URL</ToggleButton>
-      </ToggleButtonGroup>
+      <Controller
+        name="link-type"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <ToggleButtonGroup
+            exclusive
+            color="primary"
+            value={value || ""}
+            onChange={onChange}
+          >
+            <ToggleButton value="DOI">DOI</ToggleButton>
+            <ToggleButton value="URL">URL</ToggleButton>
+          </ToggleButtonGroup>
+        )}
+      />
       <FormControl variant="standard" sx={{ margin: "0 12px" }}>
         <InputLabel focused={false} shrink>
           DOI / URL
         </InputLabel>
-        <Input id="link" onChange={handleChange} />
+        <Controller
+          name="link"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Input id="link" onChange={onChange} value={value || ""} />
+          )}
+        />
       </FormControl>
     </Stack>
   )

@@ -24,14 +24,18 @@ import {
   export_word,
 } from "./utilities/citation_exporter"
 
-import { DBContext } from "../provider/DBProvider"
 import { generateCitation } from "./utilities/citation_generator"
-import { Citation, CitationDocumentType, DocumentType } from "../types"
+import {
+  Citation,
+  CitationDocumentType,
+  CitationStyle,
+  DocumentType,
+} from "../types"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 import { Cite } from "@citation-js/core"
 import sendFeedback from "./utilities/feedback-api"
 
-const style = {
+const importStyle = {
   position: "absolute" as const,
   top: "50%",
   left: "50%",
@@ -101,7 +105,7 @@ export const ExportFileNameModel: React.FC<{
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={importStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Export To {buttonText} file
           </Typography>
@@ -135,20 +139,34 @@ require("@citation-js/plugin-bibtex")
 import { Spinner } from "./editor/Spinner"
 import EditIcon from "@mui/icons-material/Edit"
 import { DocumentIcon, ImportCitation } from "./Citation"
-import { clearCitationFields, fillCitationFields } from "./utilities/html_fields"
-import { StoreContext } from "../provider/Store"
+
 import SaveIcon from "@mui/icons-material/Save"
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
-import { navigate } from "gatsby"
-import { EditorContext } from "../provider/EditorProvider"
+
 import FeedbackIcon from "@mui/icons-material/Feedback"
 import { Feedback } from "./Buttons"
 import { validateFeedback } from "./utilities/text-validation"
 
+import { useLocation } from "@reach/router"
+import { navigate } from "gatsby"
+import { EditorContext } from "../provider/EditorProvider"
+
+import { v4 as uuid } from "uuid"
+import { TCitation } from "../db/types"
+import { DBContext } from "../provider/DBProvider"
+
 export const UploadFileModel: React.FC<{
   documentType: CitationDocumentType
-  editor?: boolean
-}> = ({ documentType, editor }) => {
+  updateCitation: (citation: Citation) => void
+  style: CitationStyle
+  xml: string
+}> = ({ documentType, updateCitation, style, xml }) => {
+  const { pathname } = useLocation()
+  const { citations, setCitations } = useContext(EditorContext)
+  const { citationDao } = useContext(DBContext)
+
+  const isEditor = pathname === "/citationsList/"
+
   const [open, setOpen] = useState(false)
   const [uploadError, setUploadError] = useState<string | undefined>(undefined)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -176,8 +194,14 @@ export const UploadFileModel: React.FC<{
 
       fileReader.onloadend = async () => {
         const cite = Cite(fileReader.result, { format: "string" })
-        const outputJson = cite.get({ format: "real", type: "json", style: "csl" })
-        setOutputJson(outputJson)
+        const outputJson = cite.get({ format: "real", type: "json" })
+        const citations = outputJson.map((citation: { _graph: unknown }) => {
+          // eslint-disable-next-line no-underscore-dangle
+          delete citation._graph
+          return citation
+        })
+
+        setOutputJson(citations)
       }
 
       fileReader.onprogress = (e) =>
@@ -191,51 +215,37 @@ export const UploadFileModel: React.FC<{
     }
   }, [])
 
-  const Store = useContext(StoreContext)
-  const Editor = useContext(EditorContext)
-
   const onEditClick = useCallback(
     (e) => {
       if (!e.currentTarget.value || !outputJson) return
 
-      if (editor) {
-        Editor.citations.push(outputJson[e.currentTarget.value])
-        Editor.setCitations([...Editor.citations])
-      } else {
-        clearCitationFields(documentType)
-        fillCitationFields(documentType, outputJson[e.currentTarget.value])
-
-        Store.dispatch({
-          type: "fill",
-          documentType,
-          value: outputJson[e.currentTarget.value],
-        })
-      }
-
+      updateCitation(outputJson[e.currentTarget.value])
       setOpen(false)
       if (uploadRef.current) uploadRef.current.value = ""
     },
     [setOpen, outputJson, documentType],
   )
 
-  const { format, dispatch } = useContext(DBContext)
-
   const onSaveAllClick = useCallback(() => {
-    if (editor && outputJson) {
-      Editor.setCitations([...Editor.citations, ...outputJson])
+    if (isEditor && outputJson) {
+      setCitations([...citations, ...outputJson])
     } else {
-      outputJson?.map((citation) =>
-        dispatch({
-          type: "save",
-          citationDocument: documentType,
-          // @ts-ignore
-          citation,
-        }),
-      )
+      if (outputJson) {
+        citationDao.bulkAdd(
+          outputJson.map(
+            (citation) =>
+              ({
+                ...citation,
+                id: uuid(),
+                updatedTimestamp: Date.now(),
+              } as TCitation),
+          ),
+        )
+      }
     }
     setOpen(false)
     if (uploadRef.current) uploadRef.current.value = ""
-  }, [outputJson, documentType])
+  }, [outputJson, documentType, citations, isEditor])
 
   const onBibliographyListClick = useCallback(() => {
     if (!outputJson) return
@@ -243,11 +253,11 @@ export const UploadFileModel: React.FC<{
     return navigate("/citationsList", {
       state: {
         citations: outputJson,
-        style: format,
+        style,
         citationDocument: documentType,
       },
     })
-  }, [outputJson, format])
+  }, [outputJson, style])
 
   return (
     <div>
@@ -273,16 +283,16 @@ export const UploadFileModel: React.FC<{
       </label>
 
       <Modal open={open} onClose={handleClose}>
-        <Box sx={{ ...style, width: "50%", height: "50%" }}>
+        <Box sx={{ ...importStyle, width: "50%", height: "50%" }}>
           {uploadProgress > 0 && uploadProgress > 100 && <Spinner />}
           {uploadError && <Alert severity="error">{uploadError}</Alert>}
           {outputJson && outputJson.length > 0 && (
             <Box sx={{ width: "100%", height: "90%" }}>
               <Box display="flex" justifyContent="end">
                 <Button startIcon={<SaveIcon />} onClick={onSaveAllClick}>
-                  {(editor && "Import") || "Save"} All
+                  {(isEditor && "Import") || "Save"} All
                 </Button>
-                {!editor && (
+                {!isEditor && (
                   <Button
                     startIcon={<FormatQuoteIcon />}
                     onClick={onBibliographyListClick}
@@ -297,6 +307,8 @@ export const UploadFileModel: React.FC<{
                     citation={citation}
                     documentType={documentType}
                     onEditClick={onEditClick}
+                    style={style}
+                    xml={xml}
                     index={index}
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
@@ -315,27 +327,33 @@ const CitationListItem: React.FC<{
   citation: ImportCitation
   documentType: CitationDocumentType
   index: number
+  style: CitationStyle
+  xml: string
   onEditClick: (e: React.MouseEvent) => void
-}> = ({ citation, documentType, index, onEditClick }) => {
-  const { format } = useContext(DBContext)
+}> = ({ citation, documentType, index, style, xml, onEditClick }) => {
   const { convertedCitation, inText } = generateCitation(
     citation,
     documentType,
     "html",
-    format,
+    style,
+    xml,
   )
+  const { pathname } = useLocation()
+  const isEditor = pathname === "/citationsList/"
 
   return (
     <ListItem
       secondaryAction={
-        <IconButton
-          value={index}
-          edge="end"
-          aria-label="edit-citation"
-          onClick={onEditClick}
-        >
-          <EditIcon />
-        </IconButton>
+        !isEditor && (
+          <IconButton
+            value={index}
+            edge="end"
+            aria-label="edit-citation"
+            onClick={onEditClick}
+          >
+            <EditIcon />
+          </IconButton>
+        )
       }
     >
       {citation && <ListItemIcon>{DocumentIcon[citation.type]}</ListItemIcon>}
@@ -397,7 +415,7 @@ export const FeedbackModel: React.FC = () => {
         </Typography>
       </Feedback>
       <Modal open={open} onClose={toggleModel}>
-        <Box sx={{ ...style, width: "50%", height: "50%" }}>
+        <Box sx={{ ...importStyle, width: "50%", height: "50%" }}>
           <Typography padding={2} fontWeight="fontWeightMedium">
             Any feedback will be valuable to improve the website:
           </Typography>

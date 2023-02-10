@@ -16,6 +16,7 @@ export enum CitationDocumentType {
 
 export type DocumentType = "article-journal" | "report" | "book" | "webpage"
 
+// TODO:: Remove use
 export const CitationJSDocumentType: {
   [k in CitationDocumentType]: DocumentType
 } = {

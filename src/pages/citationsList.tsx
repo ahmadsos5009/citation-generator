@@ -4,7 +4,6 @@ import Seo from "../components/Seo"
 import Layout from "../components/pages/Layout"
 import Loadable from "@loadable/component"
 import { EditorProvider } from "../provider/EditorProvider"
-import { ReferencesListProvider } from "../provider/ReferencesListProvider"
 
 const CitationEditor = Loadable(() => import("../components/editor/CitationEditor"))
 
@@ -41,11 +40,9 @@ const CitationsListPage: React.FC = () => {
         </Grid>
 
         <Container>
-          <ReferencesListProvider>
-            <EditorProvider>
-              <CitationEditor />
-            </EditorProvider>
-          </ReferencesListProvider>
+          <EditorProvider>
+            <CitationEditor />
+          </EditorProvider>
         </Container>
       </Grid>
     </Layout>
