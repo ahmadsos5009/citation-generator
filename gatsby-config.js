@@ -85,18 +85,18 @@ module.exports = {
         icon: "src/images/icon.png",
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-google-gtag`,
-    //   options: {
-    //     trackingIds: ["G-QCGFXVP49H"],
-    //   },
-    // },
-    // {
-    //   resolve: "gatsby-plugin-google-tagmanager",
-    //   options: {
-    //     id: "GTM-PQKDKVB",
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: ["G-QCGFXVP49H"],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-PQKDKVB",
+      },
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {
