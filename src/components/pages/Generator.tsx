@@ -30,7 +30,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
   return (
     <Layout>
       <Seo
-        title={`${pageTitle} Citation Generator`}
+        title={`${pageTitle} Citation Generator | ${pageTitle} Citation Generator Free`}
         description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
       />
       <GeneratorProvider xml={xml} style={style}>
