@@ -1,8 +1,12 @@
 import * as React from "react"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import MenuIcon from "@mui/icons-material/Menu"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   Box,
   Button,
@@ -28,10 +32,6 @@ const Header: React.FC = () => {
     setAnchorElNav(null)
   }
 
-  // component: "a",
-  //   href: "/",
-  //   noWrap: true,
-
   return (
     <AppBar position="static">
       <Container disableGutters maxWidth={false} sx={{ background: "#ECE4D5" }}>
@@ -55,15 +55,16 @@ const Header: React.FC = () => {
             }}
           >
             {config.SERVICES_PAGES.filter(({ disabled }) => !disabled).map(
-              ({ name, href }) => (
-                <PrimaryButton
-                  key={name}
-                  href={href}
-                  sx={{ my: 2, display: "block" }}
-                >
-                  {name}
-                </PrimaryButton>
-              ),
+              ({ name, href }) =>
+                (href === "guide" && <StyleGuideButton key="style" />) || (
+                  <PrimaryButton
+                    key={name}
+                    href={href}
+                    sx={{ my: 2, display: "block" }}
+                  >
+                    {name}
+                  </PrimaryButton>
+                ),
             )}
           </Box>
 
@@ -114,11 +115,12 @@ const Header: React.FC = () => {
               }}
             >
               {config.SERVICES_PAGES.filter(({ disabled }) => !disabled).map(
-                ({ name, href }) => (
-                  <MenuItem key={name} component="a" href={href}>
-                    <Typography textAlign="center">{name}</Typography>
-                  </MenuItem>
-                ),
+                ({ name, href }) =>
+                  (href === "guide" && <AccordionStyleGuidButton key={name} />) || (
+                    <MenuItem key={name} component="a" href={href}>
+                      <Typography textAlign="center">{name}</Typography>
+                    </MenuItem>
+                  ),
               )}
             </Menu>
           </Box>
@@ -158,3 +160,63 @@ const Header: React.FC = () => {
 }
 
 export default Header
+
+const StyleGuideButton: React.FC = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = useCallback((event) => {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget)
+    }
+  }, [])
+
+  const handleClose = useCallback(() => {
+    setAnchorEl(null)
+  }, [])
+
+  return (
+    <>
+      <PrimaryButton
+        aria-owns={anchorEl ? "simple-menu" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+        onMouseOver={handleClick}
+        sx={{ my: 2, display: "block" }}
+      >
+        Style Guide
+      </PrimaryButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        MenuListProps={{ onMouseLeave: handleClose }}
+      >
+        <MenuItem component="a" href="/guide/chicago/">
+          <Typography px={2} textAlign="center">
+            Chicago
+          </Typography>
+        </MenuItem>
+      </Menu>
+    </>
+  )
+}
+
+const AccordionStyleGuidButton: React.FC = () => {
+  return (
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography>Style Guide</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <MenuItem component="a" href="/guide/chicago/">
+          <Typography textAlign="center">Chicago</Typography>
+        </MenuItem>
+      </AccordionDetails>
+    </Accordion>
+  )
+}

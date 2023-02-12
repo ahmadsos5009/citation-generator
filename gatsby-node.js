@@ -11,10 +11,17 @@ exports.createPages = async function ({ actions, graphql }) {
       allMdx {
         edges {
           node {
+            internal {
+              contentFilePath
+            }
             body
             frontmatter {
               path
               title
+              description
+              slug
+              documents
+              documentsLink
             }
             id
           }
@@ -25,14 +32,35 @@ exports.createPages = async function ({ actions, graphql }) {
 
   // eslint-disable-next-line array-callback-return
   return data.allMdx.edges.map((edge) => {
-    const { path, title } = edge.node.frontmatter
+    const { path, title, description, slug, documents, documentsLink } =
+      edge.node.frontmatter
     const { id, body } = edge.node
 
-    actions.createPage({
-      path,
-      component: require.resolve("./src/components/pages/Generator.tsx"),
-      context: { id, title, style: path, xml: body },
-    })
+    /** Citation Generator Pages */
+    if (path) {
+      actions.createPage({
+        path,
+        component: require.resolve("./src/components/pages/Generator.tsx"),
+        context: { id, title, style: path, xml: body },
+      })
+    }
+
+    /** Citation Style Guide Pages */
+    if (slug) {
+      const guideTemplate = require.resolve("./src/components/pages/Guide.tsx")
+      actions.createPage({
+        path: slug,
+        component: `${guideTemplate}?__contentFilePath=${edge.node.internal.contentFilePath}`,
+        context: {
+          id,
+          title,
+          description,
+          body,
+          documents,
+          documentsLink,
+        },
+      })
+    }
   })
 }
 

@@ -54,12 +54,13 @@
 - [X] Performance fix for CSL xml
 - [X] move all CSL to config
 - [X] use IndexDB, and update schema, for Reference Management System
+- [X] Add Guide Pages
+- [ ] build Reference Management System
+- [ ] build annotated bibliography page
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
 - [ ] PubMed
-- [ ] build Reference Management System
-- [ ] build annotated bibliography page
 - [ ] add 4040 page
 - [ ] add more CSL style
 
@@ -70,6 +71,6 @@ Dexie - Schema:
 * tag: ``
 * manger_filter: TODO
 
-> * Seed CSL on request
-> * Add csl xml to the body
-> * Static example generation, like mdx page
+> -[X] Seed CSL on request
+> -[X] Add CSL XSLT to the body
+> -[X] Static example generation, like mdx page
