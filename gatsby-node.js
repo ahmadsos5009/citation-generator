@@ -18,6 +18,7 @@ exports.createPages = async function ({ actions, graphql }) {
             frontmatter {
               path
               title
+              metaTitle
               description
               slug
               documents
@@ -32,7 +33,7 @@ exports.createPages = async function ({ actions, graphql }) {
 
   // eslint-disable-next-line array-callback-return
   return data.allMdx.edges.map((edge) => {
-    const { path, title, description, slug, documents, documentsLink } =
+    const { path, title, metaTitle, description, slug, documents, documentsLink } =
       edge.node.frontmatter
     const { id, body } = edge.node
 
@@ -41,7 +42,7 @@ exports.createPages = async function ({ actions, graphql }) {
       actions.createPage({
         path,
         component: require.resolve("./src/components/pages/Generator.tsx"),
-        context: { id, title, style: path, xml: body },
+        context: { id, title, metaTitle, style: path, xml: body },
       })
     }
 

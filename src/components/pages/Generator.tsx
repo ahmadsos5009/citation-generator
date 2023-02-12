@@ -14,11 +14,17 @@ import TabPanel, { DocumentTabs } from "../TabPanel"
 import { GeneratorProvider } from "../../provider/GeneratorProvider"
 
 interface PageProps {
-  pageContext: { id: string; title: string; style: CitationStyle; xml: string }
+  pageContext: {
+    id: string
+    title: string
+    metaTitle: string
+    style: CitationStyle
+    xml: string
+  }
 }
 
 const Generator: React.FC<PageProps> = ({ pageContext }) => {
-  const { title, style, xml } = pageContext
+  const { title, metaTitle, style, xml } = pageContext
 
   const pageTitle = useMemo(() => {
     if (style.includes("_")) {
@@ -30,7 +36,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
   return (
     <Layout>
       <Seo
-        title={`${pageTitle} Citation Generator | ${pageTitle} Citation Generator Free`}
+        title={metaTitle}
         description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
       />
       <GeneratorProvider xml={xml} style={style}>
