@@ -36,7 +36,7 @@ export default <Config>{
       href: "/annotated_bibliography/",
       disabled: true,
     },
-    { name: "Style Guide", disabled: true },
+    { name: "Style Guide", href: "guide" },
     {
       name: "Citation Examples",
       href: "/examples/",
