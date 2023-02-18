@@ -5,6 +5,7 @@ import {
   Button,
   Fab,
   FilledInput,
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -260,7 +261,7 @@ export const UploadFileModel: React.FC<{
   }, [outputJson, style])
 
   return (
-    <div>
+    <Grid alignSelf="center">
       <label htmlFor="contained-button-file">
         <Input
           // @ts-ignore
@@ -271,15 +272,17 @@ export const UploadFileModel: React.FC<{
           multiple
           type="file"
         />
-        <IconButton
+        <Button
           color="secondary"
-          sx={{ p: "10px", ":hover": { borderRadius: "8px" } }}
+          sx={{ ":hover": { borderRadius: "8px" } }}
           aria-label="upload"
+          startIcon={<UploadFileIcon />}
           component="span"
         >
-          <UploadFileIcon />
-          <Typography color="secondary.main">Import form .bib/.tex</Typography>
-        </IconButton>
+          <Typography variant="caption" minWidth="102px" color="secondary.main">
+            Import form .bib/.tex
+          </Typography>
+        </Button>
       </label>
 
       <Modal open={open} onClose={handleClose}>
@@ -319,7 +322,7 @@ export const UploadFileModel: React.FC<{
           )}
         </Box>
       </Modal>
-    </div>
+    </Grid>
   )
 }
 

@@ -55,5 +55,5 @@ export default <Config>{
     },
   },
   ENABLE_COLLECTION: false,
-  DOCUMENT_TYPES: ["journal", "book", "report", "website"],
+  DOCUMENT_TYPES: ["journal", "book", "website", "report"],
 }

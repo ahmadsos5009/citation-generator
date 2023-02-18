@@ -7,16 +7,16 @@
 #### 🧐 CSL styles supported
 
     ├── apa
-    ├── apa 7
-    ├── ama
-    ├── asa
+    ├── apa 7 *
+    ├── ama * 
+    ├── asa *
     ├── acm
     ├── acs
-    ├── cse
+    ├── cse *
     ├── ieee
     ├── mla
-    ├── mla_8th
-    ├── mhra
+    ├── mla_8th * 
+    ├── mhra *
     ├── turabian_9th
     ├── turabian_9th
     ├── chicago
@@ -55,7 +55,13 @@
 - [X] move all CSL to config
 - [X] use IndexDB, and update schema, for Reference Management System
 - [X] Add Guide Pages
+- [X] Update Form
 - [ ] build Reference Management System
+- [ ] Add Google Docs, Microsoft Word, Bibitem, Endnote
+- [ ] Add Footnote preview
+- [ ] Update Form `text fields` `authors` `link` `date`
+- [ ] Add Guide external link and format to the generator page 
+ > Add Google Ads Unit
 - [ ] build annotated bibliography page
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item

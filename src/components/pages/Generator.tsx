@@ -6,12 +6,11 @@ import Seo from "../Seo"
 
 import { CitationStyle } from "../../types"
 
-import { Grid, Stack } from "@mui/material"
-import { Primary, PrimaryText } from "../Typography"
-
-import TabPanel, { DocumentTabs } from "../TabPanel"
+import { Container, Grid, Paper, Stack } from "@mui/material"
+import { PrimaryStart, PrimaryTextStart } from "../Typography"
 
 import { GeneratorProvider } from "../../provider/GeneratorProvider"
+import CitationForm from "../CitationForm"
 
 interface PageProps {
   pageContext: {
@@ -40,28 +39,49 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
         description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
       />
       <GeneratorProvider xml={xml} style={style}>
-        <Grid
-          container
-          height="100%"
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          bgcolor="primary.main"
-          flexWrap="nowrap"
+        <Container
+          disableGutters
+          maxWidth={false}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            bgcolor: "primary.main",
+          }}
         >
-          <Grid xs={2} md={4} item>
-            <Stack p={2}>
-              <Primary>{`${pageTitle} Citation Generator`}</Primary>
-              <PrimaryText>{title}</PrimaryText>
-            </Stack>
-          </Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            py={2}
+            item
+            xs={10}
+          >
+            <Paper
+              elevation={8}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: { xs: "98%", md: "100%" },
+              }}
+            >
+              <Grid item xs={12} md={8}>
+                <Stack
+                  px={{ xs: 1, md: 0 }}
+                  rowGap={2}
+                  textAlign={{ xs: "center", md: "start" }}
+                >
+                  <Stack py={2}>
+                    <PrimaryStart>{`${pageTitle} Citation Generator`}</PrimaryStart>
+                    <PrimaryTextStart>{`${title} Citation and Footnote/Endnote generator`}</PrimaryTextStart>
+                  </Stack>
+                </Stack>
 
-          <Grid p={{ xs: 1 }} container justifyContent="center" direction="column">
-            <DocumentTabs />
-
-            <TabPanel />
+                <CitationForm />
+              </Grid>
+            </Paper>
           </Grid>
-        </Grid>
+        </Container>
       </GeneratorProvider>
     </Layout>
   )
