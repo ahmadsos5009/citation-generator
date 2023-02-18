@@ -8,23 +8,28 @@ import React, {
 import {
   Alert,
   Box,
+  Button,
   ButtonGroup,
   Container,
   Divider,
   Grid,
   IconButton,
-  InputBase,
+  InputAdornment,
   ListItem,
   ListItemIcon,
   ListItemText,
   Paper,
   Snackbar,
+  Stack,
   SxProps,
+  TextField,
   Theme,
+  ToggleButton,
+  ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material"
-import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+
 import {
   Citation,
   CitationDocumentType,
@@ -47,10 +52,16 @@ import { generateCitation } from "./utilities/citation_generator"
 
 import { PrimaryList } from "./Lists"
 
-import { UploadFileModel } from "./Model"
-import { Secondary } from "./Typography"
 import { GeneratorContext } from "../provider/GeneratorProvider"
+
+import FootnoteIcon from "../icons/footnote"
+
+import { PlainTextIcon, WordIcon } from "../icons"
+
+import { UploadFileModel } from "./Model"
+import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 
 export const DocumentIcon: {
   [key in DocumentType]: ReactElement
@@ -81,10 +92,8 @@ const boxStyle: SxProps<Theme> = {
   padding: "12px",
   width: "100%",
   overflowWrap: "anywhere",
-  bgcolor: "primary.main",
+  bgcolor: "#F4F3F5",
   borderRadius: "4px",
-  boxShadow:
-    "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
 }
 
 export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
@@ -92,49 +101,129 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
 }) => {
   const { citation, style, xml, documentType } = useContext(GeneratorContext)
 
-  if (!citation || isEmptyCitation(citation, CitationJSDocumentType[documentType])) {
-    return (
-      <Typography padding={2} fontWeight="fontWeightMedium">
-        Fill entry to generate citation manually on the fly
-      </Typography>
-    )
-  }
-
   const { convertedCitation, inText } = useMemo(
     () => generateCitation(citation, documentType, "html", style, xml),
     [citation, documentType, style],
   )
 
+  const isEmpty = useMemo(
+    () => isEmptyCitation(citation, CitationJSDocumentType[documentType]),
+    [citation],
+  )
+
   return (
-    <Grid item xs={11} lg={10} sx={{ ...boxStyle }}>
-      <Secondary>Citation Preview</Secondary>
-
-      <Box sx={{ display: "flex", padding: "8px", alignItems: "center" }}>
-        <IconButton onClick={handleClick} value="citation">
-          <ContentCopyIcon />
-        </IconButton>
-        <div
-          className="output-viewer"
-          dangerouslySetInnerHTML={{ __html: convertedCitation }}
-        />
-      </Box>
-
-      <Box sx={{ display: "flex", padding: "8px", alignItems: "center" }}>
-        <IconButton onClick={handleClick} value="in-text">
-          <ContentCopyIcon />
-        </IconButton>
-        <Box>
-          <Typography align="center" color="text.secondary" padding={0}>
-            In text citation:
+    <Grid item xs={11} lg={12} sx={{ ...boxStyle }}>
+      <Grid xs={11} md={12} item container justifyContent="space-between">
+        <Stack>
+          <DocumentSource />
+          <Typography variant="caption" align="center" p={1}>
+            Document Type
           </Typography>
-          <div
-            className="output-viewer"
-            dangerouslySetInnerHTML={{
-              __html: inText,
-            }}
-          />
-        </Box>
-      </Box>
+        </Stack>
+
+        <Stack>
+          <ToggleButtonGroup
+            sx={{ flexWrap: "wrap" }}
+            value="citation"
+            size="small"
+            exclusive
+          >
+            <ToggleButton value="citation">Citation Preview</ToggleButton>
+            <ToggleButton value="footnote">
+              <FootnoteIcon />
+              Footnote Preview
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant="caption" align="center" p={1}>
+            View Mode
+          </Typography>
+        </Stack>
+
+        <Stack>
+          <ToggleButtonGroup
+            sx={{ flexWrap: "wrap", justifyContent: "center" }}
+            value="text"
+            size="small"
+            exclusive
+          >
+            <ToggleButton value="text">
+              <PlainTextIcon />
+              Plain-text
+            </ToggleButton>
+            <ToggleButton value="word">
+              <WordIcon />
+              Word
+            </ToggleButton>
+            <ToggleButton value="bibtex">
+              {/*<BibtexIcon />*/}
+              Bibtex
+            </ToggleButton>
+            <ToggleButton value="bibitem">
+              {/*<TexIcon />*/}
+              Bibitem
+            </ToggleButton>
+            <ToggleButton value="ris">
+              {/*<RisIcon />*/}
+              Ris
+            </ToggleButton>
+            <ToggleButton value="endnote">
+              {/*<XmlIcon />*/}
+              Endnote
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <Typography variant="caption" align="center" p={1}>
+            Copy Option
+          </Typography>
+        </Stack>
+      </Grid>
+
+      {/*{!citation ||*/}
+      {/*  (isEmptyCitation(citation, CitationJSDocumentType[documentType]) && (*/}
+      {/*    <Typography align="center" p={1} fontWeight="bold">*/}
+      {/*      Fill entry to generate citation manually on the fly <br />*/}
+      {/*      or Import citation from an external source*/}
+      {/*    </Typography>*/}
+      {/*  ))}*/}
+      {!isEmpty && (
+        <Paper sx={{ width: "100%" }}>
+          <Box sx={{ display: "flex", padding: "8px", alignItems: "center" }}>
+            <IconButton
+              onClick={handleClick}
+              value="citation"
+              sx={{ flexDirection: "column" }}
+            >
+              <ContentCopyIcon />
+              <Typography variant="caption">Copy</Typography>
+            </IconButton>
+            <div
+              className="output-viewer"
+              dangerouslySetInnerHTML={{ __html: convertedCitation }}
+            />
+          </Box>
+
+          <Box sx={{ display: "flex", padding: "8px", alignItems: "center" }}>
+            <IconButton
+              onClick={handleClick}
+              value="in-text"
+              sx={{ flexDirection: "column" }}
+            >
+              <ContentCopyIcon />
+              <Typography variant="caption">Copy</Typography>
+            </IconButton>
+            <Box>
+              <Typography variant="caption" color="text.secondary" padding={0}>
+                In text citation:
+              </Typography>
+              <div
+                className="output-viewer"
+                dangerouslySetInnerHTML={{
+                  __html: inText,
+                }}
+              />
+            </Box>
+          </Box>
+        </Paper>
+      )}
     </Grid>
   )
 }
@@ -237,28 +326,44 @@ export const ImportCitationBox: React.FC<{
   }
 
   return (
-    <Grid py={2} item container justifyContent="center">
+    <Grid py={2} item container justifyContent={{ xs: "center", md: "start" }}>
       <Paper
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          width: { xs: "95%", md: "75%", lg: "60%" },
+          width: { xs: "95%", md: "100%" },
         }}
       >
         <Container disableGutters sx={{ display: "flex" }}>
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
+          <TextField
+            size="small"
+            sx={{ p: 1, ml: 1, flex: 1 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={onImportSearch}
+                  >
+                    Search
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
             placeholder={message}
-            inputProps={{ "aria-label": "Import Citation" }}
             value={input}
             onChange={onImportChange}
             onKeyPress={onKeyPress}
           />
 
           <ButtonGroup>
-            <IconButton size="small" aria-label="search" onClick={onImportSearch}>
-              <SearchIcon />
-            </IconButton>
             <Divider orientation="vertical" />
             <Tooltip title="clear imported citation">
               <IconButton
@@ -276,14 +381,13 @@ export const ImportCitationBox: React.FC<{
           sx={{ display: { xs: "none", md: "flex" } }}
           orientation="vertical"
         />
-        <Container disableGutters maxWidth={false}>
-          <UploadFileModel
-            documentType={documentType}
-            updateCitation={updateCitation}
-            style={style}
-            xml={xml}
-          />
-        </Container>
+
+        <UploadFileModel
+          documentType={documentType}
+          updateCitation={updateCitation}
+          style={style}
+          xml={xml}
+        />
       </Paper>
 
       {/* TODO:: move this to import list results */}

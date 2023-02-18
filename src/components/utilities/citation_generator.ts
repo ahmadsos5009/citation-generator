@@ -1,7 +1,25 @@
 import { Cite, plugins } from "@citation-js/core"
-import { Citation, CitationStyle } from "../../types"
+import { Citation, CitationStyle, DocumentType } from "../../types"
 
 require("@citation-js/plugin-csl")
+
+export function generateNativeCitation(
+  citation: Citation,
+  documentType: DocumentType,
+  format: "ris" | "bibtex",
+  template: CitationStyle,
+  xml: string,
+): string {
+  const cslPlugin = plugins.config.get("@csl")
+  cslPlugin.templates.add(template, xml)
+
+  const cite = Cite({ ...citation, type: documentType }, { format: "string" })
+  return cite.format(format, {
+    format: "text",
+    lang: "en-US",
+    template,
+  })
+}
 
 export function generateCitation(
   citation: Citation,

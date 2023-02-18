@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react"
 
-import { generateCitation } from "../utilities/citation_generator"
+import generateStrategy from "../utilities/generat-citation-strategy"
 
 import { GeneratorContext } from "../../provider/GeneratorProvider"
 
@@ -15,7 +15,8 @@ type ClipboardProps = {
 
 export default (): ClipboardProps => {
   const [showAlert, setShowAlert] = React.useState(false)
-  const { documentType, citation, style, xml } = useContext(GeneratorContext)
+  const { documentType, citation, style, xml, copyOption } =
+    useContext(GeneratorContext)
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
@@ -26,19 +27,19 @@ export default (): ClipboardProps => {
       const target = (event.currentTarget as HTMLButtonElement).value
 
       let clipboardText = ""
-      const { convertedCitation, inText } = generateCitation(
+      const { convertedCitation, inText } = generateStrategy(
         citation,
         documentType,
-        "text",
         style,
         xml,
+        copyOption,
       )
 
       if (target === "citation") {
         clipboardText = convertedCitation
       }
       if (target === "in-text") {
-        clipboardText = inText
+        clipboardText = inText || ""
       }
 
       (async () => {

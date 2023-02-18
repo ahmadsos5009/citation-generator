@@ -15,12 +15,15 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form"
+import { CopyOption, PreviewMode } from "../components/form/CitationToolbar"
 
 export const GeneratorContext = createContext<{
   xml: string
   style: CitationStyle
   citation: Citation
   documentType: CitationDocumentType
+  previewMode: PreviewMode
+  copyOption: CopyOption
   control: Control
   reset: UseFormReset<FieldValues>
   register: UseFormRegister<FieldValues>
@@ -28,14 +31,20 @@ export const GeneratorContext = createContext<{
   setCitation: (citation: Citation, type: CitationDocumentType) => Citation
   setValue: UseFormSetValue<FieldValues>
   setDocumentType: Dispatch<SetStateAction<CitationDocumentType>>
+  setPreviewMode: Dispatch<SetStateAction<PreviewMode>>
+  setCopyOption: Dispatch<SetStateAction<CopyOption>>
 }>({
   citation: {} as Citation,
   xml: "",
   style: "apa",
   documentType: CitationDocumentType.JOURNAL,
+  previewMode: "citation",
+  copyOption: "text",
   control: {} as Control,
   setCitation: () => ({} as Citation),
   setDocumentType: () => "",
+  setPreviewMode: () => "",
+  setCopyOption: () => "",
   setValue: () => "",
   reset: () => "",
   register: () => ({} as never),
@@ -49,6 +58,9 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
 }) => {
   const { control, reset, resetField, register, setValue, watch } = useForm()
   const formCitation = watch()
+
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("citation")
+  const [copyOption, setCopyOption] = useState<CopyOption>("text")
 
   const [documentType, setDocumentType] = useState<CitationDocumentType>(
     CitationDocumentType.JOURNAL,
@@ -78,6 +90,8 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
         style,
         citation: formCitation,
         documentType,
+        previewMode,
+        copyOption,
         control,
         register,
         reset,
@@ -85,6 +99,8 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
         setCitation,
         setValue,
         setDocumentType,
+        setPreviewMode,
+        setCopyOption,
       }}
     >
       {children}
