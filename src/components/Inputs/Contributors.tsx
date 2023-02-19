@@ -134,6 +134,7 @@ const ContributorsInput: React.FC = () => {
         >
           <FormControl>
             <Select
+              size="small"
               name={`${contributor.id}_${contributor.role}`}
               value={contributor.role}
               onChange={handleRoleChange}
@@ -151,6 +152,7 @@ const ContributorsInput: React.FC = () => {
           </FormControl>
 
           <TextField
+            size="small"
             name={`${contributor.id}_${contributor.role}`}
             id="given"
             label="Given"
@@ -160,6 +162,7 @@ const ContributorsInput: React.FC = () => {
             onChange={handleChange}
           />
           <TextField
+            size="small"
             name={`${contributor.id}_${contributor.role}`}
             id="family"
             label="Family"
@@ -169,6 +172,7 @@ const ContributorsInput: React.FC = () => {
             onChange={handleChange}
           />
           <TextField
+            size="small"
             name={`${contributor.id}_${contributor.role}`}
             id="suffix"
             label="Suffix"

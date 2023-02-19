@@ -19,7 +19,7 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
   const value = citation[id] || ""
 
   return (
-    <FormControl fullWidth variant="outlined">
+    <FormControl fullWidth variant="standard">
       <FormLabel
         sx={{
           fontFamily: "Noto Sans, sans-serif",
@@ -58,7 +58,7 @@ const Input = styled(InputBase)(({ theme }) => ({
     position: "relative",
     border: "1px solid #646b81",
     fontSize: 16,
-    padding: "10px 12px",
+    padding: "4px 12px",
     transition: "unset",
     "&:focus": {
       border: "2px solid #161719",

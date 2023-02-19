@@ -32,12 +32,7 @@ const LinkInput: React.FC = () => {
   return (
     <Stack margin="8px">
       <FormLabel>Link</FormLabel>
-      <ToggleButtonGroup
-        exclusive
-        color="primary"
-        value={link}
-        onChange={handleLinkChange}
-      >
+      <ToggleButtonGroup exclusive value={link} onChange={handleLinkChange}>
         <ToggleButton value="DOI">DOI</ToggleButton>
         <ToggleButton value="URL">URL</ToggleButton>
       </ToggleButtonGroup>

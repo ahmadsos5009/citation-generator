@@ -76,7 +76,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                     <Typography
                       align="left"
                       variant="caption"
-                    >{`${title} Citation and Footnote/Endnote generator`}</Typography>
+                    >{`${title} Citation generator`}</Typography>
                   </Stack>
                 </Stack>
 
