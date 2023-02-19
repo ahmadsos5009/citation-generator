@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useCallback, useContext } from "react"
 
 import { FormControl, FormLabel, InputBase, styled } from "@mui/material"
 import { HtmlTooltip } from "../Tooltips"
@@ -6,10 +6,17 @@ import { descriptions, labels } from "../../cslTypes/fieldsMapping"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { FieldProps } from "./types"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
-import { Controller } from "react-hook-form"
 
 const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
-  const { control } = useContext(GeneratorContext)
+  const { setValue, citation } = useContext(GeneratorContext)
+
+  const handleChange = useCallback((e) => {
+    const { id, value } = e.target
+    setValue(id, value)
+  }, [])
+
+  // @ts-ignore
+  const value = citation[id] || ""
 
   return (
     <FormControl fullWidth variant="outlined">
@@ -30,19 +37,13 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
           <HelpOutlineIcon fontSize="16" sx={{ margin: "-4px 4px" }} />
         </HtmlTooltip>
       </FormLabel>
-      <Controller
-        name={id}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <Input
-            onChange={onChange}
-            value={value}
-            required={required}
-            multiline={multiline}
-            fullWidth
-            id={id}
-          />
-        )}
+      <Input
+        onChange={handleChange}
+        value={value}
+        required={required}
+        multiline={multiline}
+        fullWidth
+        id={id}
       />
     </FormControl>
   )

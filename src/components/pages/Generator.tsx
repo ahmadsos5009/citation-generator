@@ -6,8 +6,8 @@ import Seo from "../Seo"
 
 import { CitationStyle } from "../../types"
 
-import { Container, Grid, Paper, Stack } from "@mui/material"
-import { PrimaryStart, PrimaryTextStart } from "../Typography"
+import { Container, Grid, Paper, Stack, Typography } from "@mui/material"
+import { PrimaryStart } from "../Typography"
 
 import { GeneratorProvider } from "../../provider/GeneratorProvider"
 import CitationForm from "../CitationForm"
@@ -73,7 +73,10 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                 >
                   <Stack py={2}>
                     <PrimaryStart>{`${pageTitle} Citation Generator`}</PrimaryStart>
-                    <PrimaryTextStart>{`${title} Citation and Footnote/Endnote generator`}</PrimaryTextStart>
+                    <Typography
+                      align="left"
+                      variant="caption"
+                    >{`${title} Citation and Footnote/Endnote generator`}</Typography>
                   </Stack>
                 </Stack>
 

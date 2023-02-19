@@ -7,7 +7,6 @@ import React, {
 } from "react"
 import { Citation, CitationDocumentType, CitationStyle } from "../types"
 import {
-  Control,
   FieldValues,
   useForm,
   UseFormResetField,
@@ -24,7 +23,6 @@ export const GeneratorContext = createContext<{
   documentType: CitationDocumentType
   previewMode: PreviewMode
   copyOption: CopyOption
-  control: Control
   reset: UseFormReset<FieldValues>
   register: UseFormRegister<FieldValues>
   resetField: UseFormResetField<FieldValues>
@@ -40,7 +38,6 @@ export const GeneratorContext = createContext<{
   documentType: CitationDocumentType.JOURNAL,
   previewMode: "citation",
   copyOption: "text",
-  control: {} as Control,
   setCitation: () => ({} as Citation),
   setDocumentType: () => "",
   setPreviewMode: () => "",
@@ -56,7 +53,7 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
   xml,
   style,
 }) => {
-  const { control, reset, resetField, register, setValue, watch } = useForm()
+  const { reset, resetField, register, setValue, watch } = useForm()
   const formCitation = watch()
 
   const [previewMode, setPreviewMode] = useState<PreviewMode>("citation")
@@ -92,7 +89,6 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
         documentType,
         previewMode,
         copyOption,
-        control,
         register,
         reset,
         resetField,

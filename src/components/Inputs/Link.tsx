@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useCallback, useContext, useState } from "react"
 import {
   FormControl,
   FormLabel,
@@ -10,40 +10,42 @@ import {
 } from "@mui/material"
 
 import { GeneratorContext } from "../../provider/GeneratorProvider"
-import { Controller } from "react-hook-form"
 
 const LinkInput: React.FC = () => {
-  const { control } = useContext(GeneratorContext)
+  const { citation, setValue } = useContext(GeneratorContext)
+
+  //  TODO:: remove this
+  const [link, setLink] = useState("DOI")
+
+  const handleLinkChange = useCallback((e, value) => setLink(value), [])
+
+  const handleChange = useCallback(
+    (e) => {
+      setValue(link, e.target.value)
+    },
+    [link],
+  )
+
+  // @ts-ignore
+  const value = citation[link] || ""
 
   return (
     <Stack margin="8px">
       <FormLabel>Link</FormLabel>
-      <Controller
-        name="link-type"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <ToggleButtonGroup
-            exclusive
-            color="primary"
-            value={value || ""}
-            onChange={onChange}
-          >
-            <ToggleButton value="DOI">DOI</ToggleButton>
-            <ToggleButton value="URL">URL</ToggleButton>
-          </ToggleButtonGroup>
-        )}
-      />
+      <ToggleButtonGroup
+        exclusive
+        color="primary"
+        value={link}
+        onChange={handleLinkChange}
+      >
+        <ToggleButton value="DOI">DOI</ToggleButton>
+        <ToggleButton value="URL">URL</ToggleButton>
+      </ToggleButtonGroup>
       <FormControl variant="standard" sx={{ margin: "0 12px" }}>
         <InputLabel focused={false} shrink>
           DOI / URL
         </InputLabel>
-        <Controller
-          name="link"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <Input id="link" onChange={onChange} value={value || ""} />
-          )}
-        />
+        <Input id="link" onChange={handleChange} value={value} />
       </FormControl>
     </Stack>
   )

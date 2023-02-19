@@ -34,7 +34,7 @@ const CitationToolbar: React.FC = () => {
       p={{ xs: 1, md: 2 }}
       container
       flexWrap="wrap"
-      justifyContent="space-around"
+      justifyContent={{ xs: "center", md: "space-between" }}
       bgcolor="#F4F3F5"
     >
       <Stack>
@@ -44,21 +44,21 @@ const CitationToolbar: React.FC = () => {
         </Typography>
       </Stack>
 
-      <Stack visibility="hidden" width={0} height={0}>
-        <ToggleButtonGroup
-          sx={{ flexWrap: "wrap" }}
-          value={previewMode}
-          onChange={onChangePreviewMode}
-          size="small"
-          exclusive
-        >
-          <ToggleButton value="citation">Citation Preview</ToggleButton>
-          <ToggleButton value="footnote">Footnote Preview</ToggleButton>
-        </ToggleButtonGroup>
-        <Typography variant="caption" align="center" p={1}>
-          View Mode
-        </Typography>
-      </Stack>
+      {/*<Stack visibility="hidden" width={0} height={0}>*/}
+      {/*  <ToggleButtonGroup*/}
+      {/*    sx={{ flexWrap: "wrap" }}*/}
+      {/*    value={previewMode}*/}
+      {/*    onChange={onChangePreviewMode}*/}
+      {/*    size="small"*/}
+      {/*    exclusive*/}
+      {/*  >*/}
+      {/*    <ToggleButton value="citation">Citation Preview</ToggleButton>*/}
+      {/*    <ToggleButton value="footnote">Footnote Preview</ToggleButton>*/}
+      {/*  </ToggleButtonGroup>*/}
+      {/*  <Typography variant="caption" align="center" p={1}>*/}
+      {/*    View Mode*/}
+      {/*  </Typography>*/}
+      {/*</Stack>*/}
 
       <Stack>
         <ToggleButtonGroup
