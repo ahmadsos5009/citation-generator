@@ -101,8 +101,8 @@ const CitationForm: React.FC = () => {
       <Typography
         py={1}
         textAlign={{ xs: "center", md: "start" }}
-        variant="subtitle1"
-        fontWeight="light"
+        variant="subtitle2"
+        fontWeight="500"
       >
         Fill entry to generate citation manually on the fly or Import citation from
         an external source

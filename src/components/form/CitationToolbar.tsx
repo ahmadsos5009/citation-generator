@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material"
 import DocumentSource from "./DocumentSource"
-import FootnoteIcon from "../../icons/footnote"
 
 export type PreviewMode = "citation" | "footnote"
 
@@ -54,10 +53,7 @@ const CitationToolbar: React.FC = () => {
           exclusive
         >
           <ToggleButton value="citation">Citation Preview</ToggleButton>
-          <ToggleButton value="footnote">
-            <FootnoteIcon />
-            Footnote Preview
-          </ToggleButton>
+          <ToggleButton value="footnote">Footnote Preview</ToggleButton>
         </ToggleButtonGroup>
         <Typography variant="caption" align="center" p={1}>
           View Mode

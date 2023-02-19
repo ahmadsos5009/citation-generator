@@ -200,6 +200,12 @@ const getCitationUser = (user: User) => ({
 })
 
 const AuthorsLabel = styled(FormLabel)`
+  font-family: Noto Sans, sans-serif;
+  color: #161719;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
   display: flex;
   align-items: center;
   padding: 0;

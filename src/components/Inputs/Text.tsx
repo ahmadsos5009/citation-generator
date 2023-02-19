@@ -15,10 +15,11 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
     <FormControl fullWidth variant="outlined">
       <FormLabel
         sx={{
+          fontFamily: "Noto Sans, sans-serif",
           color: "#161719",
-          fontSize: "18px",
+          fontSize: "1em",
           fontStyle: "normal",
-          fontWeight: 400,
+          fontWeight: 600,
           lineHeight: "22px",
         }}
         focused={false}

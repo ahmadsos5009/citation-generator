@@ -54,10 +54,6 @@ import { PrimaryList } from "./Lists"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
-import FootnoteIcon from "../icons/footnote"
-
-import { PlainTextIcon, WordIcon } from "../icons"
-
 import { UploadFileModel } from "./Model"
 import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
@@ -129,10 +125,7 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
             exclusive
           >
             <ToggleButton value="citation">Citation Preview</ToggleButton>
-            <ToggleButton value="footnote">
-              <FootnoteIcon />
-              Footnote Preview
-            </ToggleButton>
+            <ToggleButton value="footnote">Footnote Preview</ToggleButton>
           </ToggleButtonGroup>
           <Typography variant="caption" align="center" p={1}>
             View Mode
@@ -146,14 +139,8 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
             size="small"
             exclusive
           >
-            <ToggleButton value="text">
-              <PlainTextIcon />
-              Plain-text
-            </ToggleButton>
-            <ToggleButton value="word">
-              <WordIcon />
-              Word
-            </ToggleButton>
+            <ToggleButton value="text">Plain-text</ToggleButton>
+            <ToggleButton value="word">Word</ToggleButton>
             <ToggleButton value="bibtex">
               {/*<BibtexIcon />*/}
               Bibtex
