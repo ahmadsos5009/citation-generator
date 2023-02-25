@@ -544,3 +544,28 @@ export const export_bibTex = (
   link.download = `${fileName}.bib`
   link.click()
 }
+
+const FORMAT_EXTENSION = {
+  bibtex: "bib",
+  ris: "ris",
+}
+
+export const export_citations = (
+  citations: Citation & { type: DocumentType }[],
+  format: "bibtex" | "ris",
+  fileName: string,
+): void => {
+  const cite = Cite(citations, { format: "string" })
+
+  const bibTex = cite.format(format, {
+    format: "text",
+    template: "apa",
+    lang: "en-US",
+  })
+
+  const link = document.createElement("a")
+
+  link.href = `data:text/x-tex;charset=UTF-8,` + encodeURIComponent(bibTex)
+  link.download = `${fileName}.${FORMAT_EXTENSION[format]}`
+  link.click()
+}

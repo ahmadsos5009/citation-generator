@@ -17,7 +17,6 @@ interface Config {
       text: string
     }
   }
-  ENABLE_COLLECTION: boolean
   DOCUMENT_TYPES: CitationDocumentType[]
 }
 
@@ -25,7 +24,7 @@ const IS_DEVELOPMENT =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
 
 export default <Config>{
-  DB_VERSION: 1,
+  DB_VERSION: 2,
   DB_NAME: "CitationGenerator",
   DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citation-creator.com",
   SERVICES_PAGES: [
@@ -54,6 +53,5 @@ export default <Config>{
       text: "free citation generator and you could create a bibliography and export it as PDF Word or BibTex.",
     },
   },
-  ENABLE_COLLECTION: false,
   DOCUMENT_TYPES: ["journal", "book", "website", "report"],
 }

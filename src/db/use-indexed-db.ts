@@ -4,6 +4,8 @@ import config from "../config"
 import { DBSchema, schema } from "./types"
 import { CSLDao } from "./CSL"
 import { CitationDao } from "./Citation"
+import { ProjectDao } from "./Project"
+
 import useDataMigration from "./use-data-migration"
 
 export default function useIndexedDb() {
@@ -14,11 +16,13 @@ export default function useIndexedDb() {
 
   const cslDao = new CSLDao(dbRef)
   const citationDao = new CitationDao(dbRef)
+  const projectDao = new ProjectDao(dbRef)
 
   useDataMigration(citationDao)
 
   return {
     cslDao,
     citationDao,
+    projectDao,
   }
 }
