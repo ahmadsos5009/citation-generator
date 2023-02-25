@@ -146,7 +146,7 @@ const ReferencesTable: React.FC = () => {
     <Container
       disableGutters
       maxWidth={false}
-      sx={{ bgcolor: "white", height: "100%" }}
+      sx={{ bgcolor: "white", height: { xs: "60vh", md: "100%" } }}
     >
       <ThemeProvider theme={DataGridTheme}>
         <DataGrid

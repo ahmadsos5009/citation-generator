@@ -58,13 +58,13 @@ const ReferencesManagerPage: React.FC = () => {
             p={2}
             bgcolor="primary.main"
           >
-            <Grid md={2} item>
+            <Grid sx={{ display: { xs: "none", md: "unset" } }} md={2} item>
               <Collection />
             </Grid>
-            <Grid md={6.8} item>
+            <Grid xs={12} md={6.8} item>
               <ReferencesTable />
             </Grid>
-            <Grid md={3} item>
+            <Grid sx={{ display: { xs: "none", md: "unset" } }} md={3} item>
               <Metadata />
             </Grid>
           </Grid>
