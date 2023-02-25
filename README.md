@@ -66,6 +66,7 @@
 - [ ] Add Guide external link and format to the generator page
   > Add Google Ads Unit
 - [ ] build annotated bibliography page
+- [ ] clean imported data, to just like type, use `in` operation
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
@@ -76,6 +77,7 @@
 ### Reference Management System
 
 - [ ] Full document search
+- [ ] Fix Mobile view
 - [ ] ...
 
 Dexie - Schema:
