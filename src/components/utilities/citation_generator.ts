@@ -1,5 +1,7 @@
 import { Cite, plugins } from "@citation-js/core"
 import { Citation, CitationStyle, DocumentType } from "../../types"
+import { v4 as uuid } from "uuid"
+import { TCitation } from "../../db/types"
 
 require("@citation-js/plugin-csl")
 
@@ -19,6 +21,20 @@ export function generateNativeCitation(
     lang: "en-US",
     template,
   })
+}
+
+/**
+ * Convert BibTex to CSL citation list
+ */
+export function convertBibTexToCSL(bibTex: string): TCitation[] {
+  require("@citation-js/plugin-bibtex")
+  const cite = Cite(bibTex, { format: "string" })
+  const outputJson = cite.get({ format: "real", type: "json" })
+
+  return outputJson.map((citation: { _graph?: string }) => {
+    delete citation["_graph"]
+    return { ...citation, id: uuid(), updatedTimestamp: Date.now() }
+  }) as TCitation[]
 }
 
 export function generateCitation(

@@ -34,3 +34,34 @@ export default <ThemeOptions>{
     },
   },
 }
+
+export const dataGrid: ThemeOptions = {
+  palette: {
+    primary: {
+      main: "#37293C",
+      light: "#675970",
+      dark: "#171710",
+    },
+  },
+  components: {
+    //@ts-ignore
+    MuiDataGrid: {
+      styleOverrides: {
+        row: {
+          "&.Mui-selected": {
+            backgroundColor: "#E6DAEA",
+            "&:hover": {
+              backgroundColor: "#E6DAEA",
+            },
+          },
+        },
+        cell: {
+          "&.MuiDataGrid-cell": {
+            outline: 0,
+            cursor: "pointer",
+          },
+        },
+      },
+    },
+  },
+}

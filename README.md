@@ -8,14 +8,14 @@
 
     ├── apa
     ├── apa 7 *
-    ├── ama * 
+    ├── ama *
     ├── asa *
     ├── acm
     ├── acs
     ├── cse *
     ├── ieee
     ├── mla
-    ├── mla_8th * 
+    ├── mla_8th *
     ├── mhra *
     ├── turabian_9th
     ├── turabian_9th
@@ -50,18 +50,21 @@
 - [x] update list generator page
 - [x] reuse reference list to be a reference manger page in future
   > Google Ads try
-- [X] Fix Scrollbar
-- [X] Performance fix for CSL xml
-- [X] move all CSL to config
-- [X] use IndexDB, and update schema, for Reference Management System
-- [X] Add Guide Pages
-- [X] Update Form
-- [ ] build Reference Management System
-- [ ] Add Google Docs, Microsoft Word, Bibitem, Endnote
-- [ ] Add Footnote preview
+- [x] Fix Scrollbar
+- [x] Performance fix for CSL xml
+- [x] move all CSL to config
+- [x] use IndexDB, and update schema, for Reference Management System
+- [x] Add Guide Pages
+- [x] Update Form
+- [x] build Reference Management System
+- [x] RMS & filter
+- [x] RMS Add user projects
+- [x] RMS Clean DB
+- [ ] Add Google Docs, Microsoft Word, Bibitem, Endnote / https://schemas.liquid-technologies.com/officeopenxml/2006/?page=shared-bibliography_xsd.html
+- [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
 - [ ] Update Form `text fields` `authors` `link` `date`
-- [ ] Add Guide external link and format to the generator page 
- > Add Google Ads Unit
+- [ ] Add Guide external link and format to the generator page
+  > Add Google Ads Unit
 - [ ] build annotated bibliography page
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
@@ -70,13 +73,17 @@
 - [ ] add 4040 page
 - [ ] add more CSL style
 
-Dexie - Schema:
-* csl: `id, name, xml`
-* citation: `id, type, json, updatedTimestamp`
-* collection: ``
-* tag: ``
-* manger_filter: TODO
+### Reference Management System
 
-> -[X] Seed CSL on request
-> -[X] Add CSL XSLT to the body
-> -[X] Static example generation, like mdx page
+- [ ] Full document search
+- [ ] ...
+
+Dexie - Schema:
+
+- csl: `id, name, xml`
+- citation: `id, type, json, updatedTimestamp`
+- collection: `id, name, references`
+
+> -[X] Seed CSL on request 
+> -[X] Add CSL XSLT to the body 
+> - [X] Static example generation, like mdx page

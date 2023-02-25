@@ -21,15 +21,24 @@ export interface TCitation
     WebsiteCitation {
   id: string
   type: DocumentType
+  favorite?: 1 | 0
   updatedTimestamp: number
+}
+
+export type TProject = {
+  id: string
+  name: string
+  citations: string[]
 }
 
 export type DBSchema = {
   csl: Table<TCSL>
   citation: Table<TCitation>
+  project: Table<TProject>
 } & Dexie
 
 export const schema = {
   csl: "id, name, xml",
-  citation: "id, updatedTimestamp",
+  citation: "id, updatedTimestamp, favorite",
+  project: "id, name, *citations",
 }
