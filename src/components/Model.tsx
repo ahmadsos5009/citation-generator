@@ -155,6 +155,9 @@ import { EditorContext } from "../provider/EditorProvider"
 import { v4 as uuid } from "uuid"
 import { TCitation } from "../db/types"
 import { DBContext } from "../provider/DBProvider"
+import { MicrosoftWordIcon } from "../icons"
+
+import { exportToWord } from "../utile/jsonCSL-openXml"
 
 export const UploadFileModel: React.FC<{
   documentType: CitationDocumentType
@@ -260,6 +263,10 @@ export const UploadFileModel: React.FC<{
     })
   }, [outputJson, style])
 
+  const onExportToWord = useCallback(() => {
+    if (outputJson) exportToWord(outputJson)
+  }, [outputJson])
+
   return (
     <Grid alignSelf="center">
       <label htmlFor="contained-button-file">
@@ -301,6 +308,11 @@ export const UploadFileModel: React.FC<{
                     onClick={onBibliographyListClick}
                   >
                     Bibliography List
+                  </Button>
+                )}
+                {!isEditor && (
+                  <Button startIcon={<MicrosoftWordIcon />} onClick={onExportToWord}>
+                    export to word .xml
                   </Button>
                 )}
               </Box>

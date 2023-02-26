@@ -8,6 +8,8 @@ import { Button, ButtonGroup, Stack, Typography } from "@mui/material"
 import { AddCitationsToProject } from "./Project"
 import styled from "@emotion/styled"
 import { TProject } from "../../db/types"
+import { MicrosoftWordIcon } from "../../icons"
+import { exportToWord } from "../../utile/jsonCSL-openXml"
 
 const ListToolbar: React.FC = () => {
   const { group } = useContext(ManagerContext)
@@ -21,6 +23,11 @@ const ListToolbar: React.FC = () => {
 
   const onDeleteClick = useCallback(async () => {
     await citationDao.bulkDelete(selection as string[])
+  }, [selection])
+
+  const onExportToWord = useCallback(async () => {
+    const references = await citationDao.bulkGet(selection as string[])
+    exportToWord(references)
   }, [selection])
 
   const onExportClick = useCallback(
@@ -92,6 +99,21 @@ const ListToolbar: React.FC = () => {
                 </ButtonGroup>
                 <Typography variant="caption" align="center" p={1}>
                   Add Selected References
+                </Typography>
+              </Stack>
+
+              <Stack alignItems="center">
+                <Button
+                  startIcon={<MicrosoftWordIcon />}
+                  size="small"
+                  variant="text"
+                  color="secondary"
+                  onClick={onExportToWord}
+                >
+                  export to word .xml
+                </Button>
+                <Typography variant="caption" align="center" p={1}>
+                  Import your citation to Microsoft Word
                 </Typography>
               </Stack>
             </Stack>

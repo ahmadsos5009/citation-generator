@@ -2,6 +2,8 @@ import React, { useCallback, useContext } from "react"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
 
 import {
+  Button,
+  ButtonGroup,
   Grid,
   Stack,
   ToggleButton,
@@ -9,18 +11,30 @@ import {
   Typography,
 } from "@mui/material"
 import DocumentSource from "./DocumentSource"
+import { exportToWord } from "../../utile/jsonCSL-openXml"
+import { MicrosoftWordIcon } from "../../icons"
+
+import { isEmptyCitation } from "../utilities/object"
+import { Citation, CitationJSDocumentType } from "../../types"
 
 export type PreviewMode = "citation" | "footnote"
 
 export type CopyOption = "text" | "word" | "bibtex" | "bibitem" | "ris"
 
 const CitationToolbar: React.FC = () => {
-  const { previewMode, copyOption, setPreviewMode, setCopyOption } =
+  const { copyOption, setCopyOption, citation, documentType } =
     useContext(GeneratorContext)
 
-  const onChangePreviewMode = useCallback((e, value) => {
-    if (value) setPreviewMode(value)
-  }, [])
+  const onExportToWord = useCallback(() => {
+    if (!isEmptyCitation(citation, CitationJSDocumentType[documentType])) {
+      exportToWord([
+        {
+          ...citation,
+          type: CitationJSDocumentType[documentType],
+        } as unknown as Citation,
+      ])
+    }
+  }, [citation, documentType])
 
   const onChangeCopyOption = useCallback((e, value) => {
     if (value) setCopyOption(value)
@@ -44,21 +58,22 @@ const CitationToolbar: React.FC = () => {
         </Typography>
       </Stack>
 
-      {/*<Stack visibility="hidden" width={0} height={0}>*/}
-      {/*  <ToggleButtonGroup*/}
-      {/*    sx={{ flexWrap: "wrap" }}*/}
-      {/*    value={previewMode}*/}
-      {/*    onChange={onChangePreviewMode}*/}
-      {/*    size="small"*/}
-      {/*    exclusive*/}
-      {/*  >*/}
-      {/*    <ToggleButton value="citation">Citation Preview</ToggleButton>*/}
-      {/*    <ToggleButton value="footnote">Footnote Preview</ToggleButton>*/}
-      {/*  </ToggleButtonGroup>*/}
-      {/*  <Typography variant="caption" align="center" p={1}>*/}
-      {/*    View Mode*/}
-      {/*  </Typography>*/}
-      {/*</Stack>*/}
+      <Stack alignItems="center">
+        <ButtonGroup sx={{ flexWrap: "wrap" }} size="small">
+          <Button
+            startIcon={<MicrosoftWordIcon />}
+            size="small"
+            variant="text"
+            color="secondary"
+            onClick={onExportToWord}
+          >
+            export to word .xml
+          </Button>
+        </ButtonGroup>
+        <Typography variant="caption" align="center" p={1}>
+          Import your citation to Microsoft Word
+        </Typography>
+      </Stack>
 
       <Stack>
         <ToggleButtonGroup
