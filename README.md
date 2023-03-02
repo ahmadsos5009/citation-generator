@@ -64,8 +64,8 @@
 - [x] Update Form `text fields` `authors` `link` `date`
   > Add Google Ads Unit
 - [ ] build annotated bibliography page
-- [ ] clean imported data, to just like type, use `in` operation
 - [ ] latex support, bibitem
+- [ ] clean imported data, to just like type, use `in` operation
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js

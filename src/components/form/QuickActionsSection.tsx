@@ -4,6 +4,7 @@ import { GeneratorContext } from "../../provider/GeneratorProvider"
 import { navigate } from "gatsby"
 import { isEmptyCitation } from "../utilities/object"
 import { CitationJSDocumentType } from "../../types"
+import AdsSidebar from "../AdsSidebar"
 
 const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => {
   const { citation, style, documentType } = useContext(GeneratorContext)
@@ -36,20 +37,7 @@ const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => 
       </Grid>
 
       <Grid item md={8}>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8835129466793937"
-          crossOrigin="anonymous"
-        />
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block" }}
-          data-ad-client="ca-pub-8835129466793937"
-          data-ad-slot="1729214133"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <AdsSidebar />
       </Grid>
 
       <Snackbar
