@@ -21,8 +21,8 @@ export const isEmptyCitation = (
 }
 
 const emptyContributors = (contributors: User[]) => {
-  return contributors.every((contributor) =>
-    Object.entries(contributor).every((ent) => !ent[1]),
+  return contributors.every(
+    (contributor) => !contributor.family && !contributor.given,
   )
 }
 

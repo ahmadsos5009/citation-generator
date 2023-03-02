@@ -61,18 +61,19 @@
 - [x] RMS Add user projects
 - [x] RMS Clean DB
 - [x] Add Google Docs, Microsoft Word, Bibitem, Endnote / https://schemas.liquid-technologies.com/officeopenxml/2006/?page=shared-bibliography_xsd.html
-- [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
-- [ ] Update Form `text fields` `authors` `link` `date`
-- [ ] Add Guide external link and format to the generator page
+- [x] Update Form `text fields` `authors` `link` `date`
   > Add Google Ads Unit
 - [ ] build annotated bibliography page
 - [ ] clean imported data, to just like type, use `in` operation
+- [ ] latex support, bibitem
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
 - [ ] PubMed
 - [ ] add 4040 page
 - [ ] add more CSL style
+- [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
+- [ ] Add format to the generator page
 
 ### Reference Management System
 

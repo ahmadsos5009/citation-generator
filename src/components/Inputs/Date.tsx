@@ -1,11 +1,12 @@
 import React, { useCallback, useContext } from "react"
 
-import { Container, FormControl, FormLabel, Input, InputLabel } from "@mui/material"
+import { Container, FormControl, Input, InputLabel, Stack } from "@mui/material"
 
 import { HtmlTooltip } from "../Tooltips"
 import { descriptions, labels } from "../../cslTypes/fieldsMapping"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
+import { Label } from "./Text"
 
 const DateField: React.FC<{ id: string }> = ({ id }) => {
   const { documentType, setValue, citation } = useContext(GeneratorContext)
@@ -37,52 +38,55 @@ const DateField: React.FC<{ id: string }> = ({ id }) => {
       disableGutters
       sx={{ pt: "4px", display: "flex", flexDirection: "column" }}
     >
-      <FormLabel>
+      <Label focused={false}>
         {labels[id]}
         <HtmlTooltip title={descriptions["issued"]}>
           {/* @ts-ignore */}
-          <HelpOutlineIcon fontSize="16" />
+          <HelpOutlineIcon fontSize="16" sx={{ margin: "-4px 4px" }} />
         </HtmlTooltip>
-      </FormLabel>
-      {documentType === "website" && (
-        <>
-          <FormControl variant="standard">
-            <InputLabel focused={false} shrink>
-              Day
-            </InputLabel>
-            <Input
-              value={day === "0" ? "" : day}
-              onChange={handleChange}
-              type="number"
-              id={`${id}-day`}
-            />
-          </FormControl>
+      </Label>
 
-          <FormControl variant="standard">
-            <InputLabel focused={false} shrink>
-              Month
-            </InputLabel>
-            <Input
-              value={month === "0" ? "" : month}
-              onChange={handleChange}
-              type="number"
-              id={`${id}-month`}
-            />
-          </FormControl>
-        </>
-      )}
+      <Stack direction="row" spacing={1}>
+        {documentType === "website" && (
+          <>
+            <FormControl variant="standard">
+              <InputLabel focused={false} shrink>
+                Day
+              </InputLabel>
+              <Input
+                value={day === "0" ? "" : day}
+                onChange={handleChange}
+                type="number"
+                id={`${id}-day`}
+              />
+            </FormControl>
 
-      <FormControl variant="standard">
-        <InputLabel focused={false} shrink>
-          Year
-        </InputLabel>
-        <Input
-          value={year === "0" ? "" : year}
-          onChange={handleChange}
-          type="number"
-          id={`${id}-year`}
-        />
-      </FormControl>
+            <FormControl variant="standard">
+              <InputLabel focused={false} shrink>
+                Month
+              </InputLabel>
+              <Input
+                value={month === "0" ? "" : month}
+                onChange={handleChange}
+                type="number"
+                id={`${id}-month`}
+              />
+            </FormControl>
+          </>
+        )}
+
+        <FormControl variant="standard">
+          <InputLabel focused={false} shrink>
+            Year
+          </InputLabel>
+          <Input
+            value={year === "0" ? "" : year}
+            onChange={handleChange}
+            type="number"
+            id={`${id}-year`}
+          />
+        </FormControl>
+      </Stack>
     </Container>
   )
 }

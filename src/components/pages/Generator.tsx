@@ -11,6 +11,7 @@ import { PrimaryStart } from "../Typography"
 
 import { GeneratorProvider } from "../../provider/GeneratorProvider"
 import CitationForm from "../CitationForm"
+import QuickActionsSection from "../form/QuickActionsSection"
 
 interface PageProps {
   pageContext: {
@@ -65,6 +66,10 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                 width: { xs: "98%", md: "100%" },
               }}
             >
+              <Grid display={{ xs: "none", md: "unset" }} item md={2}>
+                {/* TODO:: Add External and Internal links */}
+              </Grid>
+
               <Grid item xs={12} md={8}>
                 <Stack
                   px={{ xs: 1, md: 0 }}
@@ -81,6 +86,17 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                 </Stack>
 
                 <CitationForm />
+              </Grid>
+
+              <Grid
+                display={{ xs: "none", md: "flex" }}
+                md={2}
+                item
+                p={2}
+                container
+                direction="column"
+              >
+                <QuickActionsSection pageTitle={pageTitle} />
               </Grid>
             </Paper>
           </Grid>

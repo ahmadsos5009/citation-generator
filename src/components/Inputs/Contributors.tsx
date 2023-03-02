@@ -5,20 +5,22 @@ import { CitationJSDocumentType } from "../../types"
 import { documentUser, users } from "../../cslTypes/fieldsMapping"
 import { v4 as uuid } from "uuid"
 import {
+  Button,
   Container,
   FormControl,
-  FormHelperText,
   FormLabel,
   IconButton,
+  InputLabel,
   MenuItem,
   Select,
   Stack,
   TextField,
 } from "@mui/material"
-import AddIcon from "@mui/icons-material/Add"
+
 import DeleteIcon from "@mui/icons-material/Delete"
 import styled from "@emotion/styled"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
+import AddIcon from "@mui/icons-material/Add"
 
 export interface Users extends User {
   role: string
@@ -120,79 +122,94 @@ const ContributorsInput: React.FC = () => {
     <Container disableGutters>
       <Stack direction="row" id="author-container">
         <AuthorsLabel id="authors">Contributor(s)</AuthorsLabel>
-        <IconButton aria-label="add" onClick={handleOnAddClick}>
-          <AddIcon />
-        </IconButton>
       </Stack>
 
-      {contributors.map((contributor, index) => (
-        <Stack
-          id={contributor.id}
-          key={index.toString()}
-          spacing={{ xs: 0, md: 2 }}
-          direction={{ xs: "column", md: "row" }}
-        >
-          <FormControl>
-            <Select
+      <Stack pt={2} pb={1} spacing={2}>
+        {contributors.map((contributor, index) => (
+          <Stack
+            id={contributor.id}
+            key={index.toString()}
+            spacing={{ xs: 1, md: 2 }}
+            direction={{ xs: "column", md: "row" }}
+          >
+            <FormControl
+              color="secondary"
+              size="small"
+              sx={{ ml: 0, minWidth: 140 }}
+            >
+              <InputLabel sx={{ fontSize: "small" }}>Contributor Role</InputLabel>
+              <Select
+                label="more source type"
+                name={`${contributor.id}_${contributor.role}`}
+                value={contributor.role}
+                onChange={handleRoleChange}
+              >
+                {documentUser[CitationJSDocumentType[documentType]].map((user) => (
+                  <MenuItem key={user} value={user}>
+                    {/* @ts-ignore */}
+                    {users[user]}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <TextField
               size="small"
               name={`${contributor.id}_${contributor.role}`}
-              value={contributor.role}
-              onChange={handleRoleChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              {documentUser[CitationJSDocumentType[documentType]].map((user) => (
-                <MenuItem key={user} value={user}>
-                  {/* @ts-ignore */}
-                  {users[user]}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>Contributor Role</FormHelperText>
-          </FormControl>
-
-          <TextField
-            size="small"
-            name={`${contributor.id}_${contributor.role}`}
-            id="given"
-            label="Given"
-            focused={false}
-            value={contributor.given || ""}
-            inputProps={{ className: "given" }}
-            onChange={handleChange}
-          />
-          <TextField
-            size="small"
-            name={`${contributor.id}_${contributor.role}`}
-            id="family"
-            label="Family"
-            focused={false}
-            value={contributor.family || ""}
-            inputProps={{ className: "family" }}
-            onChange={handleChange}
-          />
-          <TextField
-            size="small"
-            name={`${contributor.id}_${contributor.role}`}
-            id="suffix"
-            label="Suffix"
-            focused={false}
-            value={contributor.suffix || ""}
-            inputProps={{ className: "suffix" }}
-            onChange={handleChange}
-          />
-
-          <Stack justifyContent="center">
-            <IconButton
+              id="given"
+              label="First Name"
+              focused={false}
+              value={contributor.given || ""}
+              inputProps={{ className: "given" }}
+              onChange={handleChange}
+            />
+            <TextField
+              size="small"
               name={`${contributor.id}_${contributor.role}`}
-              onClick={handleOnDeleteClick}
-              aria-label="delete"
-            >
-              <DeleteIcon />
-            </IconButton>
+              id="family"
+              label="Last Name"
+              focused={false}
+              value={contributor.family || ""}
+              inputProps={{ className: "family" }}
+              onChange={handleChange}
+            />
+            <TextField
+              size="small"
+              name={`${contributor.id}_${contributor.role}`}
+              id="suffix"
+              label="Suffix"
+              focused={false}
+              value={contributor.suffix || ""}
+              inputProps={{ className: "suffix" }}
+              onChange={handleChange}
+            />
+
+            <Stack justifyContent="center">
+              <IconButton
+                size="small"
+                title="delete contributor"
+                name={`${contributor.id}_${contributor.role}`}
+                onClick={handleOnDeleteClick}
+                aria-label="delete"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Stack>
           </Stack>
-        </Stack>
-      ))}
+        ))}
+      </Stack>
+
+      <Container disableGutters>
+        <Button
+          color="success"
+          size="small"
+          aria-label="add"
+          startIcon={<AddIcon />}
+          onClick={handleOnAddClick}
+        >
+          Add Contributor
+        </Button>
+      </Container>
     </Container>
   )
 }
@@ -203,7 +220,7 @@ const getCitationUser = (user: User) => ({
   suffix: user.suffix,
 })
 
-const AuthorsLabel = styled(FormLabel)`
+export const AuthorsLabel = styled(FormLabel)`
   font-family: Noto Sans, sans-serif;
   color: #161719;
   font-size: 1em;

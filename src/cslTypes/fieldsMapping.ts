@@ -35,7 +35,7 @@ export const descriptions: { [key in string]: string } = {
     "(container) volume holding the item (e.g. “2” when citing a chapter from book volume 2)",
   issue:
     "(container) issue holding the item (e.g. “5” when citing a journal article from journal volume 2, issue 5)",
-  page: "range of pages the item (e.g. a journal article) covers in a container (e.g. a journal issue)",
+  page: "range of pages the item (e.g. a journal article) covers in a container (e.g. a journal issue), e.g: 1-2, ii-xi",
   issued: "date the item was issued/published",
   "collection-title":
     "title of the collection holding the item (e.g. the series title for a book)",

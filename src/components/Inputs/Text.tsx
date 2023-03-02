@@ -20,23 +20,13 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
 
   return (
     <FormControl fullWidth variant="standard">
-      <FormLabel
-        sx={{
-          fontFamily: "Noto Sans, sans-serif",
-          color: "#161719",
-          fontSize: "1em",
-          fontStyle: "normal",
-          fontWeight: 600,
-          lineHeight: "22px",
-        }}
-        focused={false}
-      >
+      <Label focused={false}>
         {labels[id]}
         <HtmlTooltip title={descriptions[id]}>
           {/* @ts-ignore */}
           <HelpOutlineIcon fontSize="16" sx={{ margin: "-4px 4px" }} />
         </HtmlTooltip>
-      </FormLabel>
+      </Label>
       <Input
         onChange={handleChange}
         value={value}
@@ -64,6 +54,15 @@ const Input = styled(InputBase)(({ theme }) => ({
       border: "2px solid #161719",
     },
   },
+}))
+
+export const Label = styled(FormLabel)(() => ({
+  fontFamily: "Noto Sans, sans-serif",
+  color: "#161719",
+  fontSize: "1em",
+  fontStyle: "normal",
+  fontWeight: 600,
+  lineHeight: "22px",
 }))
 
 export default TextField
