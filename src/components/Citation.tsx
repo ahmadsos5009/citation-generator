@@ -300,7 +300,7 @@ export const ImportCitationBox: React.FC<{
   const message = useMemo(() => {
     switch (documentType) {
       case CitationDocumentType.JOURNAL:
-        return "Search by Article Title or DOI or URL or PubMed id PMC31209238"
+        return "Search by Article Title or DOI or URL or PubMed ID"
       case CitationDocumentType.BOOK:
         return "Search by Book Title or URL or ISBN"
       case CitationDocumentType.WEBSITE:

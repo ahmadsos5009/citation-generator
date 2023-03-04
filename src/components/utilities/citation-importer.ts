@@ -175,7 +175,9 @@ export const CitationJsImport = async (input: string): Promise<ImportCitation[]>
   require("@citation-js/plugin-bibjson")
   require("@citation-js/plugin-pubmed")
   try {
-    const cite = await Cite.async(input)
+    const cite = PUBMED.test(input)
+      ? await Cite.async(input, { forceType: "@pubmed/id" })
+      : await Cite.async(input)
     return cite.get({ format: "real", type: "json" })
   } catch (e) {
     return []
@@ -185,7 +187,7 @@ export const CitationJsImport = async (input: string): Promise<ImportCitation[]>
 const ISBN = /^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$/
 const DOI = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i
 const URL = /^http([s]?):\/\/.*/
-const PUBMED = /PMC\d{7,8}/
+const PUBMED = /\d{7,8}/
 
 export const CitationImportStrategy = async (
   document: CitationDocumentType,
@@ -194,8 +196,8 @@ export const CitationImportStrategy = async (
   if (document === CitationDocumentType.WEBSITE) {
     return await WebsiteUrlSearch(input)
   }
-
   const cleansedInput = input.trim()
+
   if (
     URL.test(cleansedInput) ||
     DOI.test(cleansedInput) ||
