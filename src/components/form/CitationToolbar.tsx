@@ -84,6 +84,7 @@ const CitationToolbar: React.FC = () => {
           exclusive
         >
           <ToggleButton value="text">Plain-text</ToggleButton>
+          <ToggleButton value="bibitem">LaTex-bibitem</ToggleButton>
           <ToggleButton value="bibtex">Bibtex</ToggleButton>
           <ToggleButton value="ris">Ris</ToggleButton>
         </ToggleButtonGroup>

@@ -77,10 +77,23 @@
 
 ### Reference Management System
 
+- [ ] Add Create Bibliography button to toolbar
 - [ ] Pull full text document, and show it as pdf
 - [ ] Full text search
 - [ ] Fix Mobile view
 - [ ] ...
+
+### Reference List
+
+- [ ] Redesign ref list page
+- [x] List style, for each CSL
+- [ ] Add annotated bibliography
+- [ ] Fix LaTex export
+
+CSS - Style:
+- lineSpacing : `line-height: ${value};` default value 1.35
+- hangingIndent: `padding-left: 2em; text-indent:-2em;`
+- entrySpacing: `margin-bottom: ${value}em;` not for first child
 
 Dexie - Schema:
 

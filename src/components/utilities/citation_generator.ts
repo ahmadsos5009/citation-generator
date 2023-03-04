@@ -70,15 +70,34 @@ export const generateCitations = (
   template: CitationStyle,
   xml: string,
   inText?: boolean,
-): string => {
+) => {
   const cite = Cite(citations, { format: "string" })
 
   const cslPlugin = plugins.config.get("@csl")
   cslPlugin.templates.add(template, xml)
 
-  return cite.format((inText && "citation") || "bibliography", {
+  const citeproc = cslPlugin.engine([], template, "en-US", "html")
+
+  const [{ entryspacing, hangingindent, linespacing }] = citeproc.makeBibliography()
+
+  // TODO:: inject this style
+  const css = `
+      .csl-bib-body {
+        line-height: ${linespacing || 1.35};
+      }
+      .csl-entry {
+         ${(hangingindent && "padding-left: 2em; text-indent:-2em;") || ""}
+      }
+      .csl-entry:not:first-child {
+        margin-bottom: ${entryspacing ? entryspacing + "em" : 0};
+      }
+  `
+
+  const referencesList = cite.format((inText && "citation") || "bibliography", {
     format: "html",
     lang: "en-US",
     template,
   })
+
+  return referencesList
 }

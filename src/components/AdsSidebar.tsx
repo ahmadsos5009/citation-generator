@@ -1,15 +1,19 @@
 import React, { useEffect } from "react"
 import { Helmet } from "react-helmet"
+import config from "../config"
 
-// TODO:: pass dataAdSlot
-const AdsSidebar: React.FC = () => {
+const AdsSidebar: React.FC<{ dataAdSlot: string }> = ({ dataAdSlot }) => {
+  if (config.IS_DEVELOPMENT) {
+    return <></>
+  }
+
   useEffect(() => {
     try {
       if (typeof window === "object") {
         ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
       }
     } catch {
-      // Pass
+      //
     }
   }, [])
 
@@ -26,7 +30,7 @@ const AdsSidebar: React.FC = () => {
         className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client="ca-pub-8835129466793937"
-        data-ad-slot="1729214133"
+        data-ad-slot={dataAdSlot}
         data-ad-format="auto"
         data-full-width-responsive="true"
       />

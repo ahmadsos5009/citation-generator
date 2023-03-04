@@ -37,7 +37,7 @@ const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => 
       </Grid>
 
       <Grid item md={8}>
-        <AdsSidebar />
+        <AdsSidebar dataAdSlot="1729214133" />
       </Grid>
 
       <Snackbar

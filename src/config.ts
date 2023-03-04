@@ -4,6 +4,7 @@ interface Config {
   DB_VERSION: number
   DB_NAME: string
   DOMAIN: string
+  IS_DEVELOPMENT: boolean
   SERVICES_PAGES: { name: string; href: string; disabled?: boolean }[]
   SOCIAL: {
     twitter: {
@@ -27,6 +28,7 @@ export default <Config>{
   DB_VERSION: 2,
   DB_NAME: "CitationGenerator",
   DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citation-creator.com",
+  IS_DEVELOPMENT,
   SERVICES_PAGES: [
     { name: "List Generator", href: "/citationsList/" },
     { name: "Manage References", href: "/referencesManager/" },

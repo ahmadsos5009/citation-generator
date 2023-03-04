@@ -1,5 +1,6 @@
 import { CopyOption } from "../form/CitationToolbar"
 import { generateCitation, generateNativeCitation } from "./citation_generator"
+import convertToBibitem from "../../utile/jsonCSL-bibitem"
 
 import {
   Citation,
@@ -8,6 +9,7 @@ import {
   CitationStyle,
 } from "../../types"
 import { plugins } from "@citation-js/core"
+import { TCitation } from "../../db/types"
 
 const generateStrategy = (
   citation: Citation,
@@ -43,6 +45,11 @@ const generateStrategy = (
           style,
           xml,
         ),
+      }
+    }
+    case "bibitem": {
+      return {
+        convertedCitation: convertToBibitem([citation as TCitation]),
       }
     }
     default:
