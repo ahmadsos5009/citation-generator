@@ -63,13 +63,13 @@
 - [x] Add Google Docs, Microsoft Word, Bibitem, Endnote / https://schemas.liquid-technologies.com/officeopenxml/2006/?page=shared-bibliography_xsd.html
 - [x] Update Form `text fields` `authors` `link` `date`
   > Add Google Ads Unit
+- [x] PubMed
 - [ ] build annotated bibliography page
 - [ ] latex support, bibitem
 - [ ] clean imported data, to just like type, use `in` operation
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
-- [ ] PubMed
 - [ ] add 4040 page
 - [ ] add more CSL style
 - [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation

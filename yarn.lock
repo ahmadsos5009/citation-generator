@@ -1220,6 +1220,11 @@
     "@citation-js/date" "^0.5.0"
     "@citation-js/name" "^0.4.2"
 
+"@citation-js/plugin-pubmed@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@citation-js/plugin-pubmed/-/plugin-pubmed-0.2.1.tgz#3c1ce25f80f7e04cdf4be79beeef67e91c632177"
+  integrity sha512-rFrmKju5pV0zTw8fw1TBCe/+WHb2nunaR8bu4x94EYUkhjGoRuyrzaNoPJLjUyBaABJT1pv/AX/5GgurlR++nw==
+
 "@citation-js/plugin-ris@^0.6.5":
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/@citation-js/plugin-ris/-/plugin-ris-0.6.5.tgz#8b6e0dcace6fa03d7f08131e077739c295ca0dc9"

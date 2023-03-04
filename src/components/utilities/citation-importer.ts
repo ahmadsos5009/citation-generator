@@ -173,6 +173,7 @@ export const CitationJsImport = async (input: string): Promise<ImportCitation[]>
   require("@citation-js/plugin-isbn")
   require("@citation-js/plugin-doi")
   require("@citation-js/plugin-bibjson")
+  require("@citation-js/plugin-pubmed")
   try {
     const cite = await Cite.async(input)
     return cite.get({ format: "real", type: "json" })
@@ -184,6 +185,7 @@ export const CitationJsImport = async (input: string): Promise<ImportCitation[]>
 const ISBN = /^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$/
 const DOI = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i
 const URL = /^http([s]?):\/\/.*/
+const PUBMED = /PMC\d{7,8}/
 
 export const CitationImportStrategy = async (
   document: CitationDocumentType,
@@ -193,14 +195,20 @@ export const CitationImportStrategy = async (
     return await WebsiteUrlSearch(input)
   }
 
-  if (URL.test(input) || DOI.test(input) || ISBN.test(input)) {
-    return await CitationJsImport(input)
+  const cleansedInput = input.trim()
+  if (
+    URL.test(cleansedInput) ||
+    DOI.test(cleansedInput) ||
+    ISBN.test(cleansedInput) ||
+    PUBMED.test(cleansedInput)
+  ) {
+    return await CitationJsImport(cleansedInput)
   } else {
     switch (document) {
       case CitationDocumentType.JOURNAL:
-        return await JournalTitleSearch(input)
+        return await JournalTitleSearch(cleansedInput)
       case CitationDocumentType.BOOK:
-        return await BookTitleSearch(input)
+        return await BookTitleSearch(cleansedInput)
     }
   }
   return []
