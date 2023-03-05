@@ -31,6 +31,7 @@ export type CitationStyle =
   | "cse"
   | "ieee"
   | "mla"
+  | "mla_7th"
   | "mla_8th"
   | "mhra"
   | "chicago"
@@ -46,6 +47,7 @@ export type CitationStyle =
   | "nlm"
   | "ecology"
   | "acs"
+  | "apa_5th"
   | "apa_7th"
   | "rsc"
 

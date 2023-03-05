@@ -46,6 +46,11 @@ export const CSL_METADATA: {
     style_title: "Council of Science Editors",
     field: "science",
   },
+  mla_7th: {
+    id: "MLA_7th",
+    style_title: "Modern Language Association 7th edition",
+    field: "language and literature",
+  },
   mla_8th: {
     id: "MLA_8th",
     style_title: "Modern Language Association 8th edition",
@@ -110,6 +115,11 @@ export const CSL_METADATA: {
     id: "AMA",
     style_title: "American Medical Association",
     field: "medicine",
+  },
+  apa_5th: {
+    id: "APA_5th",
+    style_title: "American Psychological Association",
+    field: "psychology",
   },
   apa_7th: {
     id: "APA_7th",

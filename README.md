@@ -6,19 +6,21 @@
 
 #### 🧐 CSL styles supported
 
-    ├── apa
-    ├── apa 7 *
-    ├── ama *
-    ├── asa *
+    ├── apa 5 *
+    ├── apa -6
+    ├── apa 7
+    ├── ama
+    ├── asa
     ├── acm
     ├── acs
-    ├── cse *
+    ├── cse
     ├── ieee
-    ├── mla
-    ├── mla_8th *
-    ├── mhra *
+    ├── mla_7th *
+    ├── mla_8th
+    ├── mla -9
+    ├── mhra
     ├── turabian_9th
-    ├── turabian_9th
+    ├── turabian_8th
     ├── chicago
     ├── harvard
     ├── nature
