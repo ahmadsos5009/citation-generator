@@ -12,5 +12,5 @@ Disallow: /cslList
 
 User-agent: *
 Disallow: /about
-Sitemap: https://citation-creator.com/sitemap/sitemap-0.xml
-Host: https://citation-creator.com
+Sitemap: https://citationgenerators.com/sitemap/sitemap-0.xml
+Host: https://citationgenerators.com
