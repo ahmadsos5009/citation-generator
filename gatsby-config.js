@@ -10,13 +10,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
-        excludes: [
-          "/referencesManager",
-          "/citationsList",
-          "/cslMetaData",
-          "/cslList",
-          "/about",
-        ],
+        excludes: ["/about", "/contact", "/examples", "/privacy", "/terms"],
         query: `
         {
           allSitePage {
@@ -34,7 +28,7 @@ module.exports = {
         },
         serialize: ({ path }) => {
           return {
-            url: path === "/" ? path : `${process.env.APP_URL}${path}/`,
+            url: path === "/" ? path : `${process.env.APP_URL}${path}`,
             changefreq: `daily`,
             priority: 0.7,
           }
@@ -46,13 +40,13 @@ module.exports = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: process.env.APP_URL,
-        sitemap: `${process.env.APP_URL}/sitemap/sitemap-0.xml`,
+        sitemap: `${process.env.APP_URL}/sitemap.xml`,
         policy: [
-          { userAgent: "*", disallow: ["/referencesManager"] },
-          { userAgent: "*", disallow: ["/citationsList"] },
-          { userAgent: "*", disallow: ["/cslMetaData"] },
-          { userAgent: "*", disallow: ["/cslList"] },
           { userAgent: "*", disallow: ["/about"] },
+          { userAgent: "*", disallow: ["/contact"] },
+          { userAgent: "*", disallow: ["/examples"] },
+          { userAgent: "*", disallow: ["/privacy"] },
+          { userAgent: "*", disallow: ["/terms"] },
         ],
       },
     },
