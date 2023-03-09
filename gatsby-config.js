@@ -40,7 +40,7 @@ module.exports = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: process.env.APP_URL,
-        sitemap: `${process.env.APP_URL}/sitemap.xml`,
+        sitemap: `${process.env.APP_URL}/sitemap-0.xml`,
         policy: [
           { userAgent: "*", disallow: ["/about"] },
           { userAgent: "*", disallow: ["/contact"] },
