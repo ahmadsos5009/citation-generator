@@ -12,5 +12,5 @@ Disallow: /privacy
 
 User-agent: *
 Disallow: /terms
-Sitemap: https://citationgenerators.com/sitemap.xml
+Sitemap: https://citationgenerators.com/sitemap-0.xml
 Host: https://citationgenerators.com
