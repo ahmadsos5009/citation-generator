@@ -1,11 +1,14 @@
 import * as React from "react"
 import { Container, Grid, Paper, Stack, Typography } from "@mui/material"
+import Loadable from "@loadable/component"
+
 import Seo from "../components/Seo"
 import Layout from "../components/pages/Layout"
 import { EditorProvider } from "../provider/EditorProvider"
 import { PrimaryStart } from "../components/Typography"
-import CitationEditor from "../components/editor/CitationEditor"
 import QuickActionsSection from "../components/editor/QuickActionsSection"
+
+const CitationEditor = Loadable(() => import("../components/editor/CitationEditor"))
 
 const CitationsListPage: React.FC = () => {
   return (
