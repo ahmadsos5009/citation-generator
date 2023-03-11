@@ -7,10 +7,11 @@ import { EditorProvider } from "../provider/EditorProvider"
 import { PrimaryStart } from "../components/Typography"
 import QuickActionsSection from "../components/editor/QuickActionsSection"
 import { Spinner } from "../components/editor/Spinner"
+import { lazy } from "@loadable/component"
 
-const CitationEditor = React.lazy(
-  () => import("../components/editor/CitationEditor"),
-)
+const CitationEditor = lazy(() => import("../components/editor/CitationEditor"), {
+  fallback: <Spinner />,
+})
 
 const CitationsListPage: React.FC = () => {
   return (
