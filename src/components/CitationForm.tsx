@@ -58,7 +58,7 @@ export const eliminatedFields: { [key in CitationDocumentType]: string[] } = {
 }
 
 const CitationForm: React.FC = () => {
-  const { documentType, style, xml, reset } = useContext(GeneratorContext)
+  const { documentType, style, note, xml, reset } = useContext(GeneratorContext)
 
   const setImportedCitation = useCallback(
     (citation: Citation) => reset(citation),
@@ -84,7 +84,7 @@ const CitationForm: React.FC = () => {
       {documentType !== CitationDocumentType.REPORT && (
         <ImportCitationBox
           documentType={documentType}
-          style={style}
+          style={note ? `annotation/${style}` : style}
           xml={xml}
           updateCitation={setImportedCitation}
         />
@@ -96,11 +96,15 @@ const CitationForm: React.FC = () => {
 }
 
 export const Form: React.FC = () => {
-  const { documentType } = useContext(GeneratorContext)
+  const { documentType, note } = useContext(GeneratorContext)
 
   const fields = useMemo(
     () =>
       documentFields[CitationJSDocumentType[documentType]].filter((field) => {
+        if (note && field === "note") {
+          return field
+        }
+
         if (!eliminatedFields[documentType].includes(field)) {
           if (field === "DOI" && documentType === CitationDocumentType.JOURNAL) {
             return field
@@ -111,7 +115,7 @@ export const Form: React.FC = () => {
           }
         }
       }),
-    [documentType],
+    [documentType, note],
   )
 
   return (

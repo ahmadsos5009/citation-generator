@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
     "@mui/x-data-grid": "^5.17.24",
+    "browserify-zlib": "^0.2.0",
     "ckeditor5-custom-build": "https://github.com/ahmadsos5009/ckeditor5",
     "dexie": "^3.2.3",
     "dexie-react-hooks": "^1.1.1",
@@ -44,19 +45,21 @@
     "gatsby-plugin-webfonts": "^2.3.2",
     "gatsby-source-filesystem": "^5.5.0",
     "gatsby-transformer-sharp": "^5.5.0",
-    "html-to-docx": "^1.3.2",
-    "html-to-pdfmake": "^2.3.7",
+    "html-to-docx": "^1.6.5",
+    "html-to-pdfmake": "^2.4.16",
     "juice": "^8.0.0",
     "pdfmake": "^0.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.43.0",
+    "stream-browserify": "^3.0.0",
     "typeface-catamaran": "^1.1.13",
+    "url": "^0.11.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/html-to-pdfmake": "^2.1.0",
+    "@types/html-to-pdfmake": "^2.4.0",
     "@types/react-helmet": "^6.1.2",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
@@ -78,9 +81,6 @@
     "prettier": "2.3.2",
     "typescript": "^4.3.5",
     "webpack": "^5.75.0"
-  },
-  "resolutions": {
-    "xmlbuilder2": "^3.0.2"
   },
   "keywords": [
     "gatsby"

@@ -91,6 +91,20 @@ const FileImport: React.FC<{
     }
   }, [])
 
+  const { citationDao } = useContext(DBContext)
+
+  const onAddCitation = useCallback(
+    (e) => {
+      const citation = citations.find((c) => c.id === e.currentTarget.value)
+      if (citation) {
+        citationDao.add(citation)
+        updateCitations(citations.filter((c) => c.id !== e.currentTarget.value))
+        setSelectedCitations(selectedCitations.filter((c) => c !== citation.id))
+      }
+    },
+    [citations, selectedCitations],
+  )
+
   return (
     <>
       <label htmlFor="contained-button-file">
@@ -121,8 +135,7 @@ const FileImport: React.FC<{
           {(style && <></>) || (
             <CitationDataView
               setSelectedCitations={setSelectedCitationsId}
-              updateCitations={updateCitations}
-              selectedCitations={selectedCitations}
+              onAddCitation={onAddCitation}
               citations={citations}
             />
           )}
@@ -151,29 +164,14 @@ const DataGridTheme = createTheme({
   },
 })
 
-const CitationDataView: React.FC<{
+export const CitationDataView: React.FC<{
   setSelectedCitations: (citations: string[]) => void
-  updateCitations: (citations: TCitation[]) => void
-  selectedCitations: string[]
+  onAddCitation: (e: React.MouseEvent) => void
   citations: TCitation[]
-}> = ({ setSelectedCitations, updateCitations, citations, selectedCitations }) => {
+}> = ({ setSelectedCitations, onAddCitation, citations }) => {
   if (!citations.length) {
     return <></>
   }
-
-  const { citationDao } = useContext(DBContext)
-
-  const onAddCitation = useCallback(
-    (e) => {
-      const citation = citations.find((c) => c.id === e.currentTarget.value)
-      if (citation) {
-        citationDao.add(citation)
-        updateCitations(citations.filter((c) => c.id !== e.currentTarget.value))
-        setSelectedCitations(selectedCitations.filter((c) => c !== citation.id))
-      }
-    },
-    [citations, selectedCitations],
-  )
 
   const viewColumns: GridColDef[] = [
     {

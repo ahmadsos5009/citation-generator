@@ -21,6 +21,7 @@ exports.createPages = async function ({ actions, graphql }) {
               metaTitle
               description
               slug
+              note
               documents
               documentsLink
             }
@@ -33,16 +34,26 @@ exports.createPages = async function ({ actions, graphql }) {
 
   // eslint-disable-next-line array-callback-return
   return data.allMdx.edges.map((edge) => {
-    const { path, title, metaTitle, description, slug, documents, documentsLink } =
-      edge.node.frontmatter
+    const {
+      path,
+      title,
+      metaTitle,
+      description,
+      slug,
+      note,
+      documents,
+      documentsLink,
+    } = edge.node.frontmatter
     const { id, body } = edge.node
 
     /** Citation Generator Pages */
     if (path) {
+      const pagePath = note ? path.replace("/annotation/", "") : path
+
       actions.createPage({
         path,
         component: require.resolve("./src/components/pages/Generator.tsx"),
-        context: { id, title, metaTitle, style: path, xml: body },
+        context: { id, title, metaTitle, style: pagePath, xml: body, note },
       })
     }
 
@@ -81,6 +92,12 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         crypto: false,
         path: false,
         fs: false,
+        assert: false,
+        url: require.resolve("url/"),
+        stream: require.resolve("stream-browserify"),
+        http: false,
+        https: false,
+        zlib: false,
       },
     },
     node: {

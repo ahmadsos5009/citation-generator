@@ -1,8 +1,12 @@
 import { Cite } from "@citation-js/core"
 import { Citation, DocumentType } from "../../types"
+import convertToBibitem from "../../utile/jsonCSL-bibitem"
 import HTMLtoDOCX from "html-to-docx"
 import { saveAs } from "file-saver"
 import juice from "juice"
+
+import { ImportCitation } from "../Citation"
+import { TCitation } from "../../db/types"
 require("@citation-js/plugin-csl")
 require("@citation-js/plugin-bibtex")
 
@@ -497,6 +501,22 @@ export const export_pdf = async (citationHtml: string, fileName: string) => {
   const parser = new DOMParser()
   const document = parser.parseFromString(citationHtml, "text/html")
   document.body.classList.add("ck-content")
+  const bibBody = document.body.querySelector(".csl-bib-body")
+  if (bibBody)
+    bibBody.setAttribute(
+      "style",
+      "line-height: 3px; padding: 0 2.54cm; font-size: 12pt;",
+    )
+
+  document.body.querySelectorAll<HTMLDivElement>(".csl-entry").forEach((node) => {
+    const margin = node.style.marginBottom.length
+      ? `margin-bottom: ${node.style.marginBottom};`
+      : ""
+    if (node.style.textIndent === "-2em") {
+      node.setAttribute("style", `${margin}margin-left:24;text-indent:-26;`)
+    }
+  })
+
   const source = `<!DOCTYPE html><html lang="en">${document.body.outerHTML}</html>`
 
   const pdfData = htmlToPdfmake.default(juice.inlineContent(source, CSL_CSS))
@@ -508,7 +528,6 @@ export const export_pdf = async (citationHtml: string, fileName: string) => {
         styles: {
           "csl-bib-body": {
             lineHeight: 1.8,
-            // font: '"SangBleu Republic", "Times New Roman", serif',
             fontSize: 12,
           },
           "csl-left-margin": {
@@ -542,6 +561,20 @@ export const export_bibTex = (
 
   link.href = `data:text/x-tex;charset=UTF-8,` + encodeURIComponent(bibTex)
   link.download = `${fileName}.bib`
+  link.click()
+}
+
+export const export_latex = (
+  citations: ImportCitation[],
+  fileName: string,
+): void => {
+  const bibItem = convertToBibitem(citations as TCitation[])
+  const latex = `\\begin{thebibliography}{${citations.length}} \n\n ${bibItem} \n\n \\end{thebibliography}`
+
+  const link = document.createElement("a")
+
+  link.href = `data:text/x-tex;charset=UTF-8,` + encodeURIComponent(latex)
+  link.download = `${fileName}.tex`
   link.click()
 }
 

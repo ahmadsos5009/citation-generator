@@ -19,6 +19,7 @@ import { CopyOption, PreviewMode } from "../components/form/CitationToolbar"
 export const GeneratorContext = createContext<{
   xml: string
   style: CitationStyle
+  note?: boolean
   citation: Citation
   documentType: CitationDocumentType
   previewMode: PreviewMode
@@ -35,6 +36,7 @@ export const GeneratorContext = createContext<{
   citation: {} as Citation,
   xml: "",
   style: "apa",
+  note: false,
   documentType: CitationDocumentType.JOURNAL,
   previewMode: "citation",
   copyOption: "text",
@@ -48,11 +50,11 @@ export const GeneratorContext = createContext<{
   resetField: () => "",
 })
 
-export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> = ({
-  children,
-  xml,
-  style,
-}) => {
+export const GeneratorProvider: React.FC<{
+  xml: string
+  style: CitationStyle
+  note?: boolean
+}> = ({ children, xml, style, note }) => {
   const { reset, resetField, register, setValue, watch } = useForm()
   const formCitation = watch()
 
@@ -85,6 +87,7 @@ export const GeneratorProvider: React.FC<{ xml: string; style: CitationStyle }> 
       value={{
         xml,
         style,
+        note,
         citation: formCitation,
         documentType,
         previewMode,

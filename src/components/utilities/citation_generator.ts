@@ -37,6 +37,45 @@ export function convertBibTexToCSL(bibTex: string): TCitation[] {
   }) as TCitation[]
 }
 
+/**
+ * Add css style for the bibliography, from csl of the selected format
+ */
+function addCSSToBiB(
+  referencesList: string,
+  hangingindent: boolean,
+  linespacing?: number,
+  entryspacing?: number,
+) {
+  const parser = new DOMParser()
+  const bibBody = parser.parseFromString(referencesList, "text/html")
+
+  const body = bibBody.querySelector<HTMLDivElement>(".csl-bib-body")
+  const space = linespacing && linespacing > 1.35 ? linespacing : 1.35
+
+  if (body)
+    body.setAttribute(
+      "style",
+      `line-height: ${space}em;
+             padding: 0 2.54cm;
+             // font-family: "Times New Roman", Times, serif;
+             font-size: 12pt;`,
+    )
+
+  bibBody.querySelectorAll<HTMLDivElement>(".csl-entry").forEach((node, index) => {
+    const css = `
+      ${(hangingindent && "padding-left: 2em; text-indent:-2em;") || ""}
+      ${entryspacing && index > 0 ? "margin-bottom: " + entryspacing + "em;" : ""}
+    `
+    node.setAttribute("style", css)
+
+    /** Annotated Bibliography */
+    node
+      .querySelector(".csl-block")
+      ?.setAttribute("style", "padding-left: 0em; text-indent: 0em;")
+  })
+  return bibBody
+}
+
 export function generateCitation(
   citation: Citation,
   documentType: string,
@@ -80,24 +119,18 @@ export const generateCitations = (
 
   const [{ entryspacing, hangingindent, linespacing }] = citeproc.makeBibliography()
 
-  // TODO:: inject this style
-  const css = `
-      .csl-bib-body {
-        line-height: ${linespacing || 1.35};
-      }
-      .csl-entry {
-         ${(hangingindent && "padding-left: 2em; text-indent:-2em;") || ""}
-      }
-      .csl-entry:not:first-child {
-        margin-bottom: ${entryspacing ? entryspacing + "em" : 0};
-      }
-  `
-
   const referencesList = cite.format((inText && "citation") || "bibliography", {
     format: "html",
     lang: "en-US",
-    template,
+    template: template,
   })
 
-  return referencesList
+  const bibBody = addCSSToBiB(
+    referencesList,
+    hangingindent,
+    linespacing,
+    entryspacing,
+  )
+
+  return bibBody.body.innerHTML
 }

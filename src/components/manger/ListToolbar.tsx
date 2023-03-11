@@ -10,6 +10,9 @@ import styled from "@emotion/styled"
 import { TProject } from "../../db/types"
 import { MicrosoftWordIcon } from "../../icons"
 import { exportToWord } from "../../utile/jsonCSL-openXml"
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
+
+import { navigate } from "gatsby"
 
 const ListToolbar: React.FC = () => {
   const { group } = useContext(ManagerContext)
@@ -43,6 +46,18 @@ const ListToolbar: React.FC = () => {
   )
 
   const isProjectSelected = group.id !== "all" && group.id !== "favorites"
+
+  const onBibliographyListClick = useCallback(async () => {
+    const citations = await citationDao.bulkGet(selection as string[])
+
+    return navigate("/citationsList", {
+      state: {
+        citations,
+        style: "apa",
+        citationDocument: "journal",
+      },
+    })
+  }, [selection])
 
   const onRemoveProjectCitation = useCallback(() => {
     const citations = state.rows.ids.filter(
@@ -120,6 +135,14 @@ const ListToolbar: React.FC = () => {
 
             <Stack justifyContent="center">
               <Stack direction="row">
+                <Button
+                  size="small"
+                  color="secondary"
+                  startIcon={<FormatQuoteIcon />}
+                  onClick={onBibliographyListClick}
+                >
+                  Bibliography List
+                </Button>
                 <Button onClick={onDeleteClick} color="secondary" size="small">
                   Delete
                 </Button>

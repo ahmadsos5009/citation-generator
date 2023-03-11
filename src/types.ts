@@ -51,6 +51,8 @@ export type CitationStyle =
   | "apa_7th"
   | "rsc"
 
+export type CitationNoteStyle = "apa_7th" | "mla_8th" | "chicago"
+
 export enum Events {
   CITATION = "fill-citation-field",
   AUTHORS = "fill-authors-field",

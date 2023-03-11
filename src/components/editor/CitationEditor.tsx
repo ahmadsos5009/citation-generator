@@ -4,29 +4,17 @@ import React, { useCallback, useContext, useEffect } from "react"
 import { CKEditor } from "@ckeditor/ckeditor5-react"
 import Editor from "ckeditor5-custom-build/build/ckeditor"
 
-import { Spinner } from "./Spinner"
 import { EditorContext } from "../../provider/EditorProvider"
+import { Box, Grid, Stack } from "@mui/material"
+import { ImportCitation, ImportCitationBox } from "../Citation"
 
-import {
-  Box,
-  Card,
-  CardContent,
-  FormControl,
-  FormHelperText,
-  Grid,
-  MenuItem,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material"
-import { DocumentIcon, ImportCitation, ImportCitationBox } from "../Citation"
+import { Citation } from "../../types"
 
-import { ReferenceExportButton } from "../Buttons"
-import { CSL_METADATA } from "../../csl_metadata"
-import { Citation, CitationJSDocumentType } from "../../types"
-import { DBContext } from "../../provider/DBProvider"
+import Toolbar from "./Toolbar"
+import BibliographyGuide from "./BibliographyGuide"
+import { AdsInContent } from "../Ads"
 
-const defaultEditorMessage = `<html lang='en'><body>
+export const defaultEditorMessage = `<html lang='en'><body>
 <h2 id="references_header" style="text-align:center;">References</h2>
 <p style="text-align:center;" id="default_message">
 <span style="color:hsl(0, 0%, 60%);">Add your citations from .bib/.tex or search from external source by Article Title or DOI or URL</span>
@@ -36,8 +24,25 @@ const defaultEditorMessage = `<html lang='en'><body>
 `
 
 const CitationEditor: React.FC = () => {
-  const { setCitations, setStyle, html, setHtml, setDocumentType } =
-    useContext(EditorContext)
+  const {
+    setCitations,
+    style,
+    setStyle,
+    xml,
+    citations,
+    html,
+    setHtml,
+    documentType,
+    setDocumentType,
+  } = useContext(EditorContext)
+
+  // TODO:: move this to the Editor Provider
+  const updateCitation = useCallback(
+    (citation: Citation) => {
+      setCitations([...citations, citation as ImportCitation])
+    },
+    [citations],
+  )
 
   const onTextChange = useCallback(
     (event, editor) => {
@@ -65,16 +70,20 @@ const CitationEditor: React.FC = () => {
     setCitations(citations)
     setStyle(style)
     setDocumentType(citationDocument)
+    window.history.pushState(null, "")
   }, [setHtml])
-
-  if (!html) {
-    return <Spinner />
-  }
 
   return (
     <Box>
-      <DocumentLabel />
-      <Header />
+      <Toolbar />
+
+      <ImportCitationBox
+        documentType={documentType}
+        style={style}
+        xml={xml}
+        updateCitation={updateCitation}
+      />
+
       <div className="document-editor">
         <div className="document-editor__toolbar" />
         <div className="document-editor__editable-container">
@@ -97,131 +106,15 @@ const CitationEditor: React.FC = () => {
           />
         </div>
       </div>
-      <Footer />
+
+      <Stack spacing={2} py={4}>
+        <Grid>
+          <AdsInContent dataAdSlot="4238879281" />
+        </Grid>
+        <BibliographyGuide />
+      </Stack>
     </Box>
   )
 }
-
-const Header: React.FC = () => {
-  const { documentType, style, xml, setXml, setStyle, citations, setCitations } =
-    useContext(EditorContext)
-
-  const updateCitation = useCallback(
-    (citation: Citation) => {
-      setCitations([...citations, citation as ImportCitation])
-    },
-    [citations],
-  )
-
-  const { cslDao } = useContext(DBContext)
-
-  const onChangeStyle = useCallback(async (e) => {
-    const newStyle = e.target.value
-    const { xml } = await cslDao.get(newStyle)
-    setXml(xml)
-    setStyle(newStyle)
-  }, [])
-
-  return (
-    <Box
-      sx={{
-        flexDirection: { xs: "column", md: "row" },
-        display: "flex",
-        background: "#f4f4f4",
-        padding: "8px 0",
-        marginBottom: "8px",
-        border: "1px hsl(0, 0%, 82.7%) solid",
-      }}
-    >
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        padding="0 8px"
-      >
-        <Stack direction="row" alignItems="center" width="max-content">
-          <FormHelperText>Citation Style:</FormHelperText>
-          <FormControl sx={{ m: 1, minWidth: 50 }} size="small">
-            <Select
-              MenuProps={{ style: { height: "220px" } }}
-              value={style}
-              onChange={onChangeStyle}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              {Object.values(CSL_METADATA).map(({ id }) => (
-                <MenuItem key={id.toLowerCase()} value={id.toLowerCase()}>
-                  {id.toLowerCase()}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Stack>
-        <Box display={{ xs: "flex", md: "none" }} alignItems="start" marginTop="4px">
-          <ReferenceExportButton />
-        </Box>
-      </Box>
-
-      <ImportCitationBox
-        documentType={documentType}
-        style={style}
-        xml={xml}
-        updateCitation={updateCitation}
-      />
-
-      <Box display={{ xs: "none", md: "flex" }} marginTop="4px">
-        <ReferenceExportButton />
-      </Box>
-    </Box>
-  )
-}
-
-const DocumentLabel: React.FC = () => {
-  const { documentType } = useContext(EditorContext)
-
-  return (
-    <Grid padding={1} container direction="row" alignItems="center">
-      {DocumentIcon[CitationJSDocumentType[documentType]]}
-      {documentType.toUpperCase()}
-    </Grid>
-  )
-}
-
-const Footer: React.FC = () => (
-  <Box margin={4}>
-    <Typography textAlign="center" gutterBottom variant="h5" component="div">
-      Difference Between Reference and Bibliography
-    </Typography>
-    <Stack
-      margin={4}
-      flexDirection="row"
-      flexWrap="wrap"
-      justifyContent="space-around"
-    >
-      <Card sx={{ my: 2, maxWidth: 345 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Reference List
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            List of sources that have been referred to in your work directly.
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card sx={{ my: 2, maxWidth: 345 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Bibliography
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            List of sources referred to in your work, whether directly cited or not.
-            You should include all of the materials you consulted in preparing your
-            paper in a bibliography.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Stack>
-  </Box>
-)
 
 export default CitationEditor
