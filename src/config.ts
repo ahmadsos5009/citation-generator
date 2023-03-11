@@ -27,7 +27,7 @@ const IS_DEVELOPMENT =
 export default <Config>{
   DB_VERSION: 2,
   DB_NAME: "CitationGenerator",
-  DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citation-creator.com",
+  DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citationgenerators.com",
   IS_DEVELOPMENT,
   SERVICES_PAGES: [
     { name: "List Generator", href: "/citationsList/" },
