@@ -13,6 +13,7 @@ import { Citation } from "../../types"
 import Toolbar from "./Toolbar"
 import BibliographyGuide from "./BibliographyGuide"
 import { AdsInContent } from "../Ads"
+import { DBContext } from "../../provider/DBProvider"
 
 export const defaultEditorMessage = `<html lang='en'><body>
 <h2 id="references_header" style="text-align:center;">References</h2>
@@ -24,6 +25,7 @@ export const defaultEditorMessage = `<html lang='en'><body>
 `
 
 const CitationEditor: React.FC = () => {
+  const { cslDao } = useContext(DBContext)
   const {
     setCitations,
     style,
@@ -32,6 +34,7 @@ const CitationEditor: React.FC = () => {
     citations,
     html,
     setHtml,
+    setXml,
     documentType,
     setDocumentType,
   } = useContext(EditorContext)
@@ -68,8 +71,13 @@ const CitationEditor: React.FC = () => {
     }
     const { citations, style, citationDocument } = response
     setCitations(citations)
-    setStyle(style)
     setDocumentType(citationDocument)
+    ;(async () => {
+      const { xml } = await cslDao.get(style)
+      setXml(xml)
+      setStyle(style)
+    })()
+
     window.history.pushState(null, "")
   }, [setHtml])
 

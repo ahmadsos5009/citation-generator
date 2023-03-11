@@ -35,7 +35,16 @@ export const Spinner: React.FC = () => {
   }, [])
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        height: "calc(70vh)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Typography p={1}>Loading Editor</Typography>
       <LinearProgress
         color="secondary"
         variant="buffer"

@@ -1,14 +1,16 @@
 import * as React from "react"
 import { Container, Grid, Paper, Stack, Typography } from "@mui/material"
-import Loadable from "@loadable/component"
 
 import Seo from "../components/Seo"
 import Layout from "../components/pages/Layout"
 import { EditorProvider } from "../provider/EditorProvider"
 import { PrimaryStart } from "../components/Typography"
 import QuickActionsSection from "../components/editor/QuickActionsSection"
+import { Spinner } from "../components/editor/Spinner"
 
-const CitationEditor = Loadable(() => import("../components/editor/CitationEditor"))
+const CitationEditor = React.lazy(
+  () => import("../components/editor/CitationEditor"),
+)
 
 const CitationsListPage: React.FC = () => {
   return (
@@ -59,8 +61,9 @@ const CitationsListPage: React.FC = () => {
                     </Typography>
                   </Stack>
                 </Stack>
-
-                <CitationEditor />
+                <React.Suspense fallback={<Spinner />}>
+                  <CitationEditor />
+                </React.Suspense>
               </Grid>
 
               <Grid
