@@ -18,6 +18,7 @@ interface Config {
       text: string
     }
   }
+  SHOW_ADS: boolean
   DOCUMENT_TYPES: CitationDocumentType[]
 }
 
@@ -27,7 +28,9 @@ const IS_DEVELOPMENT =
 export default <Config>{
   DB_VERSION: 2,
   DB_NAME: "CitationGenerator",
-  DOMAIN: IS_DEVELOPMENT ? "http://localhost:8000" : "https://citationgenerators.com",
+  DOMAIN: IS_DEVELOPMENT
+    ? "http://localhost:8000"
+    : "https://citationgenerators.com",
   IS_DEVELOPMENT,
   SERVICES_PAGES: [
     { name: "List Generator", href: "/citationsList/" },
@@ -50,5 +53,6 @@ export default <Config>{
       text: "free citation generator and you could create a bibliography and export it as PDF Word or BibTex.",
     },
   },
+  SHOW_ADS: false,
   DOCUMENT_TYPES: ["journal", "book", "website", "report"],
 }

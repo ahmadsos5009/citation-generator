@@ -14,6 +14,7 @@ import Toolbar from "./Toolbar"
 import BibliographyGuide from "./BibliographyGuide"
 import { AdsInContent } from "../Ads"
 import { DBContext } from "../../provider/DBProvider"
+import config from "../../config"
 
 export const defaultEditorMessage = `<html lang='en'><body>
 <h2 id="references_header" style="text-align:center;">References</h2>
@@ -116,9 +117,7 @@ const CitationEditor: React.FC = () => {
       </div>
 
       <Stack spacing={2} py={4}>
-        <Grid>
-          <AdsInContent dataAdSlot="4238879281" />
-        </Grid>
+        <Grid>{config.SHOW_ADS && <AdsInContent dataAdSlot="4238879281" />}</Grid>
         <BibliographyGuide />
       </Stack>
     </Box>

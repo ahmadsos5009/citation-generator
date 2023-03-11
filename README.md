@@ -78,13 +78,13 @@
 - [ ] add 4040 page
 
 ### Add CSL:
-* ASCE
-* AIP
-* BMJ
-* AGU
-* APSA
-* ASME
 
+- ASCE
+- AIP
+- BMJ
+- AGU
+- APSA
+- ASME
 
 ### Reference Management System
 
@@ -107,6 +107,7 @@
 - [ ] fix pdf and docx `text-indent` and annotated
 
 CSS - Style:
+
 - lineSpacing : `line-height: ${value};` default value 1.35
 - hangingIndent: `padding-left: 2em; text-indent:-2em;`
 - entrySpacing: `margin-bottom: ${value}em;` not for first child
@@ -117,18 +118,13 @@ Dexie - Schema:
 - citation: `id, type, json, updatedTimestamp`
 - collection: `id, name, references`
 
-> -[X] Seed CSL on request 
-> -[X] Add CSL XSLT to the body 
-> -[X] Static example generation, like mdx page
-
-
-
-
+> -[X] Seed CSL on request -[X] Add CSL XSLT to the body -[X] Static example generation, like mdx page
 
 ## Open Xml:
-            
+
 `7.4.1 Types of Sources`
-The Office Open XML formats support a collection of predefined source types for bibliography entries based on the categories most commonly used in various citation and bibliography style guidelines . The set of predefined source types can be extended as needed. The recommended approach for extending this set is to use the Misc type, and then leverage the methods described in Part 5 of this standard for extending the format with new attributes or elements. The  following types of sources are predefined:
+The Office Open XML formats support a collection of predefined source types for bibliography entries based on the categories most commonly used in various citation and bibliography style guidelines . The set of predefined source types can be extended as needed. The recommended approach for extending this set is to use the Misc type, and then leverage the methods described in Part 5 of this standard for extending the format with new attributes or elements. The following types of sources are predefined:
+
 - Book (Book)
 - BookSection (Book Section)
 - JournalArticle (Journal Article)
@@ -150,53 +146,54 @@ The Office Open XML formats support a collection of predefined source types for 
 `7.4.2 Child Elements`
 Each Source element has a number of elements as children, each of which represents a different piece of data for the bibliography entries. For example, a book might have an author, title, publisher, year, and city. Most are self-explanatory, but this document will pay special attention to some of the more complex children.
 The child elements are:
-- AbbreviatedCaseNumber *
-- AlbumTitle *
+
+- AbbreviatedCaseNumber \*
+- AlbumTitle \*
 - Author
 - BookTitle
-- Broadcaster *
-- BroadcastTitle *
-- CaseNumber *
+- Broadcaster \*
+- BroadcastTitle \*
+- CaseNumber \*
 - ChapterNumber
-- City *
-- Comments *
-- ConferenceName *
-- Country *
-- CountryRegion * 
-- Court *
+- City \*
+- Comments \*
+- ConferenceName \*
+- Country \*
+- CountryRegion \*
+- Court \*
 - Day
 - DayAccessed
-- Department *
-- Distributor *
+- Department \*
+- Distributor \*
 - Edition
-- Guid *
-- Institution *
-- InternetSiteTitle *
+- Guid \*
+- Institution \*
+- InternetSiteTitle \*
 - Issue
 - JournalName
-- LCID *
+- LCID \*
 - Medium
 - Month
 - MonthAccessed
 - NumberVolumes
 - Pages
-- PatentNumber *
+- PatentNumber \*
 - PeriodicalTitle
 - PlacePublished
-- ProductionCompany *
+- ProductionCompany \*
 - PublicationTitle
 - Publisher
-- RecordingNumber *
-- RefOrder *
-- Reporter *
+- RecordingNumber \*
+- RefOrder \*
+- Reporter \*
 - SourceType
 - ShortTitle
 - StandardNumber - ISSN, ISBN
-- StateProvince *
-- Station *
-- Tag * 
-- Theater *
-- ThesisType *
+- StateProvince \*
+- Station \*
+- Tag \*
+- Theater \*
+- ThesisType \*
 - Title
 - Type
 - URL
@@ -206,22 +203,23 @@ The child elements are:
 - YearAccessed
 
 `7.4.3 Author`
-There are two elements with the same name: Author. The first Author element is a container for the set of contributors attributed to the current source. The second Author element is a child of the first  and is used to represent a single contributor. The valid set of contributors is defined as:
+There are two elements with the same name: Author. The first Author element is a container for the set of contributors attributed to the current source. The second Author element is a child of the first and is used to represent a single contributor. The valid set of contributors is defined as:
+
 - Artist
 - Author
 - BookAuthor
 - Compiler
 - Composer
-- Conductor *
-- Counsel *
+- Conductor \*
+- Counsel \*
 - Director
 - Editor
-- Interviewee *
+- Interviewee \*
 - Interviewer
-- Inventor *
+- Inventor \*
 - Performer
 - ProducerName
 - Translator
-- Writer *
+- Writer \*
 
------------------------------------------
+---

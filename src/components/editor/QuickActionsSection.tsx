@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, Grid, Stack } from "@mui/material"
 import { AdsSidebar } from "../Ads"
+import config from "../../config"
 
 const QuickActionsSection: React.FC = () => {
   return (
@@ -17,8 +18,8 @@ const QuickActionsSection: React.FC = () => {
       </Grid>
 
       <Grid item md={8}>
-        <AdsSidebar dataAdSlot="1729214133" />
-        <AdsSidebar dataAdSlot="1729214133" />
+        {config.SHOW_ADS && <AdsSidebar dataAdSlot="1729214133" />}
+        {config.SHOW_ADS && <AdsSidebar dataAdSlot="1729214133" />}
       </Grid>
     </>
   )

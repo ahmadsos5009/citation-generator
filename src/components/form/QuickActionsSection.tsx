@@ -17,6 +17,7 @@ import { AdsSidebar } from "../Ads"
 import { CSL_NOTE_METADATA } from "../../csl_metadata"
 
 import NoteIcon from "@mui/icons-material/Note"
+import config from "../../config"
 
 const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => {
   const { citation, style, documentType } = useContext(GeneratorContext)
@@ -73,7 +74,7 @@ const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => 
       </Grid>
 
       <Grid item md={8}>
-        <AdsSidebar dataAdSlot="1729214133" />
+        {config.SHOW_ADS && <AdsSidebar dataAdSlot="1729214133" />}
       </Grid>
 
       <Snackbar

@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material"
 import { AdsInContent } from "../Ads"
+import config from "../../config"
 
 const BibliographyGuide: React.FC = () => {
   return (
@@ -95,9 +96,7 @@ const BibliographyGuide: React.FC = () => {
         </Stack>
       </Grid>
 
-      <Grid>
-        <AdsInContent dataAdSlot="4238879281" />
-      </Grid>
+      <Grid>{config.SHOW_ADS && <AdsInContent dataAdSlot="4238879281" />}</Grid>
 
       <Grid px={{ xs: 2, md: 0 }} py={8} id="bibliography_guide">
         <Typography variant="h5">
