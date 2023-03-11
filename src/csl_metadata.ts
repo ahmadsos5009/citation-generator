@@ -1,4 +1,4 @@
-import { CitationStyle } from "./types"
+import { CitationNoteStyle, CitationStyle } from "./types"
 
 export const POPULAR_CSL_METADATA = {
   apa: {
@@ -37,6 +37,7 @@ export const CSL_METADATA: {
   [key in CitationStyle]: {
     id: string
     style_title: string
+    label?: string
     field: string
   }
 } = {
@@ -125,5 +126,29 @@ export const CSL_METADATA: {
     id: "APA_7th",
     style_title: "American Psychological Association",
     field: "psychology",
+  },
+}
+
+export const CSL_NOTE_METADATA: {
+  [key in CitationNoteStyle]: {
+    id: string
+    label: string
+    field: string
+  }
+} = {
+  apa_7th: {
+    id: "annotation/APA_7th",
+    label: "APA 7th ",
+    field: "psychology",
+  },
+  mla_8th: {
+    id: "annotation/mla_8th",
+    label: "MLA 8th ",
+    field: "language and literature",
+  },
+  chicago: {
+    id: "annotation/chicago",
+    label: "Chicago 17th",
+    field: "generic",
   },
 }

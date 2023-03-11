@@ -66,20 +66,29 @@
 - [x] Update Form `text fields` `authors` `link` `date`
   > Add Google Ads Unit
 - [x] PubMed
-- [ ] build annotated bibliography page
-- [ ] latex support, bibitem
+- [x] latex support, bibitem
+- [x] build annotated bibliography page
+- [x] Add format to the generator page
+- [ ] add more CSL style
+- [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
 - [ ] clean imported data, to just like type, use `in` operation
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
 - [ ] add 4040 page
-- [ ] add more CSL style
-- [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
-- [ ] Add format to the generator page
+
+### Add CSL:
+* ASCE
+* AIP
+* BMJ
+* AGU
+* APSA
+* ASME
+
 
 ### Reference Management System
 
-- [ ] Add Create Bibliography button to toolbar
+- [x] Add Create Bibliography button to toolbar
 - [ ] Pull full text document, and show it as pdf
 - [ ] Full text search
 - [ ] Fix Mobile view
@@ -87,10 +96,15 @@
 
 ### Reference List
 
-- [ ] Redesign ref list page
+- [x] Redesign ref list page
+- [x] Fix LaTex export
 - [x] List style, for each CSL
-- [ ] Add annotated bibliography
-- [ ] Fix LaTex export
+- [x] Add annotated bibliography
+- [x] Enable annotated bibliography config
+- [x] Update References List page
+- [x] Add annotated bibliography styles
+- [ ] fix annotated bibliography switch issue
+- [ ] fix pdf and docx `text-indent` and annotated
 
 CSS - Style:
 - lineSpacing : `line-height: ${value};` default value 1.35

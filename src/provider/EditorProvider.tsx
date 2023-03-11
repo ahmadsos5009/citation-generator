@@ -23,18 +23,10 @@ export const EditorContext = React.createContext<{
   documentType: CitationDocumentType.JOURNAL,
   style: "apa",
   xml: "",
-  setCitations: () => {
-    console.error("Unmounted")
-  },
-  setDocumentType: () => {
-    console.error("Unmounted")
-  },
-  setStyle: () => {
-    console.error("Unmounted")
-  },
-  setHtml: () => {
-    console.error("Unmounted")
-  },
+  setCitations: () => "",
+  setDocumentType: () => "",
+  setStyle: () => "",
+  setHtml: () => "",
   setXml: () => "",
 })
 

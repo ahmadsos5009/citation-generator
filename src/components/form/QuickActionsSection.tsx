@@ -1,10 +1,22 @@
 import React, { useCallback, useContext, useState } from "react"
-import { Button, Grid, Snackbar, Stack } from "@mui/material"
+import {
+  Button,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
 import { navigate } from "gatsby"
 import { isEmptyCitation } from "../utilities/object"
 import { CitationJSDocumentType } from "../../types"
-import AdsSidebar from "../AdsSidebar"
+import { AdsSidebar } from "../Ads"
+import { CSL_NOTE_METADATA } from "../../csl_metadata"
+
+import NoteIcon from "@mui/icons-material/Note"
 
 const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => {
   const { citation, style, documentType } = useContext(GeneratorContext)
@@ -33,6 +45,30 @@ const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => 
           <Button onClick={onGenerateReferencesClick} variant="text">
             {pageTitle} Reference Generator
           </Button>
+          <List
+            sx={{ py: 2, px: 1 }}
+            subheader={
+              <Stack direction="row" alignItems="center" spacing={1}>
+                {/*  @ts-ignore */}
+                <NoteIcon fontSize="1em" />
+                <Typography>Annotated Bibliography</Typography>
+              </Stack>
+            }
+          >
+            <Divider />
+            {Object.values(CSL_NOTE_METADATA).map(({ id, label }) => (
+              <ListItem key={id}>
+                <Button
+                  sx={{ flex: 1, justifyContent: "start" }}
+                  href={`/${id.toLowerCase()}/`}
+                  component="a"
+                  variant="text"
+                >
+                  {label}
+                </Button>
+              </ListItem>
+            ))}
+          </List>
         </Stack>
       </Grid>
 

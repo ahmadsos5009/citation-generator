@@ -220,7 +220,7 @@ export type ImportCitation = Citation & { type: DocumentType }
 
 export const ImportCitationBox: React.FC<{
   documentType: CitationDocumentType
-  style: CitationStyle
+  style: string
   xml: string
   updateCitation: (citation: Citation) => void
 }> = ({ documentType, style, xml, updateCitation }) => {
@@ -259,7 +259,7 @@ export const ImportCitationBox: React.FC<{
           citation,
           documentType,
           "html",
-          style,
+          style as CitationStyle,
           xml,
         )
         return {
@@ -372,7 +372,7 @@ export const ImportCitationBox: React.FC<{
         <UploadFileModel
           documentType={documentType}
           updateCitation={updateCitation}
-          style={style}
+          style={style as CitationStyle}
           xml={xml}
         />
       </Paper>

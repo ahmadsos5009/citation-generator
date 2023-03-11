@@ -32,11 +32,6 @@ export default <Config>{
   SERVICES_PAGES: [
     { name: "List Generator", href: "/citationsList/" },
     { name: "Manage References", href: "/referencesManager/" },
-    {
-      name: "Annotated Bibliography",
-      href: "/annotated_bibliography/",
-      disabled: true,
-    },
     { name: "Style Guide", href: "guide" },
     {
       name: "Citation Examples",

@@ -31,7 +31,8 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
         onChange={handleChange}
         value={value}
         required={required}
-        multiline={multiline}
+        multiline={id === "note"}
+        minRows={3}
         fullWidth
         id={id}
       />

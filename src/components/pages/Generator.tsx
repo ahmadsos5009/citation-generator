@@ -20,11 +20,12 @@ interface PageProps {
     metaTitle: string
     style: CitationStyle
     xml: string
+    note?: boolean
   }
 }
 
 const Generator: React.FC<PageProps> = ({ pageContext }) => {
-  const { title, metaTitle, style, xml } = pageContext
+  const { title, metaTitle, style, xml, note } = pageContext
 
   const pageTitle = useMemo(() => {
     if (style.includes("_")) {
@@ -39,7 +40,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
         title={metaTitle}
         description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
       />
-      <GeneratorProvider xml={xml} style={style}>
+      <GeneratorProvider xml={xml} style={style} note={note}>
         <Container
           disableGutters
           maxWidth={false}
@@ -77,7 +78,9 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                   textAlign={{ xs: "center", md: "start" }}
                 >
                   <Stack py={2}>
-                    <PrimaryStart>{`${pageTitle} Citation Generator`}</PrimaryStart>
+                    <PrimaryStart>{`${pageTitle} Citation Generator ${
+                      note ? "+ Annotated Bibliography" : ""
+                    }`}</PrimaryStart>
                     <Typography
                       align="left"
                       variant="caption"

@@ -12,11 +12,17 @@ import {
   List,
   ListItem,
   ListItemText,
+  Stack,
   Typography,
 } from "@mui/material"
 import { PrimaryStart, PrimaryText, Secondary } from "../components/Typography"
-import { ReferencesList, ReferenceManagement } from "../placeholders"
+import {
+  ReferencesList,
+  ReferenceManagement,
+  AnnotatedBibliography,
+} from "../placeholders"
 import styled from "@emotion/styled"
+import { CSL_NOTE_METADATA } from "../csl_metadata"
 
 const IndexPage: React.FC = () => {
   return (
@@ -44,13 +50,13 @@ const IndexPage: React.FC = () => {
                 <Item>
                   <ListItemText
                     primary="Import Citations"
-                    secondary="Import citations from Title, URL, DOI, ISBN, BibTeX"
+                    secondary="Import citations from Title, URL, DOI, PubMed, ISBN, BibTeX"
                   />
                 </Item>
                 <Item>
                   <ListItemText
                     primary="Export Citations"
-                    secondary="Export your citations or references list to a PDF, Word, BibTex Document"
+                    secondary="Export your citations or references list to a PDF, Word, LaTex, BibTex Document"
                   />
                 </Item>
                 <Item>
@@ -129,21 +135,25 @@ const IndexPage: React.FC = () => {
           </Grid>
         </Grid>
 
-        {/* TODO:: show this when implement annotated bibliography */}
-        {/*<Grid bgcolor="primary.light" container xs={12} item>*/}
-        {/*  <Grid md={7} p={6} item>*/}
-        {/*    <PrimaryText pb={1} sx={{ color: "#8A8783 !important" }}>*/}
-        {/*      Text editor for Bibliographies list, Text editor for Bibliographies*/}
-        {/*      list*/}
-        {/*    </PrimaryText>*/}
-        {/*    <Button variant="outlined">Action</Button>*/}
-        {/*  </Grid>*/}
-        {/*  <Grid md={5} item container alignItems="center" justifyContent="center">*/}
-        {/*    <CardMedia sx={{ maxWidth: { md: 400, xs: 200 } }}>*/}
-        {/*      <AnnotatedBibliography />*/}
-        {/*    </CardMedia>*/}
-        {/*  </Grid>*/}
-        {/*</Grid>*/}
+        <Grid bgcolor="primary.light" container xs={12} item>
+          <Grid md={7} p={6} item>
+            <Stack alignItems="start" py={2}>
+              <PrimaryText>Generate Annotated Bibliography for:</PrimaryText>
+              <Stack direction="row">
+                {Object.values(CSL_NOTE_METADATA).map(({ id, label }) => (
+                  <Link key={id} size="small" href={`/${id.toLowerCase()}/`}>
+                    {label}
+                  </Link>
+                ))}
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid md={5} item container alignItems="center" justifyContent="center">
+            <CardMedia sx={{ maxWidth: { md: 400, xs: 200 } }}>
+              <AnnotatedBibliography />
+            </CardMedia>
+          </Grid>
+        </Grid>
       </Grid>
     </Layout>
   )
@@ -152,6 +162,19 @@ const IndexPage: React.FC = () => {
 const Item = styled(ListItem)`
   padding-right: 0;
   padding-left: 0;
+`
+
+const Link = styled(Button)`
+  display: block;
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  color: #37293c;
+  text-align: center;
+  :hover {
+    text-decoration: underline;
+  }
 `
 
 export default IndexPage

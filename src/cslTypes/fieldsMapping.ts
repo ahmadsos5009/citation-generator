@@ -18,7 +18,7 @@ export const labels: { [key in string]: string } = {
   archive_location: "Loc. in Archive",
   source: "Library Catalog",
   "call-number": "Call Number",
-  note: "Extra",
+  note: "Annotation",
   "publisher-place": "Place",
   "collection-number": "Series Number",
   "number-of-volumes": "# of Volumes",
@@ -51,7 +51,7 @@ export const descriptions: { [key in string]: string } = {
     "storage location within an archive (e.g. a box and folder number)",
   source: "from whence the item originates (e.g. a library catalog or database)",
   "call-number": "call number (to locate the item in a library)",
-  note: "(short) inline note giving additional item details (e.g. a concise summary or commentary)",
+  note: "Descriptive text or notes about an item (e.g. in an annotated bibliography)",
   "publisher-place": "geographic location of the publisher",
   "collection-number":
     "number identifying the collection holding the item (e.g. the series number for a book)",
