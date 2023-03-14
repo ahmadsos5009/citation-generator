@@ -50,6 +50,12 @@ export type CitationStyle =
   | "apa_5th"
   | "apa_7th"
   | "rsc"
+  | "agu"
+  | "aip"
+  | "apsa"
+  | "asce"
+  | "asme"
+  | "bmj"
 
 export type CitationNoteStyle = "apa_7th" | "mla_8th" | "chicago"
 

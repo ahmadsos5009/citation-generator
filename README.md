@@ -6,16 +6,22 @@
 
 #### 🧐 CSL styles supported
 
-    ├── apa 5 *
-    ├── apa -6
+    ├── apa 5
+    ├── apa 6
     ├── apa 7
     ├── ama
     ├── asa
     ├── acm
     ├── acs
+    ├── asce * 
+    ├── aip  *
+    ├── bmj  *
+    ├── agu  *
+    ├── apsa  *
+    ├── asme  *
     ├── cse
     ├── ieee
-    ├── mla_7th *
+    ├── mla_7th
     ├── mla_8th
     ├── mla -9
     ├── mhra
@@ -69,22 +75,13 @@
 - [x] latex support, bibitem
 - [x] build annotated bibliography page
 - [x] Add format to the generator page
-- [ ] add more CSL style
+- [x] add more CSL style
 - [ ] Add Footnote preview / https://github.com/timlrx/rehype-citation
 - [ ] clean imported data, to just like type, use `in` operation
 - [ ] Fix Imported Data, and filter just document type
 - [ ] Fix Import and upload list item
 - [ ] Duplicate references citation.js
 - [ ] add 4040 page
-
-### Add CSL:
-
-- ASCE
-- AIP
-- BMJ
-- AGU
-- APSA
-- ASME
 
 ### Reference Management System
 

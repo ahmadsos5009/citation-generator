@@ -33,14 +33,7 @@ export const POPULAR_CSL_METADATA = {
   },
 }
 
-export const CSL_METADATA: {
-  [key in CitationStyle]: {
-    id: string
-    style_title: string
-    label?: string
-    field: string
-  }
-} = {
+export const HEADER_CSL_METADATA = {
   ...POPULAR_CSL_METADATA,
   cse: {
     id: "CSE",
@@ -126,6 +119,47 @@ export const CSL_METADATA: {
     id: "APA_7th",
     style_title: "American Psychological Association",
     field: "psychology",
+  },
+}
+
+export const CSL_METADATA: {
+  [key in CitationStyle]: {
+    id: string
+    style_title: string
+    label?: string
+    field: string
+  }
+} = {
+  ...HEADER_CSL_METADATA,
+  agu: {
+    id: "AGU",
+    style_title: "American Geophysical Union",
+    field: "geology",
+  },
+  aip: {
+    id: "AIP",
+    style_title: "American Institute of Physics",
+    field: "physics",
+  },
+  apsa: {
+    id: "APSA",
+    style_title: "American Political Science Association",
+    field: "political science",
+  },
+  asce: {
+    id: "ASCE",
+    style_title: "American Society of Civil Engineers",
+    field: "engineering",
+  },
+  asme: {
+    id: "ASME",
+    style_title: "American Society of Mechanical Engineers",
+    field: "engineering",
+  },
+  bmj: {
+    id: "BMJ",
+    style_title: "BMJ",
+    field: "medicine",
   },
 }
 

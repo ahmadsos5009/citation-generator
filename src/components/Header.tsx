@@ -19,7 +19,7 @@ import {
 } from "@mui/material"
 import { Logo, PrimaryButton } from "./Typography"
 import config from "../config"
-import { CSL_METADATA } from "../csl_metadata"
+import { HEADER_CSL_METADATA } from "../csl_metadata"
 
 const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
@@ -136,7 +136,7 @@ const Header: React.FC = () => {
             justifyContent: "center",
           }}
         >
-          {Object.values(CSL_METADATA).map(({ id }) => (
+          {Object.values(HEADER_CSL_METADATA).map(({ id }) => (
             <Button
               key={id}
               href={`/${id.toLocaleLowerCase()}/`}
