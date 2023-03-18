@@ -46,7 +46,7 @@ export const referenceColumns: GridColDef[] = [
     flex: 1,
     disableColumnMenu: true,
     valueFormatter: (params) => {
-      return params.value.reduce(
+      return (params.value || []).reduce(
         (prev: string, { family, given }: User) =>
           (family && `${prev} ${family} ${given}`) || "--",
         "",

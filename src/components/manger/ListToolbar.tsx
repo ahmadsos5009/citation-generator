@@ -54,7 +54,7 @@ const ListToolbar: React.FC = () => {
       state: {
         citations,
         style: "apa",
-        citationDocument: "journal",
+        citationDocument: "article-journal",
       },
     })
   }, [selection])
