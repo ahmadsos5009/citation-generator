@@ -12,7 +12,7 @@ import {
 import { GeneratorContext } from "../../provider/GeneratorProvider"
 import { navigate } from "gatsby"
 import { isEmptyCitation } from "../utilities/object"
-import { CitationJSDocumentType } from "../../types"
+
 import { AdsSidebar } from "../Ads"
 import { CSL_NOTE_METADATA } from "../../csl_metadata"
 
@@ -25,7 +25,7 @@ const QuickActionsSection: React.FC<{ pageTitle: string }> = ({ pageTitle }) => 
   const [isEmpty, setIsEmpty] = useState(false)
 
   const onGenerateReferencesClick = useCallback(() => {
-    if (isEmptyCitation(citation, CitationJSDocumentType[documentType])) {
+    if (isEmptyCitation(citation, documentType)) {
       setIsEmpty(true)
       return
     }

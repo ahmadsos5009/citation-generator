@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useState,
 } from "react"
-import { Citation, CitationDocumentType, CitationStyle } from "../types"
+import { Citation, CitationStyle, DocumentType } from "../types"
 import {
   FieldValues,
   useForm,
@@ -16,20 +16,46 @@ import {
 } from "react-hook-form"
 import { CopyOption, PreviewMode } from "../components/form/CitationToolbar"
 
+const initialDocuments = {
+  article: {},
+  "article-magazine": {},
+  "article-newspaper": {},
+  "article-journal": {},
+  bill: {},
+  book: {},
+  chapter: {},
+  "entry-dictionary": {},
+  "entry-encyclopedia": {},
+  graphic: {},
+  legislation: {},
+  legal_case: {},
+  manuscript: {},
+  map: {},
+  "paper-conference": {},
+  patent: {},
+  post: {},
+  "post-weblog": {},
+  personal_communication: {},
+  report: {},
+  speech: {},
+  thesis: {},
+  webpage: {},
+}
+
 export const GeneratorContext = createContext<{
   xml: string
   style: CitationStyle
   note?: boolean
   citation: Citation
-  documentType: CitationDocumentType
+  documentType: DocumentType
   previewMode: PreviewMode
   copyOption: CopyOption
   reset: UseFormReset<FieldValues>
   register: UseFormRegister<FieldValues>
   resetField: UseFormResetField<FieldValues>
-  setCitation: (citation: Citation, type: CitationDocumentType) => Citation
+  setCitation: (citation: Citation, type: DocumentType) => Citation
   setValue: UseFormSetValue<FieldValues>
-  setDocumentType: Dispatch<SetStateAction<CitationDocumentType>>
+  setDocumentType: Dispatch<SetStateAction<DocumentType>>
   setPreviewMode: Dispatch<SetStateAction<PreviewMode>>
   setCopyOption: Dispatch<SetStateAction<CopyOption>>
 }>({
@@ -37,7 +63,7 @@ export const GeneratorContext = createContext<{
   xml: "",
   style: "apa",
   note: false,
-  documentType: CitationDocumentType.JOURNAL,
+  documentType: "article-journal",
   previewMode: "citation",
   copyOption: "text",
   setCitation: () => ({} as Citation),
@@ -61,21 +87,13 @@ export const GeneratorProvider: React.FC<{
   const [previewMode, setPreviewMode] = useState<PreviewMode>("citation")
   const [copyOption, setCopyOption] = useState<CopyOption>("text")
 
-  const [documentType, setDocumentType] = useState<CitationDocumentType>(
-    CitationDocumentType.JOURNAL,
-  )
+  const [documentType, setDocumentType] = useState<DocumentType>("article-journal")
 
-  const [runtimeCitation, setRuntimeCitation] = useState<
-    { [k in CitationDocumentType]: Citation }
-  >({
-    [CitationDocumentType.JOURNAL]: {},
-    [CitationDocumentType.BOOK]: {},
-    [CitationDocumentType.REPORT]: {},
-    [CitationDocumentType.WEBSITE]: {},
-  })
+  const [runtimeCitation, setRuntimeCitation] =
+    useState<{ [k in DocumentType]: Citation }>(initialDocuments)
 
   const setCitation = useCallback(
-    (citation: Citation, type: CitationDocumentType) => {
+    (citation: Citation, type: DocumentType) => {
       setRuntimeCitation({ ...runtimeCitation, [documentType]: citation })
       return runtimeCitation[type]
     },

@@ -1,5 +1,3 @@
-import { CitationDocumentType } from "./types"
-
 interface Config {
   DB_VERSION: number
   DB_NAME: string
@@ -19,7 +17,6 @@ interface Config {
     }
   }
   SHOW_ADS: boolean
-  DOCUMENT_TYPES: CitationDocumentType[]
 }
 
 const IS_DEVELOPMENT =
@@ -54,5 +51,4 @@ export default <Config>{
     },
   },
   SHOW_ADS: false,
-  DOCUMENT_TYPES: ["journal", "book", "website", "report"],
 }

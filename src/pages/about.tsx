@@ -26,9 +26,9 @@ const AboutPage: React.FC = () => {
           <PrimaryTextStart>
             Our citation generator website is user-friendly and intuitive, with a
             simple and straightforward design that makes it easy to generate and
-            store citations in your browser. Whether you're writing a research paper,
-            a thesis, or just need to create a bibliography, our citation generator
-            has got you covered.
+            store citations in your browser. Whether you&apos;re writing a research
+            paper, a thesis, or just need to create a bibliography, our citation
+            generator has got you covered.
           </PrimaryTextStart>
           <PrimaryTextStart>
             Our citation generator is constantly updated to reflect the latest

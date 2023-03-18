@@ -1,6 +1,5 @@
 import { User } from "../../cslTypes/type"
 import React, { useCallback, useContext, useMemo } from "react"
-import { CitationJSDocumentType } from "../../types"
 
 import { documentUser, users } from "../../cslTypes/fieldsMapping"
 import { v4 as uuid } from "uuid"
@@ -34,9 +33,9 @@ const ContributorsInput: React.FC = () => {
    * so we could us it when updating it or delete them
    */
   const contributors = useMemo(() => {
-    const initRole = documentUser[CitationJSDocumentType[documentType]][0]
+    const initRole = documentUser[documentType][0]
     const users: (User & { role: string })[] = []
-    documentUser[CitationJSDocumentType[documentType]].map((role) => {
+    documentUser[documentType].map((role) => {
       // @ts-ignore
       if (citation && citation[role]) {
         // @ts-ignore
@@ -53,7 +52,7 @@ const ContributorsInput: React.FC = () => {
   }, [documentType, citation])
 
   const handleOnAddClick = useCallback(() => {
-    const role = documentUser[CitationJSDocumentType[documentType]][0]
+    const role = documentUser[documentType][0]
     // @ts-ignore
     const users = (citation && [...citation[role], {}]) || [{}]
     setValue(role, [...users])
@@ -144,7 +143,7 @@ const ContributorsInput: React.FC = () => {
                 value={contributor.role}
                 onChange={handleRoleChange}
               >
-                {documentUser[CitationJSDocumentType[documentType]].map((user) => (
+                {documentUser[documentType].map((user) => (
                   <MenuItem key={user} value={user}>
                     {/* @ts-ignore */}
                     {users[user]}
