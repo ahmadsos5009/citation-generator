@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo } from "react"
 import { Container, FormControl, Grid, Typography } from "@mui/material"
 
-import { Citation } from "../types"
+import { Citation, CitationDocumentType, CitationJSDocumentType } from "../types"
 
 import { ClearFields, SaveCitationButton } from "./Buttons"
 import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
@@ -12,8 +12,8 @@ import CitationToolbar from "./form/CitationToolbar"
 import QuickCitationPreview from "./form/QuickCitationPreview"
 import { documentFields } from "../cslTypes/fieldsMapping"
 
-export const eliminatedFields = {
-  "article-journal": [
+export const eliminatedFields: { [key in CitationDocumentType]: string[] } = {
+  [CitationDocumentType.JOURNAL]: [
     "abstract",
     "shortTitle",
     "journalAbbreviation",
@@ -24,7 +24,7 @@ export const eliminatedFields = {
     "call-number",
     "note",
   ],
-  book: [
+  [CitationDocumentType.BOOK]: [
     "abstract",
     "collection-title",
     "collection-number",
@@ -38,7 +38,7 @@ export const eliminatedFields = {
     "call-number",
     "note",
   ],
-  webpage: [
+  [CitationDocumentType.WEBSITE]: [
     "abstract",
     "publisher-place",
     "language",
@@ -47,7 +47,14 @@ export const eliminatedFields = {
     "call-number",
     "note",
   ],
-  report: ["abstract", "language", "note", "source", "accessed", "call-number"],
+  [CitationDocumentType.REPORT]: [
+    "abstract",
+    "language",
+    "note",
+    "source",
+    "accessed",
+    "call-number",
+  ],
 }
 
 const CitationForm: React.FC = () => {
@@ -74,12 +81,14 @@ const CitationForm: React.FC = () => {
         an external source
       </Typography>
 
-      <ImportCitationBox
-        documentType={documentType}
-        style={note ? `annotation/${style}` : style}
-        xml={xml}
-        updateCitation={setImportedCitation}
-      />
+      {documentType !== CitationDocumentType.REPORT && (
+        <ImportCitationBox
+          documentType={documentType}
+          style={note ? `annotation/${style}` : style}
+          xml={xml}
+          updateCitation={setImportedCitation}
+        />
+      )}
 
       <Form />
     </Grid>
@@ -91,27 +100,21 @@ export const Form: React.FC = () => {
 
   const fields = useMemo(
     () =>
-      documentType === "article-journal" ||
-      documentType === "book" ||
-      documentType === "webpage" ||
-      documentType === "report"
-        ? documentFields[documentType].filter((field) => {
-            if (note && field === "note") {
-              return field
-            }
+      documentFields[CitationJSDocumentType[documentType]].filter((field) => {
+        if (note && field === "note") {
+          return field
+        }
 
-            // @ts-ignore
-            if (!eliminatedFields[documentType].includes(field)) {
-              if (field === "DOI" && documentType === "article-journal") {
-                return field
-              }
+        if (!eliminatedFields[documentType].includes(field)) {
+          if (field === "DOI" && documentType === CitationDocumentType.JOURNAL) {
+            return field
+          }
 
-              if (!(field === "URL" && documentType === "article-journal")) {
-                return field
-              }
-            }
-          })
-        : documentFields[documentType],
+          if (!(field === "URL" && documentType === CitationDocumentType.JOURNAL)) {
+            return field
+          }
+        }
+      }),
     [documentType, note],
   )
 

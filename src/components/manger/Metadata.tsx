@@ -98,9 +98,6 @@ const ReferenceViewer: React.FC = () => {
     author: 3,
     issued: 4,
     accessed: 4,
-    page: 5,
-    volume: 5,
-    note: 6,
   }
 
   /**

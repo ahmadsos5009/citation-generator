@@ -33,9 +33,7 @@ const ReferenceEdit: React.FC<{
 
   const onSaveClick = useCallback(
     (e) => {
-      const updatedValue =
-        e.currentTarget.parentNode.querySelector("input")?.value ||
-        e.currentTarget.parentNode.querySelector("textarea").value
+      const updatedValue = e.currentTarget.parentNode.querySelector("input").value
       const key = e.currentTarget.value
       if (!reference) return
 
@@ -152,8 +150,6 @@ const ReferenceEdit: React.FC<{
         <TextField
           size="small"
           defaultValue={value}
-          multiline={field === "note"}
-          maxRows={4}
           InputProps={{
             endAdornment: (
               <>

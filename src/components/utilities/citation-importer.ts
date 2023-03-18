@@ -3,7 +3,7 @@ import { Cite } from "@citation-js/core"
 import * as name from "@citation-js/name"
 import * as date from "@citation-js/date"
 import { util } from "@citation-js/core"
-import { DocumentType } from "../../types"
+import { CitationDocumentType } from "../../types"
 
 const CROSS_REF_API = "https://api.crossref.org"
 const GOOGLE_BOOK_API = "https://www.googleapis.com/books/v1/volumes"
@@ -190,10 +190,10 @@ const URL = /^http([s]?):\/\/.*/
 const PUBMED = /\d{7,8}/
 
 export const CitationImportStrategy = async (
-  document: DocumentType,
+  document: CitationDocumentType,
   input: string,
 ): Promise<ImportCitation[]> => {
-  if (document === "webpage") {
+  if (document === CitationDocumentType.WEBSITE) {
     return await WebsiteUrlSearch(input)
   }
   const cleansedInput = input.trim()
@@ -207,9 +207,9 @@ export const CitationImportStrategy = async (
     return await CitationJsImport(cleansedInput)
   } else {
     switch (document) {
-      case "article-journal":
+      case CitationDocumentType.JOURNAL:
         return await JournalTitleSearch(cleansedInput)
-      case "book":
+      case CitationDocumentType.BOOK:
         return await BookTitleSearch(cleansedInput)
     }
   }

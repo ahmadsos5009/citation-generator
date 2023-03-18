@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-import { CitationStyle, DocumentType } from "../types"
+import { CitationDocumentType, CitationStyle } from "../types"
 import { ImportCitation } from "../components/Citation"
 import { generateCitations } from "../components/utilities/citation_generator"
 
@@ -9,18 +9,18 @@ const defaultCSL =
 
 export const EditorContext = React.createContext<{
   citations: ImportCitation[]
-  documentType: DocumentType
+  documentType: CitationDocumentType
   style: CitationStyle
   xml: string
   html?: string
   setCitations: React.Dispatch<React.SetStateAction<ImportCitation[]>>
-  setDocumentType: React.Dispatch<React.SetStateAction<DocumentType>>
+  setDocumentType: React.Dispatch<React.SetStateAction<CitationDocumentType>>
   setStyle: React.Dispatch<React.SetStateAction<CitationStyle>>
   setHtml: React.Dispatch<React.SetStateAction<string>>
   setXml: React.Dispatch<React.SetStateAction<string>>
 }>({
   citations: [],
-  documentType: "article-journal",
+  documentType: CitationDocumentType.JOURNAL,
   style: "apa",
   xml: "",
   setCitations: () => "",
@@ -32,7 +32,9 @@ export const EditorContext = React.createContext<{
 
 export const EditorProvider: React.FC = ({ children }) => {
   const [citations, setCitations] = useState<ImportCitation[]>([])
-  const [documentType, setDocumentType] = useState<DocumentType>("article-journal")
+  const [documentType, setDocumentType] = useState<CitationDocumentType>(
+    CitationDocumentType.JOURNAL,
+  )
   const [style, setStyle] = useState<CitationStyle>("apa")
   const [xml, setXml] = useState<string>(defaultCSL)
   const [html, setHtml] = useState<string>("")

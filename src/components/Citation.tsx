@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useMemo, useState } from "react"
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react"
 import {
   Alert,
   Box,
@@ -24,11 +30,19 @@ import {
   Typography,
 } from "@mui/material"
 
-import { Citation, CitationStyle, DocumentLabel, DocumentType } from "../types"
-
+import {
+  Citation,
+  CitationDocumentType,
+  CitationJSDocumentType,
+  CitationStyle,
+  DocumentType,
+} from "../types"
+import BookIcon from "@mui/icons-material/Book"
+import WebsiteIcon from "@mui/icons-material/Web"
+import ReportIcon from "@mui/icons-material/Summarize"
 import SearchIcon from "@mui/icons-material/Search"
 import EditIcon from "@mui/icons-material/Edit"
-
+import ArticleIcon from "@mui/icons-material/Article"
 import BackspaceIcon from "@mui/icons-material/Backspace"
 
 import { ImportProgress } from "./editor/Spinner"
@@ -44,6 +58,24 @@ import { UploadFileModel } from "./Model"
 import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+
+export const DocumentIcon: {
+  [key in DocumentType]: ReactElement
+} = {
+  "article-journal": <ArticleIcon />,
+  book: <BookIcon />,
+  webpage: <WebsiteIcon />,
+  report: <ReportIcon />,
+}
+
+export const DocumentLabel: {
+  [key in DocumentType]: string
+} = {
+  "article-journal": "Journal",
+  book: "Book",
+  webpage: "Website",
+  report: "Report",
+}
 
 interface OnFlyCitationBoxProps {
   handleClick: (event: React.MouseEvent<HTMLElement>) => void
@@ -70,7 +102,10 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
     [citation, documentType, style],
   )
 
-  const isEmpty = useMemo(() => isEmptyCitation(citation, documentType), [citation])
+  const isEmpty = useMemo(
+    () => isEmptyCitation(citation, CitationJSDocumentType[documentType]),
+    [citation],
+  )
 
   return (
     <Grid item xs={11} lg={12} sx={{ ...boxStyle }}>
@@ -184,7 +219,7 @@ export const OnFlyCitationBox: React.FC<OnFlyCitationBoxProps> = ({
 export type ImportCitation = Citation & { type: DocumentType }
 
 export const ImportCitationBox: React.FC<{
-  documentType: DocumentType
+  documentType: CitationDocumentType
   style: string
   xml: string
   updateCitation: (citation: Citation) => void
@@ -264,11 +299,11 @@ export const ImportCitationBox: React.FC<{
 
   const message = useMemo(() => {
     switch (documentType) {
-      case "article-journal":
+      case CitationDocumentType.JOURNAL:
         return "Search by Article Title or DOI or URL or PubMed ID"
-      case "book":
+      case CitationDocumentType.BOOK:
         return "Search by Book Title or URL or ISBN"
-      case "webpage":
+      case CitationDocumentType.WEBSITE:
         return "Search by URL"
       default:
         return `Search not supported for book ${DocumentLabel[documentType]}`
@@ -362,7 +397,7 @@ export const ImportCitationBox: React.FC<{
         >
           {importedCitations.map(({ citation, htmlCitation, inText }, index) => (
             <ListItem
-              key={index.toString()}
+              key="citation-import"
               secondaryAction={
                 <IconButton
                   edge="end"
@@ -375,9 +410,7 @@ export const ImportCitationBox: React.FC<{
               }
             >
               {citation?.type && (
-                <ListItemIcon>
-                  {DocumentLabel[citation.type as DocumentType]}
-                </ListItemIcon>
+                <ListItemIcon>{DocumentIcon[citation.type]}</ListItemIcon>
               )}
               <ListItemText>
                 <div

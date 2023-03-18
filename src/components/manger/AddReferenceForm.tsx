@@ -11,12 +11,12 @@ import {
   Select,
   Typography,
 } from "@mui/material"
-
+import config from "../../config"
 import {
   GeneratorContext,
   GeneratorProvider,
 } from "../../provider/GeneratorProvider"
-import { CitationStyle, DocumentLabel } from "../../types"
+import { CitationStyle } from "../../types"
 
 const importStyle = {
   position: "absolute" as const,
@@ -71,16 +71,6 @@ const AddReferenceForm: React.FC = () => {
   )
 }
 
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-    },
-  },
-}
-
 const DocumentSelect: React.FC = () => {
   const { setDocumentType, documentType } = useContext(GeneratorContext)
 
@@ -89,12 +79,12 @@ const DocumentSelect: React.FC = () => {
   }, [])
 
   return (
-    <FormControl color="secondary" sx={{ ml: 0, minWidth: 180 }} size="small">
+    <FormControl color="secondary" sx={{ ml: 0, minWidth: 140 }} size="small">
       <InputLabel sx={{ m: -1 }}>Document type</InputLabel>
-      <Select value={documentType} MenuProps={MenuProps} onChange={onSetDocument}>
-        {Object.entries(DocumentLabel).map(([key, value]) => (
-          <MenuItem key={key} value={key}>
-            {value}
+      <Select value={documentType} onChange={onSetDocument}>
+        {config.DOCUMENT_TYPES.map((doc) => (
+          <MenuItem key={doc} value={doc}>
+            {doc}
           </MenuItem>
         ))}
       </Select>

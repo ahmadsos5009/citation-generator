@@ -15,7 +15,7 @@ import { exportToWord } from "../../utile/jsonCSL-openXml"
 import { MicrosoftWordIcon } from "../../icons"
 
 import { isEmptyCitation } from "../utilities/object"
-import { Citation } from "../../types"
+import { Citation, CitationJSDocumentType } from "../../types"
 
 export type PreviewMode = "citation" | "footnote"
 
@@ -26,11 +26,11 @@ const CitationToolbar: React.FC = () => {
     useContext(GeneratorContext)
 
   const onExportToWord = useCallback(() => {
-    if (!isEmptyCitation(citation, documentType)) {
+    if (!isEmptyCitation(citation, CitationJSDocumentType[documentType])) {
       exportToWord([
         {
           ...citation,
-          type: documentType,
+          type: CitationJSDocumentType[documentType],
         } as unknown as Citation,
       ])
     }

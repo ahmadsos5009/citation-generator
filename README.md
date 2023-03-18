@@ -88,8 +88,6 @@
 - [x] Add Create Bibliography button to toolbar
 - [ ] Pull full text document, and show it as pdf
 - [ ] Full text search
-- [x] Show Annotation in Metadata
-- [ ] Add citation notes
 - [ ] Fix Mobile view
 - [ ] ...
 

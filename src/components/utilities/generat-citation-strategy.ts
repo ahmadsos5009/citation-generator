@@ -2,13 +2,18 @@ import { CopyOption } from "../form/CitationToolbar"
 import { generateCitation, generateNativeCitation } from "./citation_generator"
 import convertToBibitem from "../../utile/jsonCSL-bibitem"
 
-import { Citation, CitationStyle, DocumentType } from "../../types"
+import {
+  Citation,
+  CitationDocumentType,
+  CitationJSDocumentType,
+  CitationStyle,
+} from "../../types"
 import { plugins } from "@citation-js/core"
 import { TCitation } from "../../db/types"
 
 const generateStrategy = (
   citation: Citation,
-  documentType: DocumentType,
+  documentType: CitationDocumentType,
   style: CitationStyle,
   xml: string,
   option: CopyOption,
@@ -23,7 +28,7 @@ const generateStrategy = (
       return {
         convertedCitation: generateNativeCitation(
           citation,
-          documentType,
+          CitationJSDocumentType[documentType],
           "bibtex",
           style,
           xml,
@@ -35,7 +40,7 @@ const generateStrategy = (
       return {
         convertedCitation: generateNativeCitation(
           citation,
-          documentType,
+          CitationJSDocumentType[documentType],
           "ris",
           style,
           xml,

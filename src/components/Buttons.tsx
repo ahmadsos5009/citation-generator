@@ -13,7 +13,7 @@ import {
 
 import { DBContext } from "../provider/DBProvider"
 
-import { CollectionLabel } from "../types"
+import { CitationJSDocumentType, CollectionLabel } from "../types"
 
 import { useDropDownMenu } from "./hooks"
 
@@ -31,11 +31,14 @@ export const SaveCitationButton: React.FC = () => {
     citationDao.add({
       ...citation,
       id: uuid(),
-      type: documentType,
+      type: CitationJSDocumentType[documentType],
       updatedTimestamp: Date.now(),
     } as TCitation)
     // TODO:: move this to GeneratorContext
-    const emptyCitation = getEmptyCitation(citation, documentType)
+    const emptyCitation = getEmptyCitation(
+      citation,
+      CitationJSDocumentType[documentType],
+    )
     reset(emptyCitation)
   }, [citation])
 
@@ -59,7 +62,10 @@ export const ClearFields: React.FC = () => {
 
   const onClearClick = useCallback(() => {
     setCitation({}, documentType)
-    const emptyCitation = getEmptyCitation(citation, documentType)
+    const emptyCitation = getEmptyCitation(
+      citation,
+      CitationJSDocumentType[documentType],
+    )
     reset(emptyCitation)
   }, [documentType, citation])
 

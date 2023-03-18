@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from "react"
 import { Alert, Box, IconButton, Paper, Snackbar, Typography } from "@mui/material"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import { isEmptyCitation } from "../utilities/object"
+import { CitationJSDocumentType } from "../../types"
 import { useClipboard } from "../hooks"
 import { GeneratorContext } from "../../provider/GeneratorProvider"
 import { generateCitation } from "../utilities/citation_generator"
@@ -19,7 +20,10 @@ const QuickCitationPreview: React.FC = () => {
     [citation, documentType, style],
   )
 
-  const isEmpty = useMemo(() => isEmptyCitation(citation, documentType), [citation])
+  const isEmpty = useMemo(
+    () => isEmptyCitation(citation, CitationJSDocumentType[documentType]),
+    [citation],
+  )
 
   if (isEmpty) {
     return <></>

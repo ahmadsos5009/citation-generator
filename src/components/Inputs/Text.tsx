@@ -21,9 +21,7 @@ const TextField: React.FC<FieldProps> = ({ id, required, multiline }) => {
   return (
     <FormControl fullWidth variant="standard">
       <Label focused={false}>
-        {/* @ts-ignore */}
         {labels[id]}
-        {/* @ts-ignore */}
         <HtmlTooltip title={descriptions[id]}>
           {/* @ts-ignore */}
           <HelpOutlineIcon fontSize="16" sx={{ margin: "-4px 4px" }} />
