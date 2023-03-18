@@ -11,12 +11,12 @@ import {
   Select,
   Typography,
 } from "@mui/material"
-import config from "../../config"
+
 import {
   GeneratorContext,
   GeneratorProvider,
 } from "../../provider/GeneratorProvider"
-import { CitationStyle } from "../../types"
+import { CitationStyle, DocumentLabel } from "../../types"
 
 const importStyle = {
   position: "absolute" as const,
@@ -82,9 +82,9 @@ const DocumentSelect: React.FC = () => {
     <FormControl color="secondary" sx={{ ml: 0, minWidth: 140 }} size="small">
       <InputLabel sx={{ m: -1 }}>Document type</InputLabel>
       <Select value={documentType} onChange={onSetDocument}>
-        {config.DOCUMENT_TYPES.map((doc) => (
-          <MenuItem key={doc} value={doc}>
-            {doc}
+        {Object.entries(DocumentLabel).map(([key, value]) => (
+          <MenuItem key={key} value={key}>
+            {value}
           </MenuItem>
         ))}
       </Select>

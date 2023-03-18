@@ -12,13 +12,23 @@ import {
 
 import ClearIcon from "@mui/icons-material/Clear"
 
-import config from "../../config"
 import { EditorContext } from "../../provider/EditorProvider"
 import { CSL_METADATA, CSL_NOTE_METADATA } from "../../csl_metadata"
 import { DBContext } from "../../provider/DBProvider"
 import { defaultEditorMessage } from "./CitationEditor"
 import ImportReferences from "./ImportReferences"
 import ReferencesExport from "./ReferencesExport"
+import { DocumentLabel } from "../../types"
+
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+    },
+  },
+}
 
 const Toolbar: React.FC = () => {
   const {
@@ -60,16 +70,17 @@ const Toolbar: React.FC = () => {
       bgcolor="#F4F3F5"
     >
       <Stack>
-        <FormControl color="secondary" sx={{ ml: 0, minWidth: 140 }} size="small">
+        <FormControl color="secondary" sx={{ ml: 0, minWidth: 180 }} size="small">
           <InputLabel sx={{ fontSize: "small" }}>--</InputLabel>
           <Select
+            MenuProps={MenuProps}
             value={documentType}
             label="more source type"
             onChange={onDocumentChange}
           >
-            {config.DOCUMENT_TYPES.map((doc) => (
-              <MenuItem key={doc} value={doc}>
-                {doc}
+            {Object.entries(DocumentLabel).map(([key, value]) => (
+              <MenuItem key={key} value={key}>
+                {value}
               </MenuItem>
             ))}
           </Select>
@@ -80,10 +91,10 @@ const Toolbar: React.FC = () => {
       </Stack>
 
       <Stack>
-        <FormControl color="secondary" sx={{ ml: 0, minWidth: 140 }} size="small">
+        <FormControl color="secondary" sx={{ ml: 0, minWidth: 200 }} size="small">
           <InputLabel sx={{ fontSize: "small" }}>-</InputLabel>
           <Select
-            MenuProps={{ style: { height: "220px" } }}
+            MenuProps={MenuProps}
             value={style || "apa"}
             label="more source type"
             onChange={onStyleChange}

@@ -26,12 +26,7 @@ import {
 } from "./utilities/citation_exporter"
 
 import { generateCitation } from "./utilities/citation_generator"
-import {
-  Citation,
-  CitationDocumentType,
-  CitationStyle,
-  DocumentType,
-} from "../types"
+import { Citation, CitationStyle, DocumentLabel, DocumentType } from "../types"
 import UploadFileIcon from "@mui/icons-material/UploadFile"
 import { Cite } from "@citation-js/core"
 import sendFeedback from "./utilities/feedback-api"
@@ -139,7 +134,7 @@ require("@citation-js/plugin-bibtex")
 
 import { Spinner } from "./editor/Spinner"
 import EditIcon from "@mui/icons-material/Edit"
-import { DocumentIcon, ImportCitation } from "./Citation"
+import { ImportCitation } from "./Citation"
 
 import SaveIcon from "@mui/icons-material/Save"
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
@@ -160,7 +155,7 @@ import { MicrosoftWordIcon } from "../icons"
 import { exportToWord } from "../utile/jsonCSL-openXml"
 
 export const UploadFileModel: React.FC<{
-  documentType: CitationDocumentType
+  documentType: DocumentType
   updateCitation: (citation: Citation) => void
   style: CitationStyle
   xml: string
@@ -340,7 +335,7 @@ export const UploadFileModel: React.FC<{
 
 const CitationListItem: React.FC<{
   citation: ImportCitation
-  documentType: CitationDocumentType
+  documentType: DocumentType
   index: number
   style: CitationStyle
   xml: string
@@ -371,13 +366,19 @@ const CitationListItem: React.FC<{
         )
       }
     >
-      {citation && <ListItemIcon>{DocumentIcon[citation.type]}</ListItemIcon>}
       <ListItemText>
         <div dangerouslySetInnerHTML={{ __html: convertedCitation }} />
         <Typography variant="caption" display="block" gutterBottom margin={0}>
           In-text Citation:
           <div dangerouslySetInnerHTML={{ __html: inText }} />
         </Typography>
+        {citation && (
+          <ListItemIcon>
+            <Typography variant="caption">
+              {DocumentLabel[citation.type as DocumentType]}
+            </Typography>
+          </ListItemIcon>
+        )}
       </ListItemText>
     </ListItem>
   )

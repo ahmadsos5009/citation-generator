@@ -8,15 +8,27 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material"
-import config from "../../config"
+
 import { GeneratorContext } from "../../provider/GeneratorProvider"
+import { DocumentLabel } from "../../types"
+
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+    },
+  },
+}
 
 const DocumentSource: React.FC = () => {
   const { documentType, setDocumentType, reset, setCitation, citation } =
     useContext(GeneratorContext)
 
   const onDocumentChange = useCallback(
-    (event, type) => {
+    (event) => {
+      const type = event.target.value
       const newCitation = setCitation(citation, type)
       reset({})
       setDocumentType(type)
@@ -24,10 +36,6 @@ const DocumentSource: React.FC = () => {
     },
     [citation],
   )
-
-  const onSelectChange = useCallback((e) => {
-    setDocumentType(e.target.value)
-  }, [])
 
   return (
     <Stack
@@ -44,20 +52,21 @@ const DocumentSource: React.FC = () => {
         color="secondary"
         onChange={onDocumentChange}
       >
-        <ToggleButton value="journal">Journal</ToggleButton>
+        <ToggleButton value="article-journal">Journal</ToggleButton>
         <ToggleButton value="book">Book</ToggleButton>
-        <ToggleButton value="website">Website</ToggleButton>
+        <ToggleButton value="webpage">Webpage</ToggleButton>
       </ToggleButtonGroup>
-      <FormControl color="secondary" sx={{ ml: 0, minWidth: 140 }} size="small">
+      <FormControl color="secondary" sx={{ ml: 0, minWidth: 200 }} size="small">
         <InputLabel sx={{ fontSize: "small" }}>more source type</InputLabel>
         <Select
+          MenuProps={MenuProps}
           value={documentType}
           label="more source type"
-          onChange={onSelectChange}
+          onChange={onDocumentChange}
         >
-          {config.DOCUMENT_TYPES.map((doc) => (
-            <MenuItem key={doc} value={doc}>
-              {doc}
+          {Object.entries(DocumentLabel).map(([key, value]) => (
+            <MenuItem key={key} value={key}>
+              {value}
             </MenuItem>
           ))}
         </Select>

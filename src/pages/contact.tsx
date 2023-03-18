@@ -45,10 +45,10 @@ const ContactPage: React.FC = () => {
         <Grid md={4} item>
           <Primary>Contact Us</Primary>
           <PrimaryTextStart>
-            At Citation Generator Website, we're dedicated to providing you with the
-            best possible experience when it comes to generating citations and
-            bibliographies. If you have any questions, concerns, or feedback, we're
-            here to help.
+            At Citation Generator Website, we&apos;re dedicated to providing you with
+            the best possible experience when it comes to generating citations and
+            bibliographies. If you have any questions, concerns, or feedback,
+            we&apos;re here to help.
           </PrimaryTextStart>
           <PrimaryTextStart>
             If you need assistance with our citation generator, have a suggestion for
