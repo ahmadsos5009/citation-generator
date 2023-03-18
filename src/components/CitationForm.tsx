@@ -74,14 +74,12 @@ const CitationForm: React.FC = () => {
         an external source
       </Typography>
 
-      {documentType !== "report" && (
-        <ImportCitationBox
-          documentType={documentType}
-          style={note ? `annotation/${style}` : style}
-          xml={xml}
-          updateCitation={setImportedCitation}
-        />
-      )}
+      <ImportCitationBox
+        documentType={documentType}
+        style={note ? `annotation/${style}` : style}
+        xml={xml}
+        updateCitation={setImportedCitation}
+      />
 
       <Form />
     </Grid>

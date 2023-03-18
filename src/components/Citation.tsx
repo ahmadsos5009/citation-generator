@@ -270,8 +270,15 @@ export const ImportCitationBox: React.FC<{
         return "Search by Book Title or URL or ISBN"
       case "webpage":
         return "Search by URL"
+      default:
+        return `Search not supported for book ${DocumentLabel[documentType]}`
     }
   }, [documentType])
+
+  const isSearchSupported =
+    documentType === "article-journal" ||
+    documentType === "book" ||
+    documentType === "webpage"
 
   if (importLoading) {
     return <ImportProgress />
@@ -288,6 +295,7 @@ export const ImportCitationBox: React.FC<{
       >
         <Container disableGutters sx={{ display: "flex" }}>
           <TextField
+            disabled={!isSearchSupported}
             size="small"
             sx={{ p: 1, ml: 1, flex: 1 }}
             InputProps={{
