@@ -16,11 +16,7 @@ import {
   Typography,
 } from "@mui/material"
 import { PrimaryStart, PrimaryText, Secondary } from "../components/Typography"
-import {
-  ReferencesList,
-  ReferenceManagement,
-  AnnotatedBibliography,
-} from "../placeholders"
+import { ReferencesList, ReferenceManagement } from "../placeholders"
 import styled from "@emotion/styled"
 import { CSL_NOTE_METADATA } from "../csl_metadata"
 
@@ -148,10 +144,52 @@ const IndexPage: React.FC = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid md={5} item container alignItems="center" justifyContent="center">
-            <CardMedia sx={{ maxWidth: { md: 400, xs: 200 } }}>
-              <AnnotatedBibliography />
-            </CardMedia>
+          <Grid
+            md={5}
+            p={6}
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Card
+              sx={{
+                bgcolor: "primary.50",
+              }}
+            >
+              <CardContent>
+                <PrimaryText>How To Write Annotated Bibliography:</PrimaryText>
+                <ol>
+                  <li>
+                    <Typography variant="body2">
+                      Write a brief summary of the source. This should include a few
+                      sentences that summarize the main ideas and arguments presented
+                      in the work. Be concise and focus on the most important points.
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2">
+                      Evaluate the source. Consider the credibility of the author and
+                      the quality of the information presented.
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2">
+                      Consider the audience. Think about who will be reading your
+                      annotated bibliography and what their interests and needs might
+                      be.
+                    </Typography>
+                  </li>
+                </ol>
+                <Typography variant="caption">
+                  Remember, an annotated bibliography is more than just a list of
+                  sources. It also includes a brief summary and evaluation of each
+                  source. By following these steps, you can create a well-written
+                  annotated bibliography that provides valuable information to your
+                  readers.
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </Grid>
