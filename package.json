@@ -2,7 +2,7 @@
   "name": "citation-generator",
   "private": true,
   "description": "Create Citation based on CSL styles",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Ahmad Souqi",
   "dependencies": {
     "@citation-js/core": "^0.6.5",
