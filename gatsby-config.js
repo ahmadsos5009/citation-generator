@@ -50,12 +50,6 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-google-adsense`,
-      options: {
-        publisherId: `ca-pub-8835129466793937`,
-      },
-    },
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-image",
     {
