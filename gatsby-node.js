@@ -76,9 +76,6 @@ exports.createPages = async function ({ actions, graphql }) {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const webpack = require("webpack")
-
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
