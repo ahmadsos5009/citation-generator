@@ -28,6 +28,7 @@
     "ckeditor5-custom-build": "https://github.com/ahmadsos5009/ckeditor5",
     "dexie": "^3.2.3",
     "dexie-react-hooks": "^1.1.1",
+    "encoding": "^0.1.13",
     "file-saver": "^2.0.5",
     "gatsby": "^5.5.0",
     "gatsby-plugin-cname": "^1.0.0",

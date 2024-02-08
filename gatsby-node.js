@@ -86,6 +86,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         fs: false,
         assert: false,
         url: require.resolve("url/"),
+        encoding: require.resolve("encoding/"),
         stream: require.resolve("stream-browserify"),
         http: false,
         https: false,
