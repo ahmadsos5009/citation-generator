@@ -99,8 +99,5 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         string_decoder: false,
       },
     },
-    node: {
-      fs: "empty",
-    },
   })
 }
