@@ -94,6 +94,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         https: false,
         zlib: false,
         punycode: false,
+        events: false,
+        buffer: false,
+        string_decoder: false,
       },
     },
     node: {
