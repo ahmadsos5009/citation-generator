@@ -1640,7 +1640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@citation-js/date@npm:^0.5.0":
+"@citation-js/date@npm:^0.5.0, @citation-js/date@npm:^0.5.1":
   version: 0.5.1
   resolution: "@citation-js/date@npm:0.5.1"
   checksum: d3f71fd8cc933d7b51f3aec3a529729a13617680b310aba72c1adb3c0b9756c418219d30a85e9a495b1f8202fd6c751ade117b64e5a95ac95a3c94014448e56f
@@ -6017,6 +6017,8 @@ __metadata:
   resolution: "citation-generator@workspace:."
   dependencies:
     "@citation-js/core": ^0.6.5
+    "@citation-js/date": ^0.5.1
+    "@citation-js/name": ^0.4.2
     "@citation-js/plugin-bibjson": ^0.6.5
     "@citation-js/plugin-bibtex": ^0.6.6
     "@citation-js/plugin-csl": ^0.6.7
