@@ -93,6 +93,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         http: false,
         https: false,
         zlib: false,
+        punycode: false,
       },
     },
     node: {
