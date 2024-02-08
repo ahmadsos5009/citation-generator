@@ -6035,6 +6035,7 @@ __metadata:
     ckeditor5-custom-build: "https://github.com/ahmadsos5009/ckeditor5"
     dexie: ^3.2.3
     dexie-react-hooks: ^1.1.1
+    encoding: ^0.1.13
     eslint: ^7.32.0
     eslint-config-airbnb: ^18.2.1
     eslint-config-airbnb-typescript: ^12.3.1
