@@ -62,9 +62,7 @@ const CitationsListPage: React.FC = () => {
                     </Typography>
                   </Stack>
                 </Stack>
-                <React.Suspense fallback={<Spinner />}>
-                  <CitationEditor />
-                </React.Suspense>
+                <CitationEditor />
               </Grid>
 
               <Grid
