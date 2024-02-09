@@ -6078,6 +6078,7 @@ __metadata:
     react-helmet: ^6.1.0
     react-hook-form: ^7.43.0
     stream-browserify: ^3.0.0
+    string_decoder: ^1.3.0
     typeface-catamaran: ^1.1.13
     typescript: ^4.3.5
     url: ^0.11.0
@@ -18072,7 +18073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string_decoder@npm:^1.1.1":
+"string_decoder@npm:^1.1.1, string_decoder@npm:^1.3.0":
   version: 1.3.0
   resolution: "string_decoder@npm:1.3.0"
   dependencies:

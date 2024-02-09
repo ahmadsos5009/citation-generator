@@ -94,6 +94,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         punycode: false,
         events: false,
         buffer: false,
+        string_decoder: require.resolve("string_decoder"),
       },
     },
   })
