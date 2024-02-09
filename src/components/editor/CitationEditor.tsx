@@ -62,26 +62,24 @@ const CitationEditor: React.FC = () => {
   )
 
   useEffect(() => {
-    if (typeof window !== "object") return
-
-    const response = window.history.state
-    if (
-      response === null ||
-      !(response["citations"] && response["style"] && response["citationDocument"])
-    ) {
-      setHtml(defaultEditorMessage)
-      return
-    }
-    const { citations, style, citationDocument } = response
-    setCitations(citations)
-    setDocumentType(citationDocument)
-    ;(async () => {
-      const { xml } = await cslDao.get(style)
-      setXml(xml)
-      setStyle(style)
-    })()
-
-    window.history.pushState(null, "")
+    // const response = window.history.state
+    // if (
+    //   response === null ||
+    //   !(response["citations"] && response["style"] && response["citationDocument"])
+    // ) {
+    //   setHtml(defaultEditorMessage)
+    //   return
+    // }
+    // const { citations, style, citationDocument } = response
+    // setCitations(citations)
+    // setDocumentType(citationDocument)
+    // ;(async () => {
+    //   const { xml } = await cslDao.get(style)
+    //   setXml(xml)
+    //   setStyle(style)
+    // })()
+    //
+    // window.history.pushState(null, "")
   }, [setHtml])
 
   return (
