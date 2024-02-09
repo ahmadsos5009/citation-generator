@@ -62,6 +62,8 @@ const CitationEditor: React.FC = () => {
   )
 
   useEffect(() => {
+    if (typeof window !== "object") return
+
     const response = window.history.state
     if (
       response === null ||
