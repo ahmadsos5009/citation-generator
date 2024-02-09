@@ -6,6 +6,9 @@ module.exports = {
     author: "Ahmad Souqi",
     siteUrl: process.env.APP_URL,
   },
+  flags: {
+    FAST_DEV: true,
+  },
   plugins: [
     {
       resolve: "gatsby-plugin-sitemap",
