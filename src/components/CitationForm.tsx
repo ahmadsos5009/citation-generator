@@ -60,28 +60,28 @@ const CitationForm: React.FC = () => {
 
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
-      {/*<CitationToolbar />*/}
+      <CitationToolbar />
 
-      {/*<QuickCitationPreview />*/}
+      <QuickCitationPreview />
 
-      {/*<Typography*/}
-      {/*  py={1}*/}
-      {/*  textAlign={{ xs: "center", md: "start" }}*/}
-      {/*  variant="subtitle2"*/}
-      {/*  fontWeight="500"*/}
-      {/*>*/}
-      {/*  Fill entry to generate citation manually on the fly or Import citation from*/}
-      {/*  an external source*/}
-      {/*</Typography>*/}
+      <Typography
+        py={1}
+        textAlign={{ xs: "center", md: "start" }}
+        variant="subtitle2"
+        fontWeight="500"
+      >
+        Fill entry to generate citation manually on the fly or Import citation from
+        an external source
+      </Typography>
 
-      {/*<ImportCitationBox*/}
-      {/*  documentType={documentType}*/}
-      {/*  style={note ? `annotation/${style}` : style}*/}
-      {/*  xml={xml}*/}
-      {/*  updateCitation={setImportedCitation}*/}
-      {/*/>*/}
+      <ImportCitationBox
+        documentType={documentType}
+        style={note ? `annotation/${style}` : style}
+        xml={xml}
+        updateCitation={setImportedCitation}
+      />
 
-      {/*<Form />*/}
+      <Form />
     </Grid>
   )
 }

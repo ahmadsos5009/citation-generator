@@ -10,7 +10,7 @@ import { Container, Grid, Paper, Stack, Typography } from "@mui/material"
 import { PrimaryStart } from "../Typography"
 
 import { GeneratorProvider } from "../../provider/GeneratorProvider"
-import CitationForm from "../CitationForm"
+// import CitationForm from "../CitationForm"
 import QuickActionsSection from "../form/QuickActionsSection"
 
 interface PageProps {
@@ -88,7 +88,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                   </Stack>
                 </Stack>
 
-                <CitationForm />
+                {/*<CitationForm />*/}
               </Grid>
 
               <Grid
