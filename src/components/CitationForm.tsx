@@ -7,6 +7,7 @@ import { GeneratorContext } from "../provider/GeneratorProvider"
 
 import CitationToolbar from "./form/CitationToolbar"
 import QuickCitationPreview from "./form/QuickCitationPreview"
+import {ImportCitationBox} from "./Citation";
 
 export const eliminatedFields = {
   "article-journal": [
@@ -70,12 +71,12 @@ const CitationForm: React.FC = () => {
         an external source
       </Typography>
 
-      {/*<ImportCitationBox*/}
-      {/*  documentType={documentType}*/}
-      {/*  style={note ? `annotation/${style}` : style}*/}
-      {/*  xml={xml}*/}
-      {/*  updateCitation={setImportedCitation}*/}
-      {/*/>*/}
+      <ImportCitationBox
+        documentType={documentType}
+        style={note ? `annotation/${style}` : style}
+        xml={xml}
+        updateCitation={setImportedCitation}
+      />
 
       {/*<Form />*/}
     </Grid>
