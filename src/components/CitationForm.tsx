@@ -5,7 +5,7 @@ import { Citation } from "../types"
 
 import { ClearFields, SaveCitationButton } from "./Buttons"
 import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
-import { ImportCitationBox } from "./Citation"
+// import { ImportCitationBox } from "./Citation"
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
 import CitationToolbar from "./form/CitationToolbar"
@@ -74,12 +74,12 @@ const CitationForm: React.FC = () => {
         an external source
       </Typography>
 
-      <ImportCitationBox
-        documentType={documentType}
-        style={note ? `annotation/${style}` : style}
-        xml={xml}
-        updateCitation={setImportedCitation}
-      />
+      {/*<ImportCitationBox*/}
+      {/*  documentType={documentType}*/}
+      {/*  style={note ? `annotation/${style}` : style}*/}
+      {/*  xml={xml}*/}
+      {/*  updateCitation={setImportedCitation}*/}
+      {/*/>*/}
 
       <Form />
     </Grid>
