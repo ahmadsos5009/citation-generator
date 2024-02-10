@@ -5,6 +5,9 @@ import { Citation } from "../types"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
+import CitationToolbar from "./form/CitationToolbar"
+import QuickCitationPreview from "./form/QuickCitationPreview"
+
 export const eliminatedFields = {
   "article-journal": [
     "abstract",
@@ -53,9 +56,9 @@ const CitationForm: React.FC = () => {
 
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
-      {/*<CitationToolbar />*/}
+      <CitationToolbar />
 
-      {/*<QuickCitationPreview />*/}
+      <QuickCitationPreview />
 
       <Typography
         py={1}
