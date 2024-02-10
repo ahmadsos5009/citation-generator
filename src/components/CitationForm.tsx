@@ -8,7 +8,7 @@ import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
 // import { ImportCitationBox } from "./Citation"
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
-import CitationToolbar from "./form/CitationToolbar"
+// import CitationToolbar from "./form/CitationToolbar"
 // import QuickCitationPreview from "./form/QuickCitationPreview"
 import { documentFields } from "../cslTypes/fieldsMapping"
 
@@ -60,7 +60,7 @@ const CitationForm: React.FC = () => {
 
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
-      <CitationToolbar />
+      {/*<CitationToolbar />*/}
 
       {/*<QuickCitationPreview />*/}
 
