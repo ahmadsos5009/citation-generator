@@ -57,7 +57,7 @@ const CitationForm: React.FC = () => {
     (citation: Citation) => reset(citation),
     [],
   )
-
+  try{
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
       <CitationToolbar />
@@ -82,8 +82,11 @@ const CitationForm: React.FC = () => {
       />
 
       <Form />
-    </Grid>
-  )
+    </Grid>)
+  }catch (e) {
+      return <div>EEEE {e && e.message}</div>
+  }
+
 }
 
 export const Form: React.FC = () => {
