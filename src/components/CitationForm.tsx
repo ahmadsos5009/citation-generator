@@ -5,11 +5,11 @@ import { Citation } from "../types"
 
 import { ClearFields, SaveCitationButton } from "./Buttons"
 import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
-// import { ImportCitationBox } from "./Citation"
+import { ImportCitationBox } from "./Citation"
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
-// import CitationToolbar from "./form/CitationToolbar"
-// import QuickCitationPreview from "./form/QuickCitationPreview"
+import CitationToolbar from "./form/CitationToolbar"
+import QuickCitationPreview from "./form/QuickCitationPreview"
 import { documentFields } from "../cslTypes/fieldsMapping"
 
 export const eliminatedFields = {
@@ -64,15 +64,15 @@ const CitationForm: React.FC = () => {
 
       {/*<QuickCitationPreview />*/}
 
-      <Typography
-        py={1}
-        textAlign={{ xs: "center", md: "start" }}
-        variant="subtitle2"
-        fontWeight="500"
-      >
-        Fill entry to generate citation manually on the fly or Import citation from
-        an external source
-      </Typography>
+      {/*<Typography*/}
+      {/*  py={1}*/}
+      {/*  textAlign={{ xs: "center", md: "start" }}*/}
+      {/*  variant="subtitle2"*/}
+      {/*  fontWeight="500"*/}
+      {/*>*/}
+      {/*  Fill entry to generate citation manually on the fly or Import citation from*/}
+      {/*  an external source*/}
+      {/*</Typography>*/}
 
       {/*<ImportCitationBox*/}
       {/*  documentType={documentType}*/}
@@ -81,7 +81,7 @@ const CitationForm: React.FC = () => {
       {/*  updateCitation={setImportedCitation}*/}
       {/*/>*/}
 
-      <Form />
+      {/*<Form />*/}
     </Grid>
   )
 }
