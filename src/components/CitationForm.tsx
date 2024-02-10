@@ -1,14 +1,11 @@
-import React, { useCallback, useContext, useMemo } from "react"
-import { Container, FormControl, Grid } from "@mui/material"
+import React, { useCallback, useContext } from "react"
+import { Container, Grid } from "@mui/material"
 
 import { Citation } from "../types"
 
 import { ClearFields, SaveCitationButton } from "./Buttons"
-import { ContributorsInput, DateField, LinkInput, TextField } from "./Inputs"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
-
-import { documentFields } from "../cslTypes/fieldsMapping"
 
 export const eliminatedFields = {
   "article-journal": [
@@ -56,7 +53,6 @@ const CitationForm: React.FC = () => {
     [],
   )
 
-  
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
       {/*<CitationToolbar />*/}
@@ -86,50 +82,50 @@ const CitationForm: React.FC = () => {
 }
 
 export const Form: React.FC = () => {
-  const { documentType, note } = useContext(GeneratorContext)
+  // const { documentType, note } = useContext(GeneratorContext)
 
-  const fields = useMemo(
-    () =>
-      documentType === "article-journal" ||
-      documentType === "book" ||
-      documentType === "webpage" ||
-      documentType === "report"
-        ? documentFields[documentType].filter((field) => {
-            if (note && field === "note") {
-              return field
-            }
-
-            // @ts-ignore
-            if (!eliminatedFields[documentType].includes(field)) {
-              if (field === "DOI" && documentType === "article-journal") {
-                return field
-              }
-
-              if (!(field === "URL" && documentType === "article-journal")) {
-                return field
-              }
-            }
-          })
-        : documentFields[documentType],
-    [documentType, note],
-  )
+  // const fields = useMemo(
+  //   () =>
+  //     documentType === "article-journal" ||
+  //     documentType === "book" ||
+  //     documentType === "webpage" ||
+  //     documentType === "report"
+  //       ? documentFields[documentType].filter((field) => {
+  //           if (note && field === "note") {
+  //             return field
+  //           }
+  //
+  //           // @ts-ignore
+  //           if (!eliminatedFields[documentType].includes(field)) {
+  //             if (field === "DOI" && documentType === "article-journal") {
+  //               return field
+  //             }
+  //
+  //             if (!(field === "URL" && documentType === "article-journal")) {
+  //               return field
+  //             }
+  //           }
+  //         })
+  //       : documentFields[documentType],
+  //   [documentType, note],
+  // )
 
   return (
     <Grid container justifyContent="center" item>
-      <Grid item xs={8} md={10} container>
-        <FormControl fullWidth component="form">
-          {fields.map((field, index) => (
-            <Grid item xs={12} py={1} key={index.toString()}>
-              {{
-                issued: <DateField id={field} />,
-                accessed: <DateField id={field} />,
-                DOI: <LinkInput />,
-                contributors: <ContributorsInput />,
-              }[field] || <TextField id={field} />}
-            </Grid>
-          ))}
-        </FormControl>
-      </Grid>
+      {/*<Grid item xs={8} md={10} container>*/}
+      {/*  <FormControl fullWidth component="form">*/}
+      {/*    {fields.map((field, index) => (*/}
+      {/*      <Grid item xs={12} py={1} key={index.toString()}>*/}
+      {/*        {{*/}
+      {/*          issued: <DateField id={field} />,*/}
+      {/*          accessed: <DateField id={field} />,*/}
+      {/*          DOI: <LinkInput />,*/}
+      {/*          contributors: <ContributorsInput />,*/}
+      {/*        }[field] || <TextField id={field} />}*/}
+      {/*      </Grid>*/}
+      {/*    ))}*/}
+      {/*  </FormControl>*/}
+      {/*</Grid>*/}
 
       <Grid item container direction="column" alignItems="center" xs={2} md={2}>
         <Container
