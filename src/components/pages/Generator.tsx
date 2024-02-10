@@ -1,6 +1,5 @@
 import * as React from "react"
 import { useMemo } from "react"
-import { ErrorBoundary } from "react-error-boundary"
 
 import Layout from "./Layout"
 import Seo from "../Seo"
@@ -89,15 +88,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
                   </Stack>
                 </Stack>
 
-                <ErrorBoundary
-                  FallbackComponent={({ error }) => <strong>{error}</strong>}
-                  onReset={() => {
-                    // reset the state of your app here
-                  }}
-                  resetKeys={["someKey"]}
-                >
-                  <CitationForm />
-                </ErrorBoundary>
+                <CitationForm />
               </Grid>
 
               <Grid
