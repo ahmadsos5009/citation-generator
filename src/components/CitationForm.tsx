@@ -3,11 +3,7 @@ import { Grid, Typography } from "@mui/material"
 
 import { Citation } from "../types"
 
-import { ImportCitationBox } from "./Citation"
 import { GeneratorContext } from "../provider/GeneratorProvider"
-
-import CitationToolbar from "./form/CitationToolbar"
-import QuickCitationPreview from "./form/QuickCitationPreview"
 
 export const eliminatedFields = {
   "article-journal": [
@@ -57,9 +53,9 @@ const CitationForm: React.FC = () => {
 
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
-      <CitationToolbar />
+      {/*<CitationToolbar />*/}
 
-      <QuickCitationPreview />
+      {/*<QuickCitationPreview />*/}
 
       <Typography
         py={1}
@@ -71,12 +67,12 @@ const CitationForm: React.FC = () => {
         an external source
       </Typography>
 
-      <ImportCitationBox
-        documentType={documentType}
-        style={note ? `annotation/${style}` : style}
-        xml={xml}
-        updateCitation={setImportedCitation}
-      />
+      {/*<ImportCitationBox*/}
+      {/*  documentType={documentType}*/}
+      {/*  style={note ? `annotation/${style}` : style}*/}
+      {/*  xml={xml}*/}
+      {/*  updateCitation={setImportedCitation}*/}
+      {/*/>*/}
 
       {/*<Form />*/}
     </Grid>
