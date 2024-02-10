@@ -51,6 +51,7 @@ const CitationForm: React.FC = () => {
     [],
   )
 
+  
   return (
     <Grid container direction="column" justifyContent="center" id="form-container">
       {/*<CitationToolbar />*/}
