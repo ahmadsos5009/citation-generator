@@ -9,7 +9,7 @@ import { ImportCitationBox } from "./Citation"
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
 import CitationToolbar from "./form/CitationToolbar"
-import QuickCitationPreview from "./form/QuickCitationPreview"
+// import QuickCitationPreview from "./form/QuickCitationPreview"
 import { documentFields } from "../cslTypes/fieldsMapping"
 
 export const eliminatedFields = {
@@ -62,7 +62,7 @@ const CitationForm: React.FC = () => {
     <Grid container direction="column" justifyContent="center" id="form-container">
       <CitationToolbar />
 
-      <QuickCitationPreview />
+      {/*<QuickCitationPreview />*/}
 
       <Typography
         py={1}
