@@ -9,9 +9,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Paper,
   Snackbar,
   Stack,
@@ -27,7 +24,6 @@ import {
 import { Citation, CitationStyle, DocumentLabel, DocumentType } from "../types"
 
 import SearchIcon from "@mui/icons-material/Search"
-import EditIcon from "@mui/icons-material/Edit"
 
 import BackspaceIcon from "@mui/icons-material/Backspace"
 
@@ -35,8 +31,6 @@ import { ImportProgress } from "./editor/Spinner"
 
 import { CitationImportStrategy } from "./utilities/citation-importer"
 import { generateCitation } from "./utilities/citation_generator"
-
-import { PrimaryList } from "./Lists"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
@@ -351,54 +345,54 @@ export const ImportCitationBox: React.FC<{
       </Paper>
 
       {/* TODO:: move this to import list results */}
-      {importedCitations.length > 0 && (
-        <PrimaryList
-          sx={{
-            bgcolor: "background.paper",
-            margin: "8px",
-            maxHeight: "400px",
-            overflowY: "auto",
-          }}
-        >
-          {importedCitations.map(({ citation, htmlCitation, inText }, index) => (
-            <ListItem
-              key={index.toString()}
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  value={index}
-                  aria-label="edit-citation"
-                  onClick={onEditClick}
-                >
-                  <EditIcon />
-                </IconButton>
-              }
-            >
-              {citation?.type && (
-                <ListItemIcon>
-                  {DocumentLabel[citation.type as DocumentType]}
-                </ListItemIcon>
-              )}
-              <ListItemText>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: htmlCitation,
-                  }}
-                />
-                <Typography
-                  variant="caption"
-                  display="block"
-                  gutterBottom
-                  margin={0}
-                >
-                  In-text Citation:
-                  <div dangerouslySetInnerHTML={{ __html: inText }} />
-                </Typography>
-              </ListItemText>
-            </ListItem>
-          ))}
-        </PrimaryList>
-      )}
+      {/*{importedCitations.length > 0 && (*/}
+      {/*  <PrimaryList*/}
+      {/*    sx={{*/}
+      {/*      bgcolor: "background.paper",*/}
+      {/*      margin: "8px",*/}
+      {/*      maxHeight: "400px",*/}
+      {/*      overflowY: "auto",*/}
+      {/*    }}*/}
+      {/*  >*/}
+      {/*    {importedCitations.map(({ citation, htmlCitation, inText }, index) => (*/}
+      {/*      <ListItem*/}
+      {/*        key={index.toString()}*/}
+      {/*        secondaryAction={*/}
+      {/*          <IconButton*/}
+      {/*            edge="end"*/}
+      {/*            value={index}*/}
+      {/*            aria-label="edit-citation"*/}
+      {/*            onClick={onEditClick}*/}
+      {/*          >*/}
+      {/*            <EditIcon />*/}
+      {/*          </IconButton>*/}
+      {/*        }*/}
+      {/*      >*/}
+      {/*        {citation?.type && (*/}
+      {/*          <ListItemIcon>*/}
+      {/*            {DocumentLabel[citation.type as DocumentType]}*/}
+      {/*          </ListItemIcon>*/}
+      {/*        )}*/}
+      {/*        <ListItemText>*/}
+      {/*          <div*/}
+      {/*            dangerouslySetInnerHTML={{*/}
+      {/*              __html: htmlCitation,*/}
+      {/*            }}*/}
+      {/*          />*/}
+      {/*          <Typography*/}
+      {/*            variant="caption"*/}
+      {/*            display="block"*/}
+      {/*            gutterBottom*/}
+      {/*            margin={0}*/}
+      {/*          >*/}
+      {/*            In-text Citation:*/}
+      {/*            <div dangerouslySetInnerHTML={{ __html: inText }} />*/}
+      {/*          </Typography>*/}
+      {/*        </ListItemText>*/}
+      {/*      </ListItem>*/}
+      {/*    ))}*/}
+      {/*  </PrimaryList>*/}
+      {/*)}*/}
 
       <Snackbar
         open={showAlert}
