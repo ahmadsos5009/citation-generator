@@ -2,8 +2,13 @@ import React, { useCallback, useContext, useMemo, useState } from "react"
 import {
   Alert,
   Box,
+  Button,
+  ButtonGroup,
+  Container,
+  Divider,
   Grid,
   IconButton,
+  InputAdornment,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -11,15 +16,20 @@ import {
   Snackbar,
   Stack,
   SxProps,
+  TextField,
   Theme,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from "@mui/material"
 
 import { Citation, CitationStyle, DocumentLabel, DocumentType } from "../types"
 
+import SearchIcon from "@mui/icons-material/Search"
 import EditIcon from "@mui/icons-material/Edit"
+
+import BackspaceIcon from "@mui/icons-material/Backspace"
 
 import { ImportProgress } from "./editor/Spinner"
 
@@ -275,69 +285,69 @@ export const ImportCitationBox: React.FC<{
 
   return (
     <Grid py={2} item container justifyContent={{ xs: "center", md: "start" }}>
-      {/*<Paper*/}
-      {/*  sx={{*/}
-      {/*    display: "flex",*/}
-      {/*    flexDirection: { xs: "column", md: "row" },*/}
-      {/*    width: { xs: "95%", md: "100%" },*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <Container disableGutters sx={{ display: "flex" }}>*/}
-      {/*    <TextField*/}
-      {/*      disabled={!isSearchSupported}*/}
-      {/*      size="small"*/}
-      {/*      sx={{ p: 1, ml: 1, flex: 1 }}*/}
-      {/*      InputProps={{*/}
-      {/*        startAdornment: (*/}
-      {/*          <InputAdornment position="start">*/}
-      {/*            <SearchIcon />*/}
-      {/*          </InputAdornment>*/}
-      {/*        ),*/}
-      {/*        endAdornment: (*/}
-      {/*          <InputAdornment position="end">*/}
-      {/*            <Button*/}
-      {/*              variant="contained"*/}
-      {/*              color="primary"*/}
-      {/*              size="small"*/}
-      {/*              onClick={onImportSearch}*/}
-      {/*            >*/}
-      {/*              Search*/}
-      {/*            </Button>*/}
-      {/*          </InputAdornment>*/}
-      {/*        ),*/}
-      {/*      }}*/}
-      {/*      placeholder={message}*/}
-      {/*      value={input}*/}
-      {/*      onChange={onImportChange}*/}
-      {/*      onKeyPress={onKeyPress}*/}
-      {/*    />*/}
+      <Paper
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          width: { xs: "95%", md: "100%" },
+        }}
+      >
+        <Container disableGutters sx={{ display: "flex" }}>
+          <TextField
+            disabled={!isSearchSupported}
+            size="small"
+            sx={{ p: 1, ml: 1, flex: 1 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={onImportSearch}
+                  >
+                    Search
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+            placeholder={message}
+            value={input}
+            onChange={onImportChange}
+            onKeyPress={onKeyPress}
+          />
 
-      {/*    <ButtonGroup>*/}
-      {/*      <Divider orientation="vertical" />*/}
-      {/*      <Tooltip title="clear imported citation">*/}
-      {/*        <IconButton*/}
-      {/*          sx={{ p: "10px" }}*/}
-      {/*          aria-label="clear"*/}
-      {/*          onClick={onClearClick}*/}
-      {/*        >*/}
-      {/*          <BackspaceIcon />*/}
-      {/*        </IconButton>*/}
-      {/*      </Tooltip>*/}
-      {/*    </ButtonGroup>*/}
-      {/*  </Container>*/}
+          <ButtonGroup>
+            <Divider orientation="vertical" />
+            <Tooltip title="clear imported citation">
+              <IconButton
+                sx={{ p: "10px" }}
+                aria-label="clear"
+                onClick={onClearClick}
+              >
+                <BackspaceIcon />
+              </IconButton>
+            </Tooltip>
+          </ButtonGroup>
+        </Container>
 
-      {/*  <Divider*/}
-      {/*    sx={{ display: { xs: "none", md: "flex" } }}*/}
-      {/*    orientation="vertical"*/}
-      {/*  />*/}
+        <Divider
+          sx={{ display: { xs: "none", md: "flex" } }}
+          orientation="vertical"
+        />
 
-      {/*  <UploadFileModel*/}
-      {/*    documentType={documentType}*/}
-      {/*    updateCitation={updateCitation}*/}
-      {/*    style={style as CitationStyle}*/}
-      {/*    xml={xml}*/}
-      {/*  />*/}
-      {/*</Paper>*/}
+        {/*<UploadFileModel*/}
+        {/*  documentType={documentType}*/}
+        {/*  updateCitation={updateCitation}*/}
+        {/*  style={style as CitationStyle}*/}
+        {/*  xml={xml}*/}
+        {/*/>*/}
+      </Paper>
 
       {/* TODO:: move this to import list results */}
       {importedCitations.length > 0 && (
