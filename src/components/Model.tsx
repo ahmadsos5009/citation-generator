@@ -26,7 +26,7 @@ import {
 
 import { generateCitation } from "./utilities/citation_generator"
 import { Citation, CitationStyle, DocumentLabel, DocumentType } from "../types"
-import UploadFileIcon from "@mui/icons-material/UploadFile"
+
 import { Cite } from "@citation-js/core"
 import sendFeedback from "./utilities/feedback-api"
 
@@ -258,28 +258,28 @@ export const UploadFileModel: React.FC<{
 
   return (
     <Grid alignSelf="center">
-      <label htmlFor="contained-button-file">
-        <Input
-          // @ts-ignore
-          ref={uploadRef}
-          onChange={onFileUpload}
-          accept="*"
-          id="contained-button-file"
-          multiple
-          type="file"
-        />
-        <Button
-          color="secondary"
-          sx={{ ":hover": { borderRadius: "8px" } }}
-          aria-label="upload"
-          startIcon={<UploadFileIcon />}
-          component="span"
-        >
-          <Typography variant="caption" minWidth="102px" color="secondary.main">
-            Import form .bib/.tex
-          </Typography>
-        </Button>
-      </label>
+      {/*<label htmlFor="contained-button-file">*/}
+      {/*  <Input*/}
+      {/*    // @ts-ignore*/}
+      {/*    ref={uploadRef}*/}
+      {/*    onChange={onFileUpload}*/}
+      {/*    accept="*"*/}
+      {/*    id="contained-button-file"*/}
+      {/*    multiple*/}
+      {/*    type="file"*/}
+      {/*  />*/}
+      {/*  <Button*/}
+      {/*    color="secondary"*/}
+      {/*    sx={{ ":hover": { borderRadius: "8px" } }}*/}
+      {/*    aria-label="upload"*/}
+      {/*    startIcon={<UploadFileIcon />}*/}
+      {/*    component="span"*/}
+      {/*  >*/}
+      {/*    <Typography variant="caption" minWidth="102px" color="secondary.main">*/}
+      {/*      Import form .bib/.tex*/}
+      {/*    </Typography>*/}
+      {/*  </Button>*/}
+      {/*</label>*/}
 
       {/*<Modal open={open} onClose={handleClose}>*/}
       {/*  <Box sx={{ ...importStyle, width: "50%", height: "50%" }}>*/}
