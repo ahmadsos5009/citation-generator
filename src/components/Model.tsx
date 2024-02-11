@@ -7,7 +7,6 @@ import {
   FilledInput,
   Grid,
   IconButton,
-  List,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -127,17 +126,13 @@ export const ExportFileNameModel: React.FC<{
   )
 }
 
-// import "@citation-js/plugin-isbn"
-// import "@citation-js/plugin-doi"
-// import "@citation-js/plugin-bibjson"
-// import "@citation-js/plugin-bibtex"
+require("@citation-js/plugin-isbn")
+require("@citation-js/plugin-doi")
+require("@citation-js/plugin-bibjson")
+require("@citation-js/plugin-bibtex")
 
-import { Spinner } from "./editor/Spinner"
 import EditIcon from "@mui/icons-material/Edit"
 import { ImportCitation } from "./Citation"
-
-import SaveIcon from "@mui/icons-material/Save"
-import FormatQuoteIcon from "@mui/icons-material/FormatQuote"
 
 import FeedbackIcon from "@mui/icons-material/Feedback"
 import { Feedback } from "./Buttons"
@@ -150,7 +145,6 @@ import { EditorContext } from "../provider/EditorProvider"
 import { v4 as uuid } from "uuid"
 import { TCitation } from "../db/types"
 import { DBContext } from "../provider/DBProvider"
-import { MicrosoftWordIcon } from "../icons"
 
 import { exportToWord } from "../utile/jsonCSL-openXml"
 
@@ -287,48 +281,48 @@ export const UploadFileModel: React.FC<{
         </Button>
       </label>
 
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={{ ...importStyle, width: "50%", height: "50%" }}>
-          {uploadProgress > 0 && uploadProgress > 100 && <Spinner />}
-          {uploadError && <Alert severity="error">{uploadError}</Alert>}
-          {outputJson && outputJson.length > 0 && (
-            <Box sx={{ width: "100%", height: "90%" }}>
-              <Box display="flex" justifyContent="end">
-                <Button startIcon={<SaveIcon />} onClick={onSaveAllClick}>
-                  {(isEditor && "Import") || "Save"} All
-                </Button>
-                {!isEditor && (
-                  <Button
-                    startIcon={<FormatQuoteIcon />}
-                    onClick={onBibliographyListClick}
-                  >
-                    Bibliography List
-                  </Button>
-                )}
-                {!isEditor && (
-                  <Button startIcon={<MicrosoftWordIcon />} onClick={onExportToWord}>
-                    export to word .xml
-                  </Button>
-                )}
-              </Box>
-              <List sx={{ margin: "8px", height: "100%", overflowY: "scroll" }}>
-                {outputJson.map((citation, index) => (
-                  <CitationListItem
-                    citation={citation}
-                    documentType={documentType}
-                    onEditClick={onEditClick}
-                    style={style}
-                    xml={xml}
-                    index={index}
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={index}
-                  />
-                ))}
-              </List>
-            </Box>
-          )}
-        </Box>
-      </Modal>
+      {/*<Modal open={open} onClose={handleClose}>*/}
+      {/*  <Box sx={{ ...importStyle, width: "50%", height: "50%" }}>*/}
+      {/*    {uploadProgress > 0 && uploadProgress > 100 && <Spinner />}*/}
+      {/*    {uploadError && <Alert severity="error">{uploadError}</Alert>}*/}
+      {/*    {outputJson && outputJson.length > 0 && (*/}
+      {/*      <Box sx={{ width: "100%", height: "90%" }}>*/}
+      {/*        <Box display="flex" justifyContent="end">*/}
+      {/*          <Button startIcon={<SaveIcon />} onClick={onSaveAllClick}>*/}
+      {/*            {(isEditor && "Import") || "Save"} All*/}
+      {/*          </Button>*/}
+      {/*          {!isEditor && (*/}
+      {/*            <Button*/}
+      {/*              startIcon={<FormatQuoteIcon />}*/}
+      {/*              onClick={onBibliographyListClick}*/}
+      {/*            >*/}
+      {/*              Bibliography List*/}
+      {/*            </Button>*/}
+      {/*          )}*/}
+      {/*          {!isEditor && (*/}
+      {/*            <Button startIcon={<MicrosoftWordIcon />} onClick={onExportToWord}>*/}
+      {/*              export to word .xml*/}
+      {/*            </Button>*/}
+      {/*          )}*/}
+      {/*        </Box>*/}
+      {/*        <List sx={{ margin: "8px", height: "100%", overflowY: "scroll" }}>*/}
+      {/*          {outputJson.map((citation, index) => (*/}
+      {/*            <CitationListItem*/}
+      {/*              citation={citation}*/}
+      {/*              documentType={documentType}*/}
+      {/*              onEditClick={onEditClick}*/}
+      {/*              style={style}*/}
+      {/*              xml={xml}*/}
+      {/*              index={index}*/}
+      {/*              // eslint-disable-next-line react/no-array-index-key*/}
+      {/*              key={index}*/}
+      {/*            />*/}
+      {/*          ))}*/}
+      {/*        </List>*/}
+      {/*      </Box>*/}
+      {/*    )}*/}
+      {/*  </Box>*/}
+      {/*</Modal>*/}
     </Grid>
   )
 }
