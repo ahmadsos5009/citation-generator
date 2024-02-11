@@ -40,6 +40,7 @@ import { PrimaryList } from "./Lists"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
+import { UploadFileModel } from "./Model"
 import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
@@ -341,12 +342,12 @@ export const ImportCitationBox: React.FC<{
           orientation="vertical"
         />
 
-        {/*<UploadFileModel*/}
-        {/*  documentType={documentType}*/}
-        {/*  updateCitation={updateCitation}*/}
-        {/*  style={style as CitationStyle}*/}
-        {/*  xml={xml}*/}
-        {/*/>*/}
+        <UploadFileModel
+          documentType={documentType}
+          updateCitation={updateCitation}
+          style={style as CitationStyle}
+          xml={xml}
+        />
       </Paper>
 
       {/* TODO:: move this to import list results */}

@@ -127,10 +127,10 @@ export const ExportFileNameModel: React.FC<{
   )
 }
 
-require("@citation-js/plugin-isbn")
-require("@citation-js/plugin-doi")
-require("@citation-js/plugin-bibjson")
-require("@citation-js/plugin-bibtex")
+import "@citation-js/plugin-isbn"
+import "@citation-js/plugin-doi"
+import "@citation-js/plugin-bibjson"
+import "@citation-js/plugin-bibtex"
 
 import { Spinner } from "./editor/Spinner"
 import EditIcon from "@mui/icons-material/Edit"
