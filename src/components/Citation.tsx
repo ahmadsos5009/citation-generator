@@ -40,7 +40,7 @@ import { PrimaryList } from "./Lists"
 
 import { GeneratorContext } from "../provider/GeneratorProvider"
 
-import { UploadFileModel } from "./Model"
+import { UploadFileModel } from "./models/UploadFile"
 import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
