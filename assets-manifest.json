@@ -35,8 +35,8 @@
   "component---src-pages-404-tsx.js": "component---src-pages-404-tsx-3c7465f7abc6c5865b5a.js",
   "component---src-pages-about-tsx-4bd82543fd5fdc398dfd.js.map": "component---src-pages-about-tsx-4bd82543fd5fdc398dfd.js.map",
   "component---src-pages-about-tsx.js": "component---src-pages-about-tsx-4bd82543fd5fdc398dfd.js",
-  "component---src-pages-citations-list-tsx-0f6c3763b2a0d59e9c17.js.map": "component---src-pages-citations-list-tsx-0f6c3763b2a0d59e9c17.js.map",
-  "component---src-pages-citations-list-tsx.js": "component---src-pages-citations-list-tsx-0f6c3763b2a0d59e9c17.js",
+  "component---src-pages-citations-list-tsx-c17538ff412498973b0f.js.map": "component---src-pages-citations-list-tsx-c17538ff412498973b0f.js.map",
+  "component---src-pages-citations-list-tsx.js": "component---src-pages-citations-list-tsx-c17538ff412498973b0f.js",
   "component---src-pages-contact-tsx-ebecd84319c6228af8f3.js.map": "component---src-pages-contact-tsx-ebecd84319c6228af8f3.js.map",
   "component---src-pages-contact-tsx.js": "component---src-pages-contact-tsx-ebecd84319c6228af8f3.js",
   "component---src-pages-examples-tsx-f80a1236e420c7d96462.js.map": "component---src-pages-examples-tsx-f80a1236e420c7d96462.js.map",
@@ -76,6 +76,6 @@
   "static/catamaran-latin-800.woff": "static/catamaran-latin-800-2bb5e9ab29bc4846fb0ff61a319dd3d2.woff",
   "static/catamaran-latin-900.woff": "static/catamaran-latin-900-fd34c70ba6ed19c738093f193f94594f.woff",
   "styles.css": "styles.bea39d308f5bf6211a5a.css",
-  "webpack-runtime-8efbc617e298884efc8a.js.map": "webpack-runtime-8efbc617e298884efc8a.js.map",
-  "webpack-runtime.js": "webpack-runtime-8efbc617e298884efc8a.js"
+  "webpack-runtime-3f6ce29d7eea77ae74a1.js.map": "webpack-runtime-3f6ce29d7eea77ae74a1.js.map",
+  "webpack-runtime.js": "webpack-runtime-3f6ce29d7eea77ae74a1.js"
 }
