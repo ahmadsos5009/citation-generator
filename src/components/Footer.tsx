@@ -118,7 +118,7 @@ const Text = styled(Typography)`
   color: #e6daea;
 `
 
-const Link = styled(Button)`
+export const Link = styled(Button)`
   display: block;
   font-family: sans-serif;
   font-style: normal;

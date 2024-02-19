@@ -43,6 +43,7 @@ import { GeneratorContext } from "../provider/GeneratorProvider"
 import DocumentSource from "./form/DocumentSource"
 import { isEmptyCitation } from "./utilities/object"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+import { UploadFileModel } from "./models/UploadFile"
 
 interface OnFlyCitationBoxProps {
   handleClick: (event: React.MouseEvent<HTMLElement>) => void
@@ -341,12 +342,12 @@ export const ImportCitationBox: React.FC<{
           orientation="vertical"
         />
 
-        {/*<UploadFileModel*/}
-        {/*  documentType={documentType}*/}
-        {/*  updateCitation={updateCitation}*/}
-        {/*  style={style as CitationStyle}*/}
-        {/*  xml={xml}*/}
-        {/*/>*/}
+        <UploadFileModel
+          documentType={documentType}
+          updateCitation={updateCitation}
+          style={style as CitationStyle}
+          xml={xml}
+        />
       </Paper>
 
       {/* TODO:: move this to import list results */}

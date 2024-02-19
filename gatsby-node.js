@@ -82,8 +82,8 @@ const webpack = require("webpack")
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     plugins: [
-      new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify("production"),
+      new webpack.ProvidePlugin({
+        process: "process",
       }),
     ],
     resolve: {
@@ -94,16 +94,14 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         fs: false,
         assert: false,
         url: require.resolve("url/"),
-        encoding: require.resolve("encoding/"),
         stream: require.resolve("stream-browserify"),
         http: false,
         https: false,
         zlib: false,
-        punycode: false,
-        events: false,
-        buffer: false,
-        string_decoder: require.resolve("string_decoder"),
       },
+    },
+    node: {
+      fs: "empty",
     },
   })
 }

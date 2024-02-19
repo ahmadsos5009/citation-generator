@@ -7,11 +7,13 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   AppBar,
   Box,
   Button,
   Container,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Toolbar,
@@ -154,6 +156,18 @@ const Header: React.FC = () => {
             </Button>
           ))}
         </Container>
+        <Alert severity="error">
+          <b>Important Announcement</b>: We&apos;re moving to a new domain:
+          <Link
+            px={1}
+            color="secondary"
+            href="https://citation-generator.pages.dev/"
+          >
+            citation-generator.pages.dev
+          </Link>
+          <br />
+          This domain will be no longer available from <b>9 March 2024</b>
+        </Alert>
       </Container>
     </AppBar>
   )
