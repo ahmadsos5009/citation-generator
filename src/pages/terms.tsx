@@ -8,7 +8,7 @@ import { Primary, PrimaryTextStart } from "../components/Typography"
 const TermsPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="Terms" />
+      <Seo path="terms" title="Terms" />
       <Grid
         p={2}
         bgcolor="primary.main"

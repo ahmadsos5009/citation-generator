@@ -60,17 +60,18 @@ type GuideProps = {
   description: string
   documents: []
   documentsLink: []
+  slug: string
 }
 
 const Guide: React.FC<{ pageContext: GuideProps; children: ReactNode }> = ({
   pageContext,
   children,
 }) => {
-  const { documents, documentsLink, title, description } = pageContext
+  const { documents, documentsLink, title, description, slug } = pageContext
 
   return (
     <Layout>
-      <Seo title={title} description={description} />
+      <Seo path={slug} title={title} description={description} />
       <Grid container bgcolor="primary.main" justifyContent="center" height="100%">
         <Grid
           container

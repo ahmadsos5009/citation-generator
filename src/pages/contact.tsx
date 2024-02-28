@@ -34,7 +34,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <Layout>
-      <Seo title="Contact Us" />
+      <Seo path="contact" title="Contact Us" />
       <Grid
         p={2}
         bgcolor="primary.main"

@@ -9,7 +9,7 @@ import styled from "@emotion/styled"
 const PrivacyPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="Privacy" />
+      <Seo path="privacy" title="Privacy" />
       <Grid
         p={2}
         bgcolor="primary.main"

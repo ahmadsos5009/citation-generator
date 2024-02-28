@@ -21,11 +21,12 @@ interface PageProps {
     style: CitationStyle
     xml: string
     note?: boolean
+    slug: string
   }
 }
 
 const Generator: React.FC<PageProps> = ({ pageContext }) => {
-  const { title, metaTitle, style, xml, note } = pageContext
+  const { title, metaTitle, style, xml, note, slug } = pageContext
 
   const pageTitle = useMemo(() => {
     if (style.includes("_")) {
@@ -37,6 +38,7 @@ const Generator: React.FC<PageProps> = ({ pageContext }) => {
   return (
     <Layout>
       <Seo
+        path={slug}
         title={metaTitle}
         description={`${pageTitle} citation & in text citation generator, and bibliography/reference list generator.`}
       />

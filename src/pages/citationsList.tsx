@@ -19,7 +19,7 @@ const CitationEditor = loadable(
 const CitationsListPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="Reference List and Bibliography Generator" />
+      <Seo path="citationsList" title="Reference List and Bibliography Generator" />
       <EditorProvider>
         <Container
           disableGutters

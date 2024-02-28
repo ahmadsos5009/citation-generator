@@ -67,7 +67,7 @@ const preprocessedCitations = [
 const CitationsExamplesPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="Citation Examples" />
+      <Seo path="examples" title="Citation Examples" />
       <Grid container bgcolor="primary.main" justifyContent="center" height="100%">
         <Grid item xs={10} md={6}>
           {preprocessedCitations.map(({ style_title, bib, inText }, index) => (

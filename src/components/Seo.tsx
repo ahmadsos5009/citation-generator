@@ -14,9 +14,10 @@ interface SeoProps {
   lang?: string | "en"
   meta?: string | []
   title: string
+  path: string
 }
 
-const Seo: React.FC<SeoProps> = ({ description, lang, title }) => {
+const Seo: React.FC<SeoProps> = ({ description, lang, title, path }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -75,6 +76,11 @@ const Seo: React.FC<SeoProps> = ({ description, lang, title }) => {
           name: "twitter:description",
           content: metaDescription,
         },
+        {
+          "http-equiv": "refresh",
+          content: `3; URL=https://citation-generator.pages.dev/${path}`,
+        },
+        // <meta http-equiv="refresh" content="3; URL=https://www.yoururl.com/newpage" />
       ]}
     />
   )

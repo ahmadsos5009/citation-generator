@@ -24,6 +24,7 @@ const IndexPage: React.FC = () => {
   return (
     <Layout>
       <Seo
+        path="/"
         title="Citation Creator / Generator"
         description="Create citation online rapidly free for a wide range of CSL styles"
       />

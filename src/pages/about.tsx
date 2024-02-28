@@ -8,7 +8,7 @@ import { PrimaryTextStart } from "../components/Typography"
 const AboutPage: React.FC = () => {
   return (
     <Layout>
-      <Seo title="About" />
+      <Seo title="About" path="about" />
       <Grid
         p={2}
         bgcolor="primary.main"

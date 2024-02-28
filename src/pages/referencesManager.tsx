@@ -26,6 +26,7 @@ const ReferencesManagerPage: React.FC = () => {
   return (
     <Layout>
       <Seo
+        path="referencesManager"
         title="Reference manager"
         // TODO:: add more about expected features
         description="Store and organize your citations with collections/papers and labels, for free"

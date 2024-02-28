@@ -32,63 +32,6 @@ exports.createPages = async function ({ actions, graphql }) {
     }
   `)
 
-  actions.createRedirect({
-    fromPath: `/`,
-    toPath: `https://citation-generator.pages.dev/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/about/`,
-    toPath: `https://citation-generator.pages.dev/about/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/citationList/`,
-    toPath: `https://citation-generator.pages.dev/citationList/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/examples/`,
-    toPath: `https://citation-generator.pages.dev/examples/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/referencesManager/`,
-    toPath: `https://citation-generator.pages.dev/referencesManager/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/privacy/`,
-    toPath: `https://citation-generator.pages.dev/privacy/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/terms/`,
-    toPath: `https://citation-generator.pages.dev/privacy/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-  actions.createRedirect({
-    fromPath: `/contact/`,
-    toPath: `https://citation-generator.pages.dev/contact/`,
-    statusCode: 301,
-    force: true,
-    redirectInBrowser: true,
-  })
-
   // eslint-disable-next-line array-callback-return
   return data.allMdx.edges.map((edge) => {
     const {
@@ -107,41 +50,36 @@ exports.createPages = async function ({ actions, graphql }) {
     if (path) {
       const pagePath = note ? path.replace("/annotation/", "") : path
 
-      // actions.createPage({
-      //   path,
-      //   component: require.resolve("./src/components/pages/Generator.tsx"),
-      //   context: { id, title, metaTitle, style: pagePath, xml: body, note },
-      // })
-      actions.createRedirect({
-        fromPath: `/${path}/`,
-        toPath: `https://citation-generator.pages.dev/${path}/`,
-        statusCode: 301,
-        force: true,
-        redirectInBrowser: true,
+      actions.createPage({
+        path,
+        component: require.resolve("./src/components/pages/Generator.tsx"),
+        context: {
+          id,
+          title,
+          metaTitle,
+          style: pagePath,
+          xml: body,
+          note,
+          slug: path,
+        },
       })
     }
 
     /** Citation Style Guide Pages */
     if (slug) {
       const guideTemplate = require.resolve("./src/components/pages/Guide.tsx")
-      // actions.createPage({
-      //   path: slug,
-      //   component: `${guideTemplate}?__contentFilePath=${edge.node.internal.contentFilePath}`,
-      //   context: {
-      //     id,
-      //     title,
-      //     description,
-      //     body,
-      //     documents,
-      //     documentsLink,
-      //   },
-      // })
-      actions.createRedirect({
-        fromPath: `/${slug}/`,
-        toPath: `https://citation-generator.pages.dev/${slug}/`,
-        statusCode: 301,
-        force: true,
-        redirectInBrowser: true,
+      actions.createPage({
+        path: slug,
+        component: `${guideTemplate}?__contentFilePath=${edge.node.internal.contentFilePath}`,
+        context: {
+          id,
+          title,
+          description,
+          body,
+          documents,
+          documentsLink,
+          slug,
+        },
       })
     }
   })
