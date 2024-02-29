@@ -77,9 +77,8 @@ const Seo: React.FC<SeoProps> = ({ description, lang, title, path }) => {
           content: metaDescription,
         },
         {
-          name: "link",
-          rel: `canonical`,
-          href: `https://citation-generator.pages.dev/${path}`,
+          "http-equiv": `refresh`,
+          content: `0; url=https://citation-generator.pages.dev/${path}`,
         },
       ]}
     />
