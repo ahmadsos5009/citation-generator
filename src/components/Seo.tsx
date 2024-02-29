@@ -77,10 +77,10 @@ const Seo: React.FC<SeoProps> = ({ description, lang, title, path }) => {
           content: metaDescription,
         },
         {
-          "http-equiv": "refresh",
-          content: `3; URL=https://citation-generator.pages.dev/${path}`,
+          name: "link",
+          rel: `canonical`,
+          href: `https://citation-generator.pages.dev/${path}`,
         },
-        // <meta http-equiv="refresh" content="3; URL=https://www.yoururl.com/newpage" />
       ]}
     />
   )
